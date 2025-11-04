@@ -21,14 +21,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // 🧱 Ánh xạ view
         edtUsername = findViewById(R.id.edtUsername);
         edtPassword = findViewById(R.id.edtPassword);
         btnSignIn = findViewById(R.id.btnSignIn);
         txtForgotPassword = findViewById(R.id.txtForgotPassword);
         txtRegister = findViewById(R.id.txtRegister);
 
-        // 🟢 Sự kiện đăng nhập
         btnSignIn.setOnClickListener(v -> {
             String username = edtUsername.getText().toString().trim();
             String password = edtPassword.getText().toString().trim();
@@ -38,7 +36,6 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
-            // 🔐 Giả lập kiểm tra tài khoản (bạn có thể thay bằng logic thực tế)
             if (username.equals("admin") && password.equals("123")) {
                 Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
 
@@ -51,12 +48,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // 🟡 Quên mật khẩu
         txtForgotPassword.setOnClickListener(v ->
                 Toast.makeText(this, "Tính năng này đang được cập nhật!", Toast.LENGTH_SHORT).show()
         );
 
-        // 🔵 Chuyển sang trang Đăng ký
         txtRegister.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(intent);
