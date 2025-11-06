@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Primary Colors -->
+    <color name="primary">#FF6B4A</color>
+    <color name="primary_dark">#E55A3C</color>
+    <color name="primary_light">#FF8A6B</color>
+    
+    <!-- Secondary Colors -->
+    <color name="secondary">#4ECDC4</color>
+    <color name="secondary_dark">#3BB5AD</color>
+    <color name="secondary_light">#6EDDD4</color>
+    
+    <!-- Background Colors -->
+    <color name="background">#F8F9FA</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#F1F3F4</color>
+    
+    <!-- Text Colors -->
+    <color name="text_primary">#212529</color>
+    <color name="text_secondary">#6C757D</color>
+    <color name="text_hint">#ADB5BD</color>
+    
+    <!-- Accent Colors -->
+    <color name="accent">#FFD93D</color>
+    <color name="error">#FF6B6B</color>
+    <color name="success">#51CF66</color>
+    
+    <!-- Basic Colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>
