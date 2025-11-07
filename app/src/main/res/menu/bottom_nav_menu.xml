@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/vqv_vt_home"
+        android:title="Home" />
+    <item
+        android:id="@+id/nav_manga"
+        android:icon="@drawable/vqv_vt_manga"
+        android:title="Manga" />
+    <item
+        android:id="@+id/nav_search"
+        android:icon="@drawable/vqv_vt_search"
+        android:title="Search" />
+    <item
+        android:id="@+id/nav_account"
+        android:icon="@drawable/vqv_vt_account"
+        android:title="Account" />
+</menu>
