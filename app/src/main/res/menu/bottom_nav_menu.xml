@@ -1,18 +1,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
         android:id="@+id/nav_home"
-        android:icon="@drawable/vqv_vt_home"
-        android:title="Home" />
+        android:title="Trang chủ"
+        android:icon="@drawable/ic_home" />
+
     <item
-        android:id="@+id/nav_manga"
-        android:icon="@drawable/vqv_vt_manga"
-        android:title="Manga" />
+        android:id="@+id/nav_tasks"
+        android:title="Nhiệm vụ"
+        android:icon="@drawable/ic_task" />
+
     <item
-        android:id="@+id/nav_search"
-        android:icon="@drawable/vqv_vt_search"
-        android:title="Search" />
+        android:id="@+id/nav_fav"
+        android:title="Yêu thích"
+        android:icon="@drawable/ic_favorite" />
+
     <item
         android:id="@+id/nav_account"
-        android:icon="@drawable/vqv_vt_account"
-        android:title="Account" />
+        android:title="Tài khoản"
+        android:icon="@drawable/ic_account" />
+
 </menu>

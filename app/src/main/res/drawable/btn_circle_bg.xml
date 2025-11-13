@@ -1,0 +1,5 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <!-- Màu nền có độ trong suốt (đen mờ 50%) -->
+    <solid android:color="#80000000" />
+</shape>

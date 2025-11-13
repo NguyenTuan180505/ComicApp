@@ -13,7 +13,7 @@
         android:theme="@style/Theme.ComicApp">
 
         <activity
-            android:name=".DocTruyenActivity"
+            android:name=".HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
