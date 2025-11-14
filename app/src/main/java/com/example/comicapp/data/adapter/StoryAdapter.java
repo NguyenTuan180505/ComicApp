@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.data.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.comicapp.R;
+import com.example.comicapp.data.model.Story;
 
 import java.util.List;
 

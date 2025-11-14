@@ -1,10 +1,12 @@
-package com.example.comicapp;
+package com.example.comicapp.ui.account;
 
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.activity.EdgeToEdge;
+
+import com.example.comicapp.R;
 
 public class AccountActivity extends AppCompatActivity {
     @Override

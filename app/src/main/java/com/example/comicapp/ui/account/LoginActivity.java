@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.ui.account;
 
 
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.comicapp.R;
 
 public class LoginActivity extends AppCompatActivity {
 

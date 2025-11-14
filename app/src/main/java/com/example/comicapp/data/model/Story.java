@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.data.model;
 
 public class Story {
     private String title;
@@ -22,4 +22,7 @@ public class Story {
     public int getImageResId() {
         return imageResId;
     }
+
+
+
 }

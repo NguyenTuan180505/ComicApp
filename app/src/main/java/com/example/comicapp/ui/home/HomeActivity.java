@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.comicapp.R;
+import com.example.comicapp.data.model.Story;
+import com.example.comicapp.data.adapter.StoryAdapter;
+import com.example.comicapp.ui.task.TaskActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 

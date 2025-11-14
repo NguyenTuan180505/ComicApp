@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.ui.follow;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import com.example.comicapp.R;
+import com.example.comicapp.ui.account.AccountActivity;
 
 public class FollowActivity extends AppCompatActivity {
     @Override

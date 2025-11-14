@@ -15,7 +15,7 @@
 
         <!-- Màn hình chính: Truyện đang theo dõi -->
         <activity
-            android:name=".HomeActivity"
+            android:name=".ui.home.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,9 +25,8 @@
 
         <!-- Màn hình thông tin tài khoản -->
         <activity
-            android:name=".AccountActivity"
+            android:name=".ui.account.AccountActivity"
             android:exported="false" />
-
     </application>
 
 </manifest>

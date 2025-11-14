@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.ui.comic;
 
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.comicapp.R;
 
 public class ComicDetailActivity extends AppCompatActivity {
 
