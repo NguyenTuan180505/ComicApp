@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp">
-
         <!-- 🔙 Nút quay lại -->
-
         <!-- Avatar -->
         <ImageButton
             android:id="@+id/btnBack"
@@ -25,7 +21,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="#000000" />
-
         <ImageView
             android:id="@+id/imgAvatar"
             android:layout_width="100dp"
@@ -39,7 +34,6 @@
             app:layout_constraintTop_toBottomOf="@id/btnBack"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
-
         <!-- Email -->
         <TextView
             android:id="@+id/tvEmailLabel"
@@ -50,7 +44,6 @@
             android:layout_marginTop="20dp"
             app:layout_constraintTop_toBottomOf="@id/imgAvatar"
             app:layout_constraintStart_toStartOf="parent" />
-
         <EditText
             android:id="@+id/edtEmail"
             android:layout_width="0dp"
@@ -61,7 +54,6 @@
             app:layout_constraintTop_toBottomOf="@id/tvEmailLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
-
         <!-- Họ & Tên -->
         <TextView
             android:id="@+id/tvNameLabel"
@@ -72,7 +64,6 @@
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@id/edtEmail"
             app:layout_constraintStart_toStartOf="parent" />
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -82,7 +73,6 @@
             app:layout_constraintTop_toBottomOf="@id/tvNameLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
-
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -91,11 +81,9 @@
                 android:text="Nguyễn"
                 android:background="@drawable/edittext_bg"
                 android:padding="10dp"/>
-
             <Space
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"/>
-
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -105,7 +93,6 @@
                 android:background="@drawable/edittext_bg"
                 android:padding="10dp"/>
         </LinearLayout>
-
         <!-- SĐT -->
         <TextView
             android:id="@+id/tvPhoneLabel"
@@ -116,7 +103,6 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvNameLabel" />
-
         <EditText
             android:id="@+id/edtPhone"
             android:layout_width="0dp"
@@ -127,10 +113,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvPhoneLabel" />
-
         <!-- Nút Lưu -->
-        <Button
-            android:id="@+id/btnSave"
+        <Button android:id="@+id/btnSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -140,6 +124,4 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edtPhone" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout> </ScrollView>

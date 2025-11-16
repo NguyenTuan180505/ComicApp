@@ -2,13 +2,14 @@ package com.example.comicapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import android.view.View;
-import android.widget.LinearLayout;
 
 public class FollowActivity extends AppCompatActivity {
     @Override
@@ -23,15 +24,21 @@ public class FollowActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Bấm vào nút "Tài khoản" ở thanh dưới -> chuyển sang AccountActivity
+        // Nhấn "Tài khoản" ở thanh dưới → Chuyển sang UserActivity
         LinearLayout navAccount = findViewById(R.id.nav_account);
-        navAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(FollowActivity.this, AccountActivity.class);
-                startActivity(intent);
-            }
+        navAccount.setOnClickListener(v -> {
+            Intent intent = new Intent(FollowActivity.this, UserActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            // Không finish() để có thể quay lại bằng Back
         });
 
+        // (Tùy chọn) Nhấn "Yêu thích" → highlight (đang ở đây)
+        LinearLayout navFavourite = findViewById(R.id.nav_favourite);
+        if (navFavourite != null) {
+            navFavourite.setOnClickListener(v -> {
+                // Đang ở FollowActivity → không làm gì hoặc reload
+            });
+        }
     }
 }

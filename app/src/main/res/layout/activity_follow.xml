@@ -9,59 +9,21 @@
     tools:context=".FollowActivity">
 
     <!-- Header -->
-    <LinearLayout
-        android:id="@+id/header"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <ImageView
-            android:layout_width="53dp"
-            android:layout_height="45dp"
-            android:contentDescription="Logo"
-            android:src="@drawable/logo" />
-
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="CBComicApp"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"/>
-
-        <!-- Icon chuông thông báo (không có chức năng) -->
-        <ImageView
-            android:id="@+id/imgNotification"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:src="@drawable/ic_notifications"
-            android:contentDescription="Thông báo"
-            android:layout_marginEnd="8dp"
-            android:clickable="false"
-            android:focusable="false" />
-    </LinearLayout>
 
     <!-- Tiêu đề -->
+
+    <!-- Danh sách truyện yêu thích - Nhỏ gọn hơn -->
     <TextView
         android:id="@+id/tvFollow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:text="Truyện đang theo dõi"
-        android:textStyle="bold"
         android:textSize="18sp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/header"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp"/>
+        tools:layout_editor_absoluteY="16dp" />
 
-    <!-- Danh sách truyện yêu thích - Nhỏ gọn hơn -->
     <GridLayout
         android:id="@+id/gridFavorites"
         android:layout_width="0dp"
@@ -214,6 +176,7 @@
 
         <!-- Nhiệm vụ -->
         <LinearLayout
+            android:id="@+id/nav_task"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -238,6 +201,7 @@
 
         <!-- Yêu thích -->
         <LinearLayout
+            android:id="@+id/nav_favourite"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

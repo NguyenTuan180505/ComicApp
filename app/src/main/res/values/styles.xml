@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Sửa lỗi Material3 + API 26 -->
+    <style name="menuItemStyle" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <!-- Thay paddingVertical bằng paddingTop + paddingBottom -->
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <!-- Dùng icon có sẵn hoặc tạo mới -->
+        <item name="android:drawableEnd">@drawable/ic_chevron_right</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
+
+</resources>
