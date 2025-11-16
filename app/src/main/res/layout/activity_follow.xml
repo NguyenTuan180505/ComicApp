@@ -190,6 +190,8 @@
 
         <!-- Trang chủ -->
         <LinearLayout
+            android:id="@+id/nav_home"
+
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -214,6 +216,8 @@
 
         <!-- Nhiệm vụ -->
         <LinearLayout
+            android:id="@+id/nav_tasks"
+
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -238,6 +242,8 @@
 
         <!-- Yêu thích -->
         <LinearLayout
+            android:id="@+id/nav_fav"
+
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

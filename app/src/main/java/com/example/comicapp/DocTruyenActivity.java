@@ -29,7 +29,8 @@ public class DocTruyenActivity extends AppCompatActivity {
         );
 
         btnBack.setOnClickListener(v -> onBackPressed());
-
+        Intent i = new Intent(DocTruyenActivity.this, ComicDetailActivity.class);
+        startActivity(i);
 
     }
 }

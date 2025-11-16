@@ -64,10 +64,9 @@ public class TaskActivity extends AppCompatActivity {
                 // Đã ở màn hình Tasks
                 return true;
             }
-            // Bỏ comment khi có các Activity khác
-            /*
-            else if (id == R.id.nav_favorite) {
-                Intent intent = new Intent(TaskActivity.this, FavoriteActivity.class);
+
+            else if (id == R.id.nav_fav) {
+                Intent intent = new Intent(TaskActivity.this, FollowActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
@@ -80,7 +79,7 @@ public class TaskActivity extends AppCompatActivity {
                 overridePendingTransition(0, 0);
                 return true;
             }
-            */
+
 
             return false;
         });

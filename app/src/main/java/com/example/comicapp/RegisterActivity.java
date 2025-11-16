@@ -1,5 +1,6 @@
 package com.example.comicapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -12,8 +13,9 @@ import com.google.android.material.button.MaterialButton;
 public class RegisterActivity extends AppCompatActivity {
 
     EditText edtUsername, edtEmail, edtPassword, edtConfirmPassword;
-    MaterialButton btnCreate;
+    MaterialButton btnCreate, btnBack;
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
         edtPassword = findViewById(R.id.edtPassword);
         edtConfirmPassword = findViewById(R.id.edtConfirmPassword);
         btnCreate = findViewById(R.id.btnCreate);
+        btnBack =  findViewById(R.id.btnBack);
 
         btnCreate.setOnClickListener(v -> {
             String pass = edtPassword.getText().toString();
@@ -38,5 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
             }
         });
+        btnBack.setOnClickListener(v -> finish());
     }
+
 }
