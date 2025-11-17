@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.ui.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.comicapp.R;
 
 public class DocTruyenActivity extends AppCompatActivity {
     @Override

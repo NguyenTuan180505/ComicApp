@@ -1,4 +1,4 @@
-package com.example.comicapp.ui.task;
+package com.example.comicapp.ui.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,13 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.comicapp.R;
 import com.example.comicapp.data.model.Task;
 import com.example.comicapp.data.adapter.TaskAdapter;
-import com.example.comicapp.ui.home.HomeActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskActivity extends AppCompatActivity {
+public class TaskActivity extends BaseNavigationActivity {
 
     RecyclerView rvTasks;
     TextView txtUserPoints;
@@ -42,7 +41,7 @@ public class TaskActivity extends AppCompatActivity {
         rvTasks.setLayoutManager(new LinearLayoutManager(this));
 
         // Setup Bottom Navigation
-        setupBottomNavigation();
+        setupBottomNavigation(R.id.nav_tasks);
     }
 
     @Override
@@ -52,42 +51,9 @@ public class TaskActivity extends AppCompatActivity {
         bottomNav.setSelectedItemId(R.id.nav_tasks);
     }
 
-    private void setupBottomNavigation() {
-        bottomNav.setOnItemSelectedListener(item -> {
-            int id = item.getItemId();
-
-            if (id == R.id.nav_home) {
-                // Chuyển về màn hình Home
-                Intent intent = new Intent(TaskActivity.this, HomeActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(intent);
-                overridePendingTransition(0, 0); // Không có animation
-                return true;
-            }
-            else if (id == R.id.nav_tasks) {
-                // Đã ở màn hình Tasks
-                return true;
-            }
-            // Bỏ comment khi có các Activity khác
-            /*
-            else if (id == R.id.nav_favorite) {
-                Intent intent = new Intent(TaskActivity.this, FavoriteActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(intent);
-                overridePendingTransition(0, 0);
-                return true;
-            }
-            else if (id == R.id.nav_account) {
-                Intent intent = new Intent(TaskActivity.this, AccountActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(intent);
-                overridePendingTransition(0, 0);
-                return true;
-            }
-            */
-
-            return false;
-        });
+    @Override
+    protected int getCurrentNavItemId() {
+        return 0;
     }
 
     private List<Task> getDummyTasks() {

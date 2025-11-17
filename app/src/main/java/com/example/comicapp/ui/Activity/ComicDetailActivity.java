@@ -1,4 +1,4 @@
-package com.example.comicapp.ui.comic;
+package com.example.comicapp.ui.Activity;
 
 import android.os.Bundle;
 import android.view.View;

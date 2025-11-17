@@ -72,7 +72,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvHotStories"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="260dp"
                 android:layout_marginTop="8dp"
                 android:clipToPadding="false"
                 android:paddingStart="12dp"
@@ -90,27 +90,19 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
+            <!-- Trong activity_home.xml -->
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabEmotion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:background="@android:color/transparent"
-                app:tabIndicatorColor="#FF6B35"
-                app:tabMode="scrollable"
-                app:tabSelectedTextColor="#FF6B35"
-                app:tabTextColor="#757575" />
+                app:tabMode="fixed"
+                app:tabGravity="fill" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvEmotionStories"
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPagerEmotion"
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:layout_marginTop="8dp"
-                android:clipToPadding="false"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp" />
+                android:layout_height="250dp"
+                />
 
             <!-- Truyện mới cập nhật -->
             <TextView
@@ -127,7 +119,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvNewStories"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="250dp"
                 android:layout_marginTop="8dp"
                 android:nestedScrollingEnabled="false"
                 android:paddingStart="16dp"

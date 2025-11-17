@@ -1,4 +1,4 @@
-package com.example.comicapp.ui.account;
+package com.example.comicapp.ui.Activity;
 
 
 import android.content.Intent;

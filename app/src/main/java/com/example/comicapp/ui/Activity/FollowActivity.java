@@ -1,19 +1,16 @@
-package com.example.comicapp.ui.follow;
+// FollowActivity.java
+package com.example.comicapp.ui.Activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import android.view.View;
-import android.widget.LinearLayout;
-
 import com.example.comicapp.R;
-import com.example.comicapp.ui.account.AccountActivity;
+import com.example.comicapp.ui.Activity.BaseNavigationActivity;
 
-public class FollowActivity extends AppCompatActivity {
+public class FollowActivity extends BaseNavigationActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,15 +23,12 @@ public class FollowActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Bấm vào nút "Tài khoản" ở thanh dưới -> chuyển sang AccountActivity
-        LinearLayout navAccount = findViewById(R.id.nav_account);
-        navAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(FollowActivity.this, AccountActivity.class);
-                startActivity(intent);
-            }
-        });
+        // CHỈ CẦN 1 DÒNG NÀY → Bottom Nav tự xử lý
+        setupBottomNavigation(R.id.nav_fav);
+    }
 
+    @Override
+    protected int getCurrentNavItemId() {
+        return R.id.nav_fav; // ĐÚNG!
     }
 }
