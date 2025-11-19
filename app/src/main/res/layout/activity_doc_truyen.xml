@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -67,65 +68,73 @@
             android:text="Nội dung chương truyện hiển thị tại đây..."
             android:textColor="@android:color/black"
             android:textSize="15sp" />
+
     </ScrollView>
 
-    <!-- 4 BUTTON DƯỚI CÙNG -->
     <LinearLayout
+        android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center"
-        android:padding="10dp"
-        android:layout_marginBottom="4dp">
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="10dp"
+        android:background="#FFFFFF"
+        android:elevation="8dp">
 
-        <!-- Nút lui -->
+        <!-- Nút lùi -->
         <ImageButton
             android:id="@+id/btnPrev"
-            android:layout_width="52dp"
-            android:layout_height="52dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:src="@drawable/vqv_vt_lui"
             android:background="@android:color/transparent"
-            android:contentDescription="Lùi"
-            android:layout_marginEnd="6dp" />
+            android:scaleType="fitCenter" />
 
         <!-- Nút chọn nhạc -->
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnMusic"
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="52dp"
-            android:layout_weight="1.3"
+            android:layout_marginHorizontal="12dp"
             android:text="Chọn nhạc"
-            android:textAllCaps="false"
-            android:textSize="14sp"
-            android:drawableLeft="@drawable/vqv_vt_music_choice"
-            android:drawablePadding="6dp"
-            android:textColor="@android:color/white"
-            android:backgroundTint="#7E57C2"
-            android:layout_marginHorizontal="4dp" />
+            android:textSize="15sp"
+            android:textColor="#FFFFFF"
+            app:icon="@drawable/vqv_vt_music_choice"
+            app:iconGravity="textStart"
+            app:iconPadding="10dp"
+            app:cornerRadius="26dp"
+            android:backgroundTint="#7E57C2" />
 
-        <!-- Nút comment -->
-        <Button
-            android:id="@+id/btnComment"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_weight="1.3"
-            android:text="Bình luận"
-            android:textAllCaps="false"
-            android:textSize="14sp"
-            android:drawableLeft="@drawable/vqv_vt_comment"
-            android:drawablePadding="6dp"
-            android:textColor="@android:color/white"
-            android:backgroundTint="#7E57C2"
-            android:layout_marginHorizontal="4dp" />
+        <!-- NÚT THẢ CẢM XÚC SIÊU ĐẸP ĐỎ LỬA -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_reaction"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:minWidth="140dp"
+            android:text="Thả cảm xúc"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#E74C3C"
+            app:icon="@drawable/ic_heart_default"
+            app:iconTint="#E74C3C"
+            app:iconGravity="textStart"
+            app:iconPadding="10dp"
+            app:strokeColor="#E74C3C"
+            app:strokeWidth="2dp"
+            app:cornerRadius="28dp"
+            android:backgroundTint="#FFFFFF" />
 
         <!-- Nút tới -->
         <ImageButton
             android:id="@+id/btnNext"
-            android:layout_width="52dp"
-            android:layout_height="52dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:src="@drawable/vqv_vt_toi"
             android:background="@android:color/transparent"
-            android:contentDescription="Tới"
-            android:layout_marginStart="6dp" />
+            android:scaleType="fitCenter" />
     </LinearLayout>
 </LinearLayout>
