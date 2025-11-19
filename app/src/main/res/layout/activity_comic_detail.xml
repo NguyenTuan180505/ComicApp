@@ -240,4 +240,5 @@
             android:text="Đọc Ngay"
             android:textColor="#FFFFFF" />
     </LinearLayout>
+
 </RelativeLayout>
