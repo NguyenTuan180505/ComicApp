@@ -15,7 +15,7 @@
 
         <!-- Màn hình chính: Truyện đang theo dõi -->
         <activity
-            android:name=".ui.Activity.HomeActivity"
+            android:name=".ui.Activity.WelcomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,7 +37,7 @@
             android:name=".ui.Activity.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.Activity.WelcomeActivity"
+            android:name=".ui.Activity.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.Activity.DocTruyenActivity"

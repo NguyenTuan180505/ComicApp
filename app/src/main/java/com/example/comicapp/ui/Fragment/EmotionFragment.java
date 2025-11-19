@@ -17,6 +17,7 @@ import com.example.comicapp.data.adapter.StoryAdapter;
 import com.example.comicapp.data.model.Story;
 import com.example.comicapp.ui.Activity.HomeActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EmotionFragment extends Fragment {
@@ -67,9 +68,65 @@ public class EmotionFragment extends Fragment {
     }
 
     private List<Story> getDummyStoriesByEmotion(String emotion) {
-        // Tạm thời trả về dữ liệu giả theo cảm xúc
-        List<Story> list = ((HomeActivity) requireActivity()).getDummyStories();
-        // Có thể lọc theo cảm xúc ở đây nếu có dữ liệu
-        return list;
+        List<Story> stories = new ArrayList<>();
+
+        // Dựa vào emotion để trả về danh sách truyện phù hợp
+        switch (emotion.toLowerCase()) {
+            case "vui":
+            case "hạnh phúc":
+            case "happy":
+                stories.add(new Story("One Piece", "Eiichiro Oda", R.drawable.onepiece));
+                stories.add(new Story("Doraemon", "Fujiko F. Fujio", R.drawable.doraemon));
+                stories.add(new Story("Gintama", "Hideaki Sorachi", R.drawable.gintama));
+                stories.add(new Story("Kaguya-sama", "Aka Akasaka", R.drawable.kaguya));
+                break;
+
+            case "buồn":
+            case "sad":
+                stories.add(new Story("Your Lie in April", "Naoshi Arakawa", R.drawable.yourlie));
+                stories.add(new Story("Clannad", "Key", R.drawable.clannad));
+                stories.add(new Story("I Want to Eat Your Pancreas", "Yoru Sumino", R.drawable.doraemon));
+                stories.add(new Story("Anohana", "Choheiwa Busters", R.drawable.kaguya));
+                break;
+
+            case "hài hước":
+            case "hài":
+            case "funny":
+                stories.add(new Story("Grand Blue", "Kenji Inoue", R.drawable.gintama));
+                stories.add(new Story("Saiki Kusuo", "Shuichi Aso", R.drawable.onepiece));
+                stories.add(new Story("Nichijou", "Keiichi Arawi", R.drawable.yourlie));
+                stories.add(new Story("Asobi Asobase", "Rin Suzukawa", R.drawable.clannad));
+                break;
+
+            case "hành động":
+            case "action":
+                stories.add(new Story("Attack on Titan", "Hajime Isayama", R.drawable.doraemon));
+                stories.add(new Story("Demon Slayer", "Koyoharu Gotouge", R.drawable.clannad));
+                stories.add(new Story("Jujutsu Kaisen", "Gege Akutami", R.drawable.yourlie));
+                stories.add(new Story("Tokyo Revengers", "Ken Wakui", R.drawable.naruto));
+                break;
+
+            case "lãng mạn":
+            case "romance":
+                stories.add(new Story("Horimiya", "HERO", R.drawable.naruto));
+                stories.add(new Story("Fruits Basket", "Natsuki Takaya", R.drawable.doraemon));
+                stories.add(new Story("My Teen Romantic Comedy", "Wataru Watari", R.drawable.clannad));
+                break;
+
+            case "kinh dị":
+            case "horror":
+                stories.add(new Story("Tokyo Ghoul", "Sui Ishida", R.drawable.yourlie));
+                stories.add(new Story("Another", "Yukito Ayatsuji", R.drawable.onepiece));
+                stories.add(new Story("Parasyte", "Hitoshi Iwaaki", R.drawable.doraemon));
+                break;
+
+            default:
+                // Nếu không khớp, trả về vài truyện phổ biến
+                stories.add(new Story("Naruto", "Masashi Kishimoto", R.drawable.naruto));
+                stories.add(new Story("Dragon Ball", "Akira Toriyama", R.drawable.doraemon));
+                break;
+        }
+
+        return stories;
     }
 }

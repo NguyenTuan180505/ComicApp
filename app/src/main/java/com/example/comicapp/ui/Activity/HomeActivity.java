@@ -92,7 +92,7 @@ public class HomeActivity extends BaseNavigationActivity {
         return R.id.nav_home;
     }
 
-    public List<Story> getDummyStories() {
+    private List<Story> getDummyStories() {
         List<Story> list = new ArrayList<>();
         list.add(new Story("Thám tử lừng danh Conan", "Aoyama Gosho", R.drawable.conan));
         list.add(new Story("One Piece", "Eiichiro Oda", R.drawable.onepiece));
