@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/bg_reaction_popup_red"
+    android:elevation="20dp"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="12dp"
+    android:layout_marginBottom="8dp">
+
+<!--    <ImageView android:id="@+id/react_like"     android:tag="like"     android:src="@drawable/react_like"       android:layout_width="58dp" android:layout_height="48dp" android:scaleType="centerInside" android:layout_margin="6dp"/>-->
+    <ImageView android:id="@+id/react_love"     android:tag="love"     android:src="@drawable/ic_heart_default"       android:layout_width="58dp" android:layout_height="48dp" android:scaleType="centerInside" android:layout_margin="6dp"/>
+    <ImageView android:id="@+id/react_haha"     android:tag="haha"     android:src="@drawable/react_haha"       android:layout_width="58dp" android:layout_height="48dp" android:scaleType="centerInside" android:layout_margin="6dp"/>
+    <ImageView android:id="@+id/react_wow"      android:tag="wow"      android:src="@drawable/react_wow"        android:layout_width="58dp" android:layout_height="48dp" android:scaleType="centerInside" android:layout_margin="6dp"/>
+    <ImageView android:id="@+id/react_sad"      android:tag="sad"      android:src="@drawable/react_sad"        android:layout_width="58dp" android:layout_height="48dp" android:scaleType="centerInside" android:layout_margin="6dp"/>
+    <ImageView android:id="@+id/react_angry"    android:tag="angry"    android:src="@drawable/react_angry"      android:layout_width="58dp" android:layout_height="48dp" android:scaleType="centerInside" android:layout_margin="6dp"/>
+    <ImageView android:id="@+id/react_care"     android:tag="care"     android:src="@drawable/react_care"       android:layout_width="58dp" android:layout_height="48dp" android:scaleType="centerInside" android:layout_margin="6dp"/>
+</LinearLayout>

@@ -1,103 +1,178 @@
 package com.example.comicapp.ui.Activity;
 
-import android.content.Intent;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.GridLayout;
+import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+
+import android.content.res.ColorStateList;          // ĐÃ CÓ RỒI – QUAN TRỌNG NHẤT
 
 import com.example.comicapp.R;
+import com.google.android.material.button.MaterialButton;
 
 public class DocTruyenActivity extends AppCompatActivity {
 
-    private CardView layoutPrediction;
-    private GridLayout gridOptions;
-    private LinearLayout layoutUserChoice;
-    private TextView tvQuestion, tvUserChoice, tvRank;
-    private Button btnPrediction;   // nút mới dưới cùng
-
-    private boolean isPredictionVisible = false;
+    private MaterialButton btnReaction;
+    private PopupWindow reactionPopup;
+    private String currentReaction = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doc_truyen);
 
-        // Các nút cũ
-        Button btnMusic = findViewById(R.id.btnMusic);
-        ImageView btnBack = findViewById(R.id.btnBack);
-        btnPrediction = findViewById(R.id.btnPrediction);   // ← nút mới
 
-        // Các view trong box dự đoán
-        layoutPrediction = findViewById(R.id.layout_prediction);
-        tvQuestion = findViewById(R.id.tv_question);
-        gridOptions = findViewById(R.id.grid_options);
-        layoutUserChoice = findViewById(R.id.layout_user_choice);
-        tvUserChoice = findViewById(R.id.tv_user_choice);
-        tvRank = findViewById(R.id.tv_rank);
+        findViewById(R.id.btnMusic).setOnClickListener(v -> {
 
-        // Sự kiện các nút cũ
-        btnMusic.setOnClickListener(v -> startActivity(new Intent(this, ChonNhacActivity.class)));
-        btnBack.setOnClickListener(v -> onBackPressed());
-
-        // ========== NÚT DỰ ĐOÁN – CHỈ BẤM LÀ HIỆN/ẨN BOX ==========
-        btnPrediction.setOnClickListener(v -> {
-            if (isPredictionVisible) {
-                layoutPrediction.setVisibility(View.GONE);
-                isPredictionVisible = false;
-            } else {
-                layoutPrediction.setVisibility(View.VISIBLE);
-                isPredictionVisible = true;
-                if (gridOptions.getChildCount() == 0) {
-                    loadPrediction();   // load lần đầu
-                }
-            }
         });
 
-        // Nếu muốn chap nào không có dự đoán thì ẩn luôn nút
-        // btnPrediction.setVisibility(View.GONE);
+        initReactionButton();
     }
 
-    private void loadPrediction() {
-        // TODO: Sau này lấy từ server. Giờ demo
-        tvQuestion.setText("Chap sau nam chính sẽ chọn ai để cứu?");
-        String[] options = {"A. Tiểu Vân", "B. Bạch Liên hoa", "C. Cả hai", "D. Chết luôn"};
-        int[] colors = {0xFFe74c3c, 0xFF3498db, 0xFF2ecc71, 0xFFf39c12};
+    private void initReactionButton() {
+        btnReaction = findViewById(R.id.btn_reaction);
 
-        for (int i = 0; i < options.length; i++) {
-            Button btn = new Button(this);
-            btn.setText(options[i]);
-            btn.setTextColor(Color.WHITE);
-            btn.setBackgroundColor(colors[i]);
-            btn.setAllCaps(false);
-            btn.setTypeface(null, Typeface.BOLD);
-            btn.setTextSize(15);
 
-            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-            params.width = 0;
-            params.height = GridLayout.LayoutParams.WRAP_CONTENT;
-            params.columnSpec = GridLayout.spec(i % 2, 1f);
-            params.rowSpec = GridLayout.spec(i / 2);
-            params.setMargins(12, 12, 12, 12);
-            btn.setLayoutParams(params);
+        View popupView = getLayoutInflater().inflate(R.layout._reaction_popup, null);
+        reactionPopup = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        reactionPopup.setElevation(30f);
+        reactionPopup.setAnimationStyle(android.R.style.Animation_Toast);
 
-            final int index = i;
-            btn.setOnClickListener(v -> {
-                tvUserChoice.setText("Bạn đã chọn: " + options[index] + " Correct");
-                tvRank.setText("Hạng #8");
-                layoutUserChoice.setVisibility(View.VISIBLE);
-                // TODO: Gửi lựa chọn lên server ở đây
+        String[] reactions = { "love", "haha", "wow", "sad", "angry", "care"};
+        int[] bigIcons = {
+                R.drawable.ic_heart_default,
+                R.drawable.react_haha,
+                R.drawable.react_wow,
+                R.drawable.react_sad,
+                R.drawable.react_angry,
+                R.drawable.react_care,
+        };
+
+        for (int i = 0; i < reactions.length; i++) {
+            ImageView iv = popupView.findViewWithTag(reactions[i]);
+            int index = i;
+
+            iv.setOnClickListener(v -> {
+                selectReaction(reactions[index], bigIcons[index]);
+                reactionPopup.dismiss();
             });
 
-            gridOptions.addView(btn);
+
+            iv.setOnTouchListener((v, event) -> {
+                if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
+                    v.animate().scaleX(1.6f).scaleY(1.6f).translationY(-30f).setDuration(150).start();
+                } else {
+                    v.animate().scaleX(1f).scaleY(1f).translationY(0f).setDuration(150).start();
+                }
+                return false;
+            });
         }
+
+        btnReaction.setOnLongClickListener(v -> {
+            // Đo chiều rộng của nút và popup để căn giữa
+            btnReaction.post(() -> {
+                int btnWidth = btnReaction.getWidth();
+                int popupWidth = popupView.getMeasuredWidth();
+
+                int offsetX = -(popupWidth / 2) + (btnWidth / 2);  // căn giữa hoàn hảo
+                int offsetY = -250;  // đẩy lên trên nút
+
+                reactionPopup.showAsDropDown(btnReaction, offsetX, offsetY);
+
+                vibrate(50);
+                popupView.setScaleX(0.6f);
+                popupView.setScaleY(0.6f);
+                popupView.animate().scaleX(1f).scaleY(1f).setDuration(200).start();
+            });
+            return true;
+        });
+
+        btnReaction.setOnClickListener(v -> {
+            if (currentReaction == null || !"like".equals(currentReaction)) {
+                selectReaction("like", R.drawable.react_like);
+            } else {
+                resetReaction();
+            }
+        });
+    }
+
+    private void selectReaction(String type, int bigIcon) {
+        currentReaction = type;
+
+        btnReaction.setText(getReactionText(type));
+        btnReaction.setIconResource(bigIcon);
+        btnReaction.setTextColor(Color.parseColor("#E74C3C"));
+        btnReaction.setStrokeColor(ColorStateList.valueOf(Color.parseColor("#E74C3C")));
+        btnReaction.setIconTint(ColorStateList.valueOf(Color.parseColor("#E74C3C")));
+
+        // Hiệu ứng nhảy nhẹ khi chọn
+        AnimatorSet set = new AnimatorSet();
+        set.playTogether(
+                ObjectAnimator.ofFloat(btnReaction, "scaleX", 1f, 1.3f, 1f),
+                ObjectAnimator.ofFloat(btnReaction, "scaleY", 1f, 1.3f, 1f)
+        );
+        set.setDuration(300).start();
+
+        Toast.makeText(this, "Đã thả " + getReactionText(type) + "!", Toast.LENGTH_SHORT).show();
+
+    }
+
+    private void resetReaction() {
+        currentReaction = null;
+        btnReaction.setText("Thả cảm xúc");
+        btnReaction.setIconResource(R.drawable.ic_heart_default);
+        btnReaction.setTextColor(Color.parseColor("#E74C3C"));
+        btnReaction.setStrokeColor(ColorStateList.valueOf(Color.parseColor("#E74C3C")));
+        btnReaction.setIconTint(ColorStateList.valueOf(Color.parseColor("#E74C3C")));
+    }
+
+    private String getReactionText(String type) {
+        switch (type) {
+            case "like": return "Thích";
+            case "love": return "Yêu thích";
+            case "haha": return "Haha";
+            case "wow": return "Wow";
+            case "sad": return "Buồn";
+            case "angry": return "Phẫn nộ";
+            case "care": return "Thương";
+            case "laugh": return "Cười lớn";
+            default: return "Thả cảm xúc";
+        }
+    }
+
+    private void vibrate(long ms) {
+        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if (v == null || !v.hasVibrator()) return;
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            v.vibrate(VibrationEffect.createOneShot(ms, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            v.vibrate(ms);
+        }
+    }
+
+    private void animatePopupEntrance(View popupView) {
+        popupView.setScaleX(0.7f);
+        popupView.setScaleY(0.7f);
+        popupView.setAlpha(0f);
+        popupView.animate()
+                .scaleX(1f).scaleY(1f)
+                .alpha(1f)
+                .setDuration(200)
+                .start();
     }
 }
