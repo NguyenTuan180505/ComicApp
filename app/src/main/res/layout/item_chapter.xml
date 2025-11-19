@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -32,6 +33,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/btn_circle_light"
+        android:contentDescription="Đọc chương này"
         android:src="@mipmap/ic_book_open"
-        android:contentDescription="Đọc chương này" />
+        tools:ignore="TouchTargetSizeCheck" />
 </LinearLayout>
