@@ -10,16 +10,48 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ComicApp">
+        android:theme="@style/Theme.ComicApp"
+        tools:targetApi="31">
+
+        <!-- Màn hình chính: Truyện đang theo dõi -->
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.Activity.WelcomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Màn hình thông tin tài khoản -->
+        <activity
+            android:name=".ui.Activity.AccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Activity.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Activity.ComicDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Activity.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Activity.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Activity.DocTruyenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Activity.TaskActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Activity.ChonNhacActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Activity.FollowActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

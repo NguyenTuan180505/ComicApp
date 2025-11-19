@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:paddingTop="32dp">
+
+    <!-- HEADER -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:background="@drawable/vqv_header_border"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="12dp">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/vqv_vt_back" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Tên truyện: Võ Lâm Ký"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/btnMenu"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/vqv_vt_menu" />
+    </LinearLayout>
+
+    <!-- HIỂN THỊ CHƯƠNG -->
+    <TextView
+        android:id="@+id/tvChapterName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Chương 5: Cuộc chiến bắt đầu"
+        android:textColor="#673AB7"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp" />
+
+    <!-- NỘI DUNG TRUYỆN -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nội dung chương truyện hiển thị tại đây..."
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+    </ScrollView>
+
+    <!-- 4 BUTTON DƯỚI CÙNG -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_marginBottom="4dp">
+
+        <!-- Nút lui -->
+        <ImageButton
+            android:id="@+id/btnPrev"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:src="@drawable/vqv_vt_lui"
+            android:background="@android:color/transparent"
+            android:contentDescription="Lùi"
+            android:layout_marginEnd="6dp" />
+
+        <!-- Nút chọn nhạc -->
+        <Button
+            android:id="@+id/btnMusic"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1.3"
+            android:text="Chọn nhạc"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:drawableLeft="@drawable/vqv_vt_music_choice"
+            android:drawablePadding="6dp"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#7E57C2"
+            android:layout_marginHorizontal="4dp" />
+
+        <!-- Nút comment -->
+        <Button
+            android:id="@+id/btnComment"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1.3"
+            android:text="Bình luận"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:drawableLeft="@drawable/vqv_vt_comment"
+            android:drawablePadding="6dp"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#7E57C2"
+            android:layout_marginHorizontal="4dp" />
+
+        <!-- Nút tới -->
+        <ImageButton
+            android:id="@+id/btnNext"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:src="@drawable/vqv_vt_toi"
+            android:background="@android:color/transparent"
+            android:contentDescription="Tới"
+            android:layout_marginStart="6dp" />
+    </LinearLayout>
+</LinearLayout>

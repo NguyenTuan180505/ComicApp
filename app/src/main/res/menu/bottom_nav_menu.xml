@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_home"
+        android:title="Trang chủ"
+        android:icon="@drawable/ic_home" />
+
+    <item
+        android:id="@+id/nav_tasks"
+        android:title="Nhiệm vụ"
+        android:icon="@drawable/ic_task" />
+
+    <item
+        android:id="@+id/nav_fav"
+        android:title="Yêu thích"
+        android:icon="@drawable/ic_favorite" />
+
+    <item
+        android:id="@+id/nav_account"
+        android:title="Tài khoản"
+        android:icon="@drawable/ic_account" />
+
+</menu>
