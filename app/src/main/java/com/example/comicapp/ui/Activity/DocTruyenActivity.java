@@ -3,6 +3,7 @@ package com.example.comicapp.ui.Activity;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.VibrationEffect;
@@ -36,9 +37,10 @@ public class DocTruyenActivity extends AppCompatActivity {
 
 
         findViewById(R.id.btnMusic).setOnClickListener(v -> {
-
+            Intent intent = new Intent(DocTruyenActivity.this, ChonNhacActivity.class);
+            startActivity(intent);
         });
-
+        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
         initReactionButton();
     }
 

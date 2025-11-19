@@ -99,7 +99,6 @@
             android:layout_weight="1"
             android:layout_height="52dp"
             android:layout_marginHorizontal="12dp"
-            android:text="Chọn nhạc"
             android:textSize="15sp"
             android:textColor="#FFFFFF"
             app:icon="@drawable/vqv_vt_music_choice"
