@@ -52,9 +52,18 @@ public class EmotionFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.rvEmotionStories);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
 
-        // TODO: Gọi API theo cảm xúc
         List<Story> stories = getDummyStoriesByEmotion(emotion);
-        recyclerView.setAdapter(new StoryAdapter(stories));
+
+        StoryAdapter adapter = new StoryAdapter(stories);
+
+        // THÊM DÒNG NÀY – QUAN TRỌNG NHẤT!!!
+        adapter.setOnStoryClickListener(story -> {
+            if (getActivity() instanceof HomeActivity) {
+                ((HomeActivity) getActivity()).openComicDetail(story);
+            }
+        });
+
+        recyclerView.setAdapter(adapter);
     }
 
     private List<Story> getDummyStoriesByEmotion(String emotion) {

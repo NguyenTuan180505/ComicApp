@@ -1,3 +1,4 @@
+// data/adapter/StoryAdapter.java
 package com.example.comicapp.data.adapter;
 
 import android.view.LayoutInflater;
@@ -17,9 +18,19 @@ import java.util.List;
 public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHolder> {
 
     private List<Story> stories;
+    private OnStoryClickListener listener;
+
+    // Interface để xử lý click
+    public interface OnStoryClickListener {
+        void onStoryClick(Story story);
+    }
 
     public StoryAdapter(List<Story> stories) {
         this.stories = stories;
+    }
+
+    public void setOnStoryClickListener(OnStoryClickListener listener) {
+        this.listener = listener;
     }
 
     @NonNull
@@ -34,18 +45,23 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
     public void onBindViewHolder(@NonNull StoryViewHolder holder, int position) {
         Story story = stories.get(position);
 
-        // Gán dữ liệu vào các view
         holder.txtTitle.setText(story.getTitle());
         holder.txtAuthor.setText("Tác giả: " + story.getAuthor());
         holder.imgStory.setImageResource(story.getImageResId());
+
+        // Xử lý click vào item
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onStoryClick(story);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return stories.size();
+        return stories != null ? stories.size() : 0;
     }
 
-    // ViewHolder class
     static class StoryViewHolder extends RecyclerView.ViewHolder {
         ImageView imgStory;
         TextView txtTitle, txtAuthor;

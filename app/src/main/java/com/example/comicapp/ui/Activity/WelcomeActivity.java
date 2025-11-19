@@ -22,7 +22,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         btnStart.setOnClickListener(v -> {
             Toast.makeText(this, "Đi tới trang chính!", Toast.LENGTH_SHORT).show();
-            // startActivity(new Intent(this, MainActivity.class));
+             startActivity(new Intent(this, LoginActivity.class));
         });
 
         btnSignup.setOnClickListener(v -> {
