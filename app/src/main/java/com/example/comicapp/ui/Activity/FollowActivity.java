@@ -17,15 +17,16 @@ public class FollowActivity extends BaseNavigationActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_follow);
 
+        // KHÔNG SET padding bottom nữa
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.followLayout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0);
             return insets;
         });
 
-        // CHỈ CẦN 1 DÒNG NÀY → Bottom Nav tự xử lý
         setupBottomNavigation(R.id.nav_fav);
     }
+
 
     @Override
     protected int getCurrentNavItemId() {

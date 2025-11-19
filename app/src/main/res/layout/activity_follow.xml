@@ -47,7 +47,7 @@
             android:focusable="false" />
     </LinearLayout>
 
-    <!-- Tiêu đề -->
+    <!-- Title -->
     <TextView
         android:id="@+id/tvFollow"
         android:layout_width="wrap_content"
@@ -60,121 +60,129 @@
         app:layout_constraintTop_toBottomOf="@id/header"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- Danh sách truyện yêu thích -->
+    <!-- Scroll content -->
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:paddingBottom="0dp"
+        android:clipToPadding="false"
         android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@id/tvFollow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottomNav">
 
-        <GridLayout
+        <LinearLayout
             android:id="@+id/gridFavorites"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:alignmentMode="alignMargins"
-            android:columnCount="3"
-            android:columnOrderPreserved="false"
+            android:orientation="vertical"
             android:padding="8dp">
 
-            <!-- Truyện 1 -->
+            <!-- Hàng 1 -->
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="6dp"
-                android:background="@drawable/edittext_bg"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="6dp">
+                android:orientation="horizontal"
+                android:gravity="center">
 
-                <ImageView
-                    android:id="@+id/imgComic1"
-                    android:layout_width="100dp"
-                    android:layout_height="130dp"
-                    android:contentDescription="Truyện 1"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/truyen1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <!-- Truyện 1 -->
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="Ta là tà đế"
-                    android:textColor="#000000"
-                    android:textStyle="bold"
-                    android:textSize="12sp"
-                    android:maxLines="2"
-                    android:ellipsize="end" />
+                    android:layout_weight="1"
+                    android:layout_margin="6dp"
+                    android:background="@drawable/edittext_bg"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="6dp">
+
+                    <ImageView
+                        android:id="@+id/imgComic1"
+                        android:layout_width="100dp"
+                        android:layout_height="130dp"
+                        android:contentDescription="Truyện 1"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/truyen1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="Ta là tà đế"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:maxLines="2"
+                        android:ellipsize="end" />
+                </LinearLayout>
+
+                <!-- Truyện 2 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="6dp"
+                    android:background="@drawable/edittext_bg"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="6dp">
+
+                    <ImageView
+                        android:id="@+id/imgComic2"
+                        android:layout_width="100dp"
+                        android:layout_height="130dp"
+                        android:contentDescription="Truyện 2"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/truyen2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="Thiên quan tứ phúc"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:maxLines="2"
+                        android:ellipsize="end" />
+                </LinearLayout>
+
+                <!-- Truyện 3 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="6dp"
+                    android:background="@drawable/edittext_bg"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="6dp">
+
+                    <ImageView
+                        android:id="@+id/imgComic3"
+                        android:layout_width="100dp"
+                        android:layout_height="130dp"
+                        android:contentDescription="Truyện 3"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/truyen3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="Khói lửa hóa Đông phong"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:maxLines="2"
+                        android:ellipsize="end" />
+                </LinearLayout>
+
             </LinearLayout>
 
-            <!-- Truyện 2 -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="6dp"
-                android:background="@drawable/edittext_bg"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="6dp">
-
-                <ImageView
-                    android:id="@+id/imgComic2"
-                    android:layout_width="100dp"
-                    android:layout_height="130dp"
-                    android:contentDescription="Truyện 2"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/truyen2" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="Thiên quan tứ phúc"
-                    android:textColor="#000000"
-                    android:textStyle="bold"
-                    android:textSize="12sp"
-                    android:maxLines="2"
-                    android:ellipsize="end" />
-            </LinearLayout>
-
-            <!-- Truyện 3 -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="6dp"
-                android:background="@drawable/edittext_bg"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="6dp">
-
-                <ImageView
-                    android:id="@+id/imgComic3"
-                    android:layout_width="100dp"
-                    android:layout_height="130dp"
-                    android:contentDescription="Truyện 3"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/truyen3" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="Khói lửa hóa Đông phong"
-                    android:textColor="#000000"
-                    android:textStyle="bold"
-                    android:textSize="12sp"
-                    android:maxLines="2"
-                    android:ellipsize="end" />
-            </LinearLayout>
-
-        </GridLayout>
-
+        </LinearLayout>
     </ScrollView>
 
     <!-- Bottom Navigation -->
