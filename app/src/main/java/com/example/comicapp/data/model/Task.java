@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.data.model;
 
 public class Task {
     private String name;

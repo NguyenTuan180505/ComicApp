@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.ui.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.comicapp.R;
 
 public class WelcomeActivity extends AppCompatActivity {
     Button btnStart, btnSignup;
@@ -20,7 +22,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         btnStart.setOnClickListener(v -> {
             Toast.makeText(this, "Đi tới trang chính!", Toast.LENGTH_SHORT).show();
-            // startActivity(new Intent(this, MainActivity.class));
+             startActivity(new Intent(this, LoginActivity.class));
         });
 
         btnSignup.setOnClickListener(v -> {

@@ -15,7 +15,7 @@
 
         <!-- Màn hình chính: Truyện đang theo dõi -->
         <activity
-            android:name=".HomeActivity"
+            android:name=".ui.Activity.WelcomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +25,31 @@
 
         <!-- Màn hình thông tin tài khoản -->
         <activity
-            android:name=".AccountActivity"
+            android:name=".ui.Activity.AccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Activity.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Activity.ComicDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Activity.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Activity.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Activity.DocTruyenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Activity.TaskActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Activity.ChonNhacActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Activity.FollowActivity"
             android:exported="false" />
 
     </application>
