@@ -26,7 +26,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/comic_banner" />
+                    android:src="@drawable/comic_banner1" />
 
                 <!-- Nút back -->
                 <ImageButton

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,19 +9,31 @@
     android:gravity="center_horizontal"
     tools:context=".ui.Activity.WelcomeActivity">
 
-    <ImageView
-        android:id="@+id/imgBanner"
+    <!-- PHẦN MỚI: ViewPager2 + Dots Indicator -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/bannerPager"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:layout_weight="1"
-        android:scaleType="centerCrop"
-        android:src="@drawable/comic_banner" />
+        android:layout_weight="1" />
 
+    <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+        android:id="@+id/dotsIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-40dp"
+        android:layout_gravity="center_horizontal"
+        app:dotsColor="#88FFFFFF"
+        app:dotsStrokeColor="#FFFFFF"
+        app:selectedDotColor="#FFFFFF"
+        app:dotsSize="10dp"
+        app:dotsSpacing="8dp" />
+
+    <!-- PHẦN CŨ: Giữ nguyên 100% -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp"
+        android:padding="30dp"
         android:gravity="center_horizontal">
 
         <TextView
@@ -52,37 +65,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal"
-            android:gravity="center">
-
-            <View
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:background="@drawable/indicator_active"
-                android:layout_margin="4dp"/>
-
-            <View
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:background="@drawable/indicator_inactive"
-                android:layout_margin="4dp"/>
-
-            <View
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:background="@drawable/indicator_inactive"
-                android:layout_margin="4dp"/>
-        </LinearLayout>
-
         <Button
             android:id="@+id/btnStart"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/btn_primary"
             android:text="Bắt đầu"
             android:textAllCaps="false"
@@ -94,11 +81,11 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/btn_secondary"
             android:text="Chưa có tài khoản ?"
             android:textAllCaps="false"
             android:textColor="#007BFF"
-            android:textSize="16sp"
-            android:background="@drawable/btn_secondary" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 
