@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#338EE8FF">  <!-- Màu gợn sóng khi nhấn (tím nhạt) -->
+
+    <item android:id="@android:id/mask">
+        <shape android:shape="oval">
+            <solid android:color="#FFFFFF" />
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#E8E1FF" />   <!-- Màu nền tím nhạt -->
+            <stroke
+                android:width="1.5dp"
+                android:color="#BB86FC" />       <!-- Viền tím đậm nhẹ -->
+            <corners android:radius="100dp" />
+        </shape>
+    </item>
+
+</ripple>
