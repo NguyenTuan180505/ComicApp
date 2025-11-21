@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:paddingTop="32dp">
+
+    <!-- HEADER -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:background="@drawable/vqv_header_border"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="12dp">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/vqv_vt_back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Chọn nhạc theo tâm trạng"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+    <!-- DANH SÁCH TÂM TRẠNG -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="12dp">
+
+        <LinearLayout
+            android:id="@+id/layoutMood"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:dividerPadding="6dp">
+
+            <Button
+                android:id="@+id/btnBinhYen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bình yên" />
+
+            <LinearLayout
+                android:id="@+id/listBinhYen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:padding="8dp" />
+
+            <Button
+                android:id="@+id/btnBuon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Buồn" />
+
+            <LinearLayout
+                android:id="@+id/listBuon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:padding="8dp" />
+
+            <Button
+                android:id="@+id/btnVui"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Vui" />
+
+            <LinearLayout
+                android:id="@+id/listVui"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:padding="8dp" />
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</LinearLayout>

@@ -1,0 +1,19 @@
+Index: app/src/main/java/com/example/comicapp/LoginActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.comicapp;\r\n\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\npublic class LoginActivity extends AppCompatActivity {\r\n\r\n    EditText edtUsername, edtPassword;\r\n    Button btnSignIn;\r\n    TextView txtForgotPassword, txtRegister;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_login);\r\n\r\n        edtUsername = findViewById(R.id.edtUsername);\r\n        edtPassword = findViewById(R.id.edtPassword);\r\n        btnSignIn = findViewById(R.id.btnSignIn);\r\n        txtForgotPassword = findViewById(R.id.txtForgotPassword);\r\n        txtRegister = findViewById(R.id.txtRegister);\r\n\r\n        btnSignIn.setOnClickListener(v -> {\r\n            String username = edtUsername.getText().toString().trim();\r\n            String password = edtPassword.getText().toString().trim();\r\n\r\n            if (username.isEmpty() || password.isEmpty()) {\r\n                Toast.makeText(this, \"Vui lòng nhập đầy đủ thông tin!\", Toast.LENGTH_SHORT).show();\r\n                return;\r\n            }\r\n\r\n            if (username.equals(\"admin\") && password.equals(\"123\")) {\r\n                Toast.makeText(this, \"Đăng nhập thành công!\", Toast.LENGTH_SHORT).show();\r\n\r\n                // Chuyển sang trang chính (MainActivity)\r\n//                Intent intent = new Intent(LoginActivity.this, MainActivity.class);\r\n//                startActivity(intent);\r\n                finish();\r\n            } else {\r\n                Toast.makeText(this, \"Sai tài khoản hoặc mật khẩu!\", Toast.LENGTH_SHORT).show();\r\n            }\r\n        });\r\n\r\n        txtForgotPassword.setOnClickListener(v ->\r\n                Toast.makeText(this, \"Tính năng này đang được cập nhật!\", Toast.LENGTH_SHORT).show()\r\n        );\r\n\r\n        txtRegister.setOnClickListener(v -> {\r\n            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);\r\n            startActivity(intent);\r\n        });\r\n    }\r\n}\r\n
+===================================================================
+diff --git a/app/src/main/java/com/example/comicapp/LoginActivity.java b/app/src/main/java/com/example/comicapp/LoginActivity.java
+--- a/app/src/main/java/com/example/comicapp/LoginActivity.java	(revision 735bd12d5bf3f6c3d3d14153931569ce738ee74a)
++++ b/app/src/main/java/com/example/comicapp/LoginActivity.java	(date 1763567536242)
+@@ -40,8 +40,8 @@
+                 Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+ 
+                 // Chuyển sang trang chính (MainActivity)
+-//                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+-//                startActivity(intent);
++                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
++                startActivity(intent);
+                 finish();
+             } else {
+                 Toast.makeText(this, "Sai tài khoản hoặc mật khẩu!", Toast.LENGTH_SHORT).show();
