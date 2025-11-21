@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,14 +16,13 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.content.res.ColorStateList;          // ĐÃ CÓ RỒI – QUAN TRỌNG NHẤT
 
 import com.example.comicapp.R;
 import com.google.android.material.button.MaterialButton;
 
-public class DocTruyenActivity extends AppCompatActivity {
+public class ReadComicActivity extends AppCompatActivity {
 
     private MaterialButton btnReaction;
     private PopupWindow reactionPopup;
@@ -33,11 +31,11 @@ public class DocTruyenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doc_truyen);
+        setContentView(R.layout.activity_read_comic);
 
 
         findViewById(R.id.btnMusic).setOnClickListener(v -> {
-            Intent intent = new Intent(DocTruyenActivity.this, ChonNhacActivity.class);
+            Intent intent = new Intent(ReadComicActivity.this, SelectMusicActivity.class);
             startActivity(intent);
         });
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());

@@ -53,7 +53,7 @@ public class ComicDetailActivity extends AppCompatActivity {
 
         // NÚT "ĐỌC NGAY" → CHUYỂN SANG MÀN HÌNH ĐỌC TRUYỆN
         btnReadNow.setOnClickListener(v -> {
-            Intent intent = new Intent(ComicDetailActivity.this, DocTruyenActivity.class);
+            Intent intent = new Intent(ComicDetailActivity.this, ReadComicActivity.class);
             intent.putExtra("story", story); // Truyền cả object Story
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); // Hiệu ứng đẹp

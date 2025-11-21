@@ -40,13 +40,13 @@
             android:name=".ui.Activity.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.Activity.DocTruyenActivity"
+            android:name=".ui.Activity.ReadComicActivity"
             android:exported="false" />
         <activity
             android:name=".ui.Activity.TaskActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.Activity.ChonNhacActivity"
+            android:name=".ui.Activity.SelectMusicActivity"
             android:exported="false" />
         <activity
             android:name=".ui.Activity.FollowActivity"
