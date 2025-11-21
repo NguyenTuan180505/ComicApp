@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.comicapp.R;
 
-public class ChonNhacActivity extends AppCompatActivity {
+public class SelectMusicActivity extends AppCompatActivity {
 
     private String[] nhacBinhYen = {"Lofi Mưa", "Tháng Năm Bình Yên", "Chờ Anh Về", "Gió Nhẹ Thôi", "Miên Man"};
     private String[] nhacBuon = {"Một Mình", "Nhớ Em", "Trời Mưa Buồn", "Cơn Gió Lạnh", "Xa"};

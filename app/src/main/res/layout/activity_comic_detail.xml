@@ -26,7 +26,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/comic_banner" />
+                    android:src="@drawable/comic_banner1" />
 
                 <!-- Nút back -->
                 <ImageButton
@@ -135,15 +135,48 @@
             </LinearLayout>
 
             <!-- Danh sách chương -->
+            <!-- Thay toàn bộ phần cũ "Danh sách chương" bằng đoạn sau -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingHorizontal="16dp">
+                android:paddingHorizontal="16dp"
+                android:paddingTop="12dp">
 
-                <include layout="@layout/item_chapter" />
-                <include layout="@layout/item_chapter" />
-                <include layout="@layout/item_chapter" />
+                <!-- Tiêu đề + Xem tất cả -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Chapter"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:id="@+id/tvViewAllChapters"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Xem tất cả >"
+                        android:textColor="#7B68EE"
+                        android:textSize="14sp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackgroundBorderless" />
+                </LinearLayout>
+
+                <!-- 3 chương mới nhất -->
+                <include layout="@layout/item_chapter" android:id="@+id/chapter1" />
+                <include layout="@layout/item_chapter" android:id="@+id/chapter2" />
+                <include layout="@layout/item_chapter" android:id="@+id/chapter3" />
+
             </LinearLayout>
 
             <!-- BÌNH LUẬN -->
@@ -240,4 +273,5 @@
             android:text="Đọc Ngay"
             android:textColor="#FFFFFF" />
     </LinearLayout>
+
 </RelativeLayout>

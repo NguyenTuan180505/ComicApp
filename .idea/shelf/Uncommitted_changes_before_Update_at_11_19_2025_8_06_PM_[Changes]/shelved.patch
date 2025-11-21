@@ -1,0 +1,113 @@
+Index: app/src/main/java/com/example/comicapp/ui/Activity/HomeActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// src/main/java/com/example/comicapp/ui/home/HomeActivity.java\r\npackage com.example.comicapp.ui.Activity;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.widget.EditText;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.recyclerview.widget.LinearLayoutManager;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\nimport androidx.viewpager2.widget.ViewPager2;\r\n\r\nimport com.example.comicapp.R;\r\nimport com.example.comicapp.data.adapter.EmotionPagerAdapter;\r\nimport com.example.comicapp.data.adapter.StoryAdapter;\r\nimport com.example.comicapp.data.model.Story;\r\nimport com.example.comicapp.ui.Activity.TaskActivity;\r\nimport com.google.android.material.bottomnavigation.BottomNavigationView;\r\nimport com.google.android.material.tabs.TabLayout;\r\nimport com.google.android.material.tabs.TabLayoutMediator;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class HomeActivity extends BaseNavigationActivity {\r\n\r\n    RecyclerView rvHot, rvNew;\r\n    TabLayout tabEmotion;\r\n    ViewPager2 viewPagerEmotion;\r\n    EditText edtSearch;\r\n    BottomNavigationView bottomNav;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_home);\r\n\r\n        // Ánh xạ view\r\n        rvHot = findViewById(R.id.rvHotStories);\r\n        rvNew = findViewById(R.id.rvNewStories);\r\n        tabEmotion = findViewById(R.id.tabEmotion);\r\n        viewPagerEmotion = findViewById(R.id.viewPagerEmotion);\r\n        edtSearch = findViewById(R.id.edtSearch);\r\n        bottomNav = findViewById(R.id.bottomNav);\r\n\r\n        // Setup Hot Stories\r\n        rvHot.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));\r\n        rvHot.setAdapter(new StoryAdapter(getDummyStories()));\r\n\r\n        // Setup New Stories\r\n        rvNew.setLayoutManager(new LinearLayoutManager(this,RecyclerView.HORIZONTAL, false));\r\n        rvNew.setAdapter(new StoryAdapter(getDummyStories()));\r\n\r\n        // Setup ViewPager2 + TabLayout cho cảm xúc\r\n        EmotionPagerAdapter pagerAdapter = new EmotionPagerAdapter(this);\r\n        viewPagerEmotion.setAdapter(pagerAdapter);\r\n\r\n        new TabLayoutMediator(tabEmotion, viewPagerEmotion, (tab, position) ->\r\n                tab.setText(pagerAdapter.getEmotionTitle(position))\r\n        ).attach();\r\n\r\n        // Sự kiện chọn tab\r\n        tabEmotion.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {\r\n            @Override\r\n            public void onTabSelected(TabLayout.Tab tab) {\r\n                String emotion = pagerAdapter.getEmotionTitle(tab.getPosition());\r\n                // TODO: Gọi API load truyện theo cảm xúc\r\n            }\r\n            @Override public void onTabUnselected(TabLayout.Tab tab) {}\r\n            @Override public void onTabReselected(TabLayout.Tab tab) {}\r\n        });\r\n\r\n        // Bottom Navigation\r\n        setupBottomNavigation(R.id.nav_home);\r\n    }\r\n\r\n    @Override\r\n    protected void onResume() {\r\n        super.onResume();\r\n        bottomNav.setSelectedItemId(R.id.nav_home);\r\n    }\r\n\r\n    @Override\r\n    protected int getCurrentNavItemId() {\r\n        return 0;\r\n    }\r\n\r\n//    private void setupBottomNavigation() {\r\n//        bottomNav.setOnItemSelectedListener(item -> {\r\n//            int id = item.getItemId();\r\n//            if (id == R.id.nav_home) return true;\r\n//\r\n//            if (id == R.id.nav_tasks) {\r\n//                startActivity(new Intent(this, TaskActivity.class)\r\n//                        .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));\r\n//                overridePendingTransition(0, 0);\r\n//                return true;\r\n//            }\r\n//            if (id == R.id.nav_account) {\r\n//                startActivity(new Intent(this, AccountActivity.class)\r\n//                        .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));\r\n//                overridePendingTransition(0, 0);\r\n//                return true;\r\n//            }\r\n//            if (id == R.id.nav_fav) {\r\n//                startActivity(new Intent(this, FollowActivity.class)\r\n//                        .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));\r\n//                overridePendingTransition(0, 0);\r\n//                return true;\r\n//            }\r\n//            return false;\r\n//        });\r\n//    }\r\n\r\n    public List<Story> getDummyStories() {\r\n        List<Story> list = new ArrayList<>();\r\n        list.add(new Story(\"Thám tử lừng danh Conan\", \"Aoyama Gosho\", R.drawable.conan));\r\n        list.add(new Story(\"One Piece\", \"Eiichiro Oda\", R.drawable.onepiece));\r\n        list.add(new Story(\"Naruto\", \"Masashi Kishimoto\", R.drawable.naruto));\r\n        return list;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/comicapp/ui/Activity/HomeActivity.java b/app/src/main/java/com/example/comicapp/ui/Activity/HomeActivity.java
+--- a/app/src/main/java/com/example/comicapp/ui/Activity/HomeActivity.java	(revision ee28491207148e5718ba2cb58a7c88ce73453939)
++++ b/app/src/main/java/com/example/comicapp/ui/Activity/HomeActivity.java	(date 1763391586314)
+@@ -119,4 +119,57 @@
+         list.add(new Story("Naruto", "Masashi Kishimoto", R.drawable.naruto));
+         return list;
+     }
++
++    public static class FollowActivity extends AppCompatActivity {
++
++        private BottomNavigationView bottomNav;
++
++        @Override
++        protected void onCreate(Bundle savedInstanceState) {
++            super.onCreate(savedInstanceState);
++            setContentView(R.layout.activity_follow);
++
++            bottomNav = findViewById(R.id.bottomNav); // ID mới trong layout
++
++            setupBottomNavigation();
++        }
++
++        @Override
++        protected void onResume() {
++            super.onResume();
++            // Quan trọng: Đánh dấu tab "Yêu thích" đang được chọn khi quay lại màn này
++            bottomNav.setSelectedItemId(R.id.nav_fav);
++        }
++
++        private void setupBottomNavigation() {
++            bottomNav.setOnItemSelectedListener(item -> {
++                int id = item.getItemId();
++
++                if (id == R.id.nav_fav) {
++                    // Đã đang ở màn Yêu thích → không làm gì
++                    return true;
++                }
++                else if (id == R.id.nav_home) {
++                    startActivity(new Intent(FollowActivity.this, com.example.comicapp.ui.Activity.HomeActivity.class)
++                            .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
++                    overridePendingTransition(0, 0);
++                    return true;
++                }
++                else if (id == R.id.nav_tasks) {
++                    startActivity(new Intent(FollowActivity.this, com.example.comicapp.ui.Activity.TaskActivity.class)
++                            .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
++                    overridePendingTransition(0, 0);
++                    return true;
++                }
++                else if (id == R.id.nav_account) {
++                    startActivity(new Intent(FollowActivity.this, AccountActivity.class)
++                            .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
++                    overridePendingTransition(0, 0);
++                    return true;
++                }
++
++                return false;
++            });
++        }
++    }
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/comicapp/ui/Activity/BaseNavigationActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.comicapp.ui.Activity;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\n\r\nimport androidx.annotation.IdRes;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport com.example.comicapp.R;\r\nimport com.example.comicapp.ui.Activity.AccountActivity;\r\nimport com.example.comicapp.ui.Activity.FollowActivity;\r\nimport com.example.comicapp.ui.Activity.TaskActivity;\r\nimport com.google.android.material.bottomnavigation.BottomNavigationView;\r\n\r\npublic abstract class BaseNavigationActivity extends AppCompatActivity {\r\n\r\n    protected BottomNavigationView bottomNav;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n    }\r\n\r\n    protected void setupBottomNavigation(@IdRes int currentItemId) {\r\n        bottomNav = findViewById(R.id.bottomNav);\r\n        if (bottomNav == null) return;\r\n\r\n        // Đánh dấu tab hiện tại\r\n        bottomNav.setSelectedItemId(currentItemId);\r\n\r\n        bottomNav.setOnItemSelectedListener(item -> {\r\n            int id = item.getItemId();\r\n\r\n            if (id == currentItemId) return true;\r\n\r\n            Class<?> targetActivity = null;\r\n            if (id == R.id.nav_home) targetActivity = HomeActivity.class;\r\n            else if (id == R.id.nav_tasks) targetActivity = TaskActivity.class;\r\n            else if (id == R.id.nav_fav) targetActivity = FollowActivity.class;\r\n            else if (id == R.id.nav_account) targetActivity = AccountActivity.class;\r\n\r\n            if (targetActivity != null) {\r\n                Intent intent = new Intent(this, targetActivity);\r\n                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);\r\n                startActivity(intent);\r\n                overridePendingTransition(0, 0);\r\n                return true;\r\n            }\r\n            return false;\r\n        });\r\n    }\r\n\r\n    @Override\r\n    protected void onResume() {\r\n        super.onResume();\r\n        if (bottomNav != null) {\r\n            // Tự động đánh dấu lại tab hiện tại\r\n            bottomNav.setSelectedItemId(getCurrentNavItemId());\r\n        }\r\n    }\r\n\r\n    // Mỗi Activity con phải override để trả về ID tab của mình\r\n    protected abstract @IdRes int getCurrentNavItemId();\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/comicapp/ui/Activity/BaseNavigationActivity.java b/app/src/main/java/com/example/comicapp/ui/Activity/BaseNavigationActivity.java
+--- a/app/src/main/java/com/example/comicapp/ui/Activity/BaseNavigationActivity.java	(revision ee28491207148e5718ba2cb58a7c88ce73453939)
++++ b/app/src/main/java/com/example/comicapp/ui/Activity/BaseNavigationActivity.java	(date 1763391762367)
+@@ -8,7 +8,7 @@
+ 
+ import com.example.comicapp.R;
+ import com.example.comicapp.ui.Activity.AccountActivity;
+-import com.example.comicapp.ui.Activity.FollowActivity;
++import com.example.comicapp.ui.Activity.HomeActivity.FollowActivity;
+ import com.example.comicapp.ui.Activity.TaskActivity;
+ import com.google.android.material.bottomnavigation.BottomNavigationView;
+ 
+Index: .idea/deploymentTargetSelector.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"deploymentTargetSelector\">\r\n    <selectionStates>\r\n      <SelectionState runConfigName=\"app\">\r\n        <option name=\"selectionMode\" value=\"DROPDOWN\" />\r\n      </SelectionState>\r\n    </selectionStates>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/deploymentTargetSelector.xml b/.idea/deploymentTargetSelector.xml
+--- a/.idea/deploymentTargetSelector.xml	(revision ee28491207148e5718ba2cb58a7c88ce73453939)
++++ b/.idea/deploymentTargetSelector.xml	(date 1763557409400)
+@@ -4,6 +4,14 @@
+     <selectionStates>
+       <SelectionState runConfigName="app">
+         <option name="selectionMode" value="DROPDOWN" />
++        <DropdownSelection timestamp="2025-11-19T13:02:31.974185700Z">
++          <Target type="DEFAULT_BOOT">
++            <handle>
++              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\LOQ\.android\avd\Medium_Phone.avd" />
++            </handle>
++          </Target>
++        </DropdownSelection>
++        <DialogSelection />
+       </SelectionState>
+     </selectionStates>
+   </component>
