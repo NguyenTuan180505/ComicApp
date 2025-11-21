@@ -9,7 +9,7 @@ import com.example.comicapp.ui.Fragment.EmotionFragment;
 
 public class EmotionPagerAdapter extends FragmentStateAdapter {
 
-    private final String[] emotions = {"Vui", "Buồn", "Hồi hộp", "Lãng mạn"};
+    private final String[] emotions = {"Vui", "Buồn", "Tức Giận", "Bình Thường"};
 
     public EmotionPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);

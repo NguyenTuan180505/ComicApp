@@ -14,6 +14,7 @@ import com.example.comicapp.R;
 import com.example.comicapp.data.adapter.EmotionPagerAdapter;
 import com.example.comicapp.data.adapter.StoryAdapter;
 import com.example.comicapp.data.model.Story;
+import com.example.comicapp.ui.Fragment.EmotionBottomSheet;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -45,7 +46,26 @@ public class HomeActivity extends BaseNavigationActivity {
         setupStoryLists();
         setupEmotionTabs();
         setupBottomNavigation(R.id.nav_home);
+        EmotionBottomSheet sheet = new EmotionBottomSheet(emoji -> {
+            selectEmotionTab(emoji);
+        });
+
+        sheet.show(getSupportFragmentManager(), "EmotionSheet");
+
     }
+    private void selectEmotionTab(String emoji) {
+        int tabIndex = 0;
+
+        switch (emoji) {
+            case "😀": tabIndex = 0; break;  // Vui
+            case "😐": tabIndex = 3; break;  // Bình thường
+            case "😔": tabIndex = 1; break;  // Buồn
+            case "😡": tabIndex = 2; break;  // Tức giận
+        }
+
+        viewPagerEmotion.setCurrentItem(tabIndex, true);
+    }
+
 
     private void setupStoryLists() {
         List<Story> stories = getDummyStories();

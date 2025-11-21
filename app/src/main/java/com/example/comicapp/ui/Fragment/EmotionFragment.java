@@ -89,16 +89,14 @@ public class EmotionFragment extends Fragment {
                 stories.add(new Story("Anohana", "Choheiwa Busters", R.drawable.kaguya));
                 break;
 
-            case "hài hước":
-            case "hài":
-            case "funny":
+            case "Tức giận":
                 stories.add(new Story("Grand Blue", "Kenji Inoue", R.drawable.gintama));
                 stories.add(new Story("Saiki Kusuo", "Shuichi Aso", R.drawable.onepiece));
                 stories.add(new Story("Nichijou", "Keiichi Arawi", R.drawable.yourlie));
                 stories.add(new Story("Asobi Asobase", "Rin Suzukawa", R.drawable.clannad));
                 break;
 
-            case "hành động":
+            case "Bình thường":
             case "action":
                 stories.add(new Story("Attack on Titan", "Hajime Isayama", R.drawable.doraemon));
                 stories.add(new Story("Demon Slayer", "Koyoharu Gotouge", R.drawable.clannad));
