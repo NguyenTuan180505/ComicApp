@@ -51,6 +51,9 @@
         <activity
             android:name=".ui.Activity.FollowActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.Activity.ChapterListActivity"
+            android:exported="false" />
         <service android:name=".service.MusicService" android:exported="false"/>
 
     </application>
