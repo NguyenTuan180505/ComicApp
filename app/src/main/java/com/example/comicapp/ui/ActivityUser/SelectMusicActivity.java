@@ -1,4 +1,4 @@
-package com.example.comicapp.ui.Activity;
+package com.example.comicapp.ui.ActivityUser;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;

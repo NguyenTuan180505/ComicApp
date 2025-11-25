@@ -1,4 +1,4 @@
-package com.example.comicapp.ui.Activity;
+package com.example.comicapp.ui.ActivityUser;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;

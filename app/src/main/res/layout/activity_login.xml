@@ -3,11 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
+    android:gravity="center"
     android:background="#FFFFFF"
     android:padding="24dp">
 
-    <!-- Tiêu đề -->
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
@@ -17,21 +16,17 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginBottom="30dp"
-        android:layout_gravity="center" />
+        android:layout_gravity="center_horizontal" /> <EditText
+    android:id="@+id/edtUsername"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:hint="Username , Email  Phone Number"
+    android:background="@drawable/edittext_bg"
+    android:padding="14dp"
+    android:textColor="#000000"
+    android:textColorHint="#999999"
+    android:layout_marginBottom="15dp" />
 
-    <!-- Ô nhập Username -->
-    <EditText
-        android:id="@+id/edtUsername"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="Username , Email  Phone Number"
-        android:background="@drawable/edittext_bg"
-        android:padding="14dp"
-        android:textColor="#000000"
-        android:textColorHint="#999999"
-        android:layout_marginBottom="15dp" />
-
-    <!-- Ô nhập Password -->
     <EditText
         android:id="@+id/edtPassword"
         android:layout_width="match_parent"
@@ -44,7 +39,6 @@
         android:textColorHint="#999999"
         android:layout_marginBottom="10dp" />
 
-    <!-- Forgot Password -->
     <TextView
         android:id="@+id/txtForgotPassword"
         android:layout_width="wrap_content"
@@ -55,7 +49,6 @@
         android:layout_gravity="end"
         android:layout_marginBottom="25dp" />
 
-    <!-- Nút Sign in -->
     <Button
         android:id="@+id/btnSignIn"
         android:layout_width="match_parent"
@@ -67,7 +60,6 @@
         android:background="@drawable/btn_signin_bg"
         android:layout_marginBottom="35dp" />
 
-    <!-- "No account?" + Register -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

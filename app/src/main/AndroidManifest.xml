@@ -15,8 +15,9 @@
 
         <!-- Màn hình chính: Truyện đang theo dõi -->
         <activity
-            android:name=".ui.Activity.WelcomeActivity"
-            android:exported="true">
+            android:name=".ui.ActivityUser.WelcomeActivity"
+            android:exported="true"
+            android:clearTaskOnLaunch="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -25,31 +26,44 @@
 
         <!-- Màn hình thông tin tài khoản -->
         <activity
-            android:name=".ui.Activity.AccountActivity"
+            android:name=".ui.ActivityUser.AccountActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.Activity.RegisterActivity"
+            android:name=".ui.ActivityUser.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.Activity.ComicDetailActivity"
+            android:name=".ui.ActivityUser.ComicDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.Activity.LoginActivity"
+            android:name=".ui.ActivityUser.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.Activity.HomeActivity"
+            android:name=".ui.ActivityUser.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.Activity.ReadComicActivity"
+            android:name=".ui.ActivityUser.ReadComicActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.Activity.TaskActivity"
+            android:name=".ui.ActivityUser.TaskActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.Activity.SelectMusicActivity"
+            android:name=".ui.ActivityUser.SelectMusicActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.Activity.FollowActivity"
+            android:name=".ui.ActivityUser.FollowActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.ActivityAdmin.ManageComicsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ActivityAdmin.ComicDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ActivityAdmin.AddComicActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ActivityAdmin.ComicDetailAdActivity"
             android:exported="false" />
         <service android:name=".service.MusicService" android:exported="false"/>
 
