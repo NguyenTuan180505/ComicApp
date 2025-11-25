@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="140dp"
+    android:layout_height="190dp"
+    android:orientation="vertical"
+    android:layout_margin="8dp"
+    android:background="#FFFFFF"
+    android:elevation="6dp">
+
+    <ImageView
+        android:id="@+id/imgSongCover"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_sontung"/>
+
+    <TextView
+        android:id="@+id/tvSongTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lofi Mưa"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:padding="8dp"
+        android:maxLines="2"
+        android:ellipsize="end"/>
+</LinearLayout>
