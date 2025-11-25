@@ -1,4 +1,4 @@
-package com.example.comicapp.ui.Admin;
+package com.example.comicapp.data.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,9 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.comicapp.ui.Admin.Comic;
-import com.example.comicapp.ui.Admin.ComicDetailAdActivity;
+import com.example.comicapp.data.model.Comic;
 import com.example.comicapp.R;
+import com.example.comicapp.ui.ActivityAdmin.ComicDetailAdActivity;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.comicapp.ui.Admin;
+package com.example.comicapp.ui.ActivityAdmin;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,14 +13,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.comicapp.ui.Admin.AddComicActivity;
-import com.example.comicapp.ui.Activity.HomeActivity;
-import com.example.comicapp.ui.Admin.Comic;
-import com.example.comicapp.ui.Admin.ComicAdapter;
+import com.example.comicapp.data.adapter.ComicAdapter;
+import com.example.comicapp.ui.ActivityUser.HomeActivity;
+import com.example.comicapp.data.model.Comic;
 import com.example.comicapp.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.button.MaterialButton;
-import com.example.comicapp.ui.Activity.LoginActivity;
+import com.example.comicapp.ui.ActivityUser.LoginActivity;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.comicapp.ui.Admin;
+package com.example.comicapp.ui.ActivityAdmin;
 
 import android.os.Bundle;
 import android.widget.ImageView;

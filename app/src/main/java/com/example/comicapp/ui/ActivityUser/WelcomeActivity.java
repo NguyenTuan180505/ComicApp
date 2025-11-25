@@ -1,13 +1,10 @@
-package com.example.comicapp.ui.Activity;
+package com.example.comicapp.ui.ActivityUser;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +12,6 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.comicapp.R;
 import com.example.comicapp.ui.Fragment.BannerFragment;
-import com.example.comicapp.ui.Admin.ManageComicsActivity;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 public class WelcomeActivity extends AppCompatActivity {

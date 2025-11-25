@@ -1,4 +1,4 @@
-package com.example.comicapp.ui.Admin;
+package com.example.comicapp.ui.ActivityAdmin;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

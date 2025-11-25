@@ -1,4 +1,4 @@
-package com.example.comicapp.ui.Activity;
+package com.example.comicapp.ui.ActivityUser;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,9 +7,6 @@ import androidx.annotation.IdRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.comicapp.R;
-import com.example.comicapp.ui.Activity.AccountActivity;
-import com.example.comicapp.ui.Activity.FollowActivity;
-import com.example.comicapp.ui.Activity.TaskActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public abstract class BaseNavigationActivity extends AppCompatActivity {

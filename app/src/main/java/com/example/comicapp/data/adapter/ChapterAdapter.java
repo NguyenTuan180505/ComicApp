@@ -1,4 +1,4 @@
-package com.example.comicapp.ui.Admin;
+package com.example.comicapp.data.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

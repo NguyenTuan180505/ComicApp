@@ -1,5 +1,5 @@
 // AccountActivity.java
-package com.example.comicapp.ui.Activity;
+package com.example.comicapp.ui.ActivityUser;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +7,6 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import com.example.comicapp.R;
-import com.example.comicapp.ui.Activity.BaseNavigationActivity;
 
 public class AccountActivity extends BaseNavigationActivity {
 

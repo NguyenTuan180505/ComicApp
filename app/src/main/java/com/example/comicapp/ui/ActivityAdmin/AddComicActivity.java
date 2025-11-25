@@ -1,4 +1,4 @@
-package com.example.comicapp.ui.Admin;
+package com.example.comicapp.ui.ActivityAdmin;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.comicapp.ui.Admin.Comic;
+import com.example.comicapp.data.model.Comic;
 import com.example.comicapp.R;
 
 public class AddComicActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.example.comicapp.ui.Activity;
+package com.example.comicapp.ui.ActivityUser;
 
 
 import android.content.Intent;
@@ -11,7 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.comicapp.R;
-import com.example.comicapp.ui.Admin.ManageComicsActivity;
+import com.example.comicapp.ui.ActivityAdmin.ManageComicsActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
