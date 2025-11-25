@@ -31,11 +31,10 @@ public class SelectMusicActivity extends AppCompatActivity {
 
     private Map<String, Integer> songResourceMap = new HashMap<>();
     private LinearLayout miniPlayer;
-    private TextView tvCurrentSong;
+    private TextView tvCurrentSong, tvCurrentArtist;
     private ImageButton btnPlayPause;
-    private ImageView imgMiniCover; // THÊM ẢNH MINI PLAYER
+    private ImageView imgMiniCover;
 
-    // TẤT CẢ BÀI HÁT + ẢNH
     private final SongData[] binhyenSongs = {
             new SongData("Lofi Mưa", "Various Artists", R.drawable.img_trucnhan),
             new SongData("Tháng Năm Bình Yên", "Bích Phương", R.drawable.img_tuanhung),
@@ -70,27 +69,23 @@ public class SelectMusicActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chon_nhac);
 
-        // Find views
         miniPlayer = findViewById(R.id.miniPlayer);
         tvCurrentSong = findViewById(R.id.tvCurrentSong);
+        tvCurrentArtist = findViewById(R.id.tvCurrentArtist);
         btnPlayPause = findViewById(R.id.btnPlayPause);
-        imgMiniCover = findViewById(R.id.imgMiniCover); // THÊM DÒNG NÀY
+        imgMiniCover = findViewById(R.id.imgMiniCover);
         findViewById(R.id.btnBack).setOnClickListener(v -> onBackPressed());
 
         initSongMap();
         setupSuggestedSongs();
-
-        // 2 cột đẹp như hình bạn chụp
         setupMoodWithGrid(R.id.btnBinhYen, R.id.listBinhYen, binhyenSongs);
         setupMoodWithGrid(R.id.btnBuon, R.id.listBuon, buonSongs);
         setupMoodWithGrid(R.id.btnVui, R.id.listVui, vuiSongs);
 
-        // NÚT PLAY/PAUSE TRONG MINI PLAYER
         btnPlayPause.setOnClickListener(v -> {
             Intent intent = new Intent(this, MusicService.class);
-            intent.setAction("TOGGLE_PLAY_PAUSE"); // Gửi action để service biết
+            intent.setAction("TOGGLE_PLAY_PAUSE");
             startService(intent);
-
             new Handler().postDelayed(() -> {
                 isSongPlaying = MusicService.mediaPlayer != null && MusicService.mediaPlayer.isPlaying();
                 btnPlayPause.setImageResource(isSongPlaying ? R.drawable.ic_pause : R.drawable.ic_play);
@@ -103,7 +98,6 @@ public class SelectMusicActivity extends AppCompatActivity {
         songResourceMap.put("Vì Người Không Xứng Đáng", R.raw.mc_vinguoikhongxungdang);
         songResourceMap.put("Lạc Trôi", R.raw.mc_lactroi);
         songResourceMap.put("Không Ai", R.raw.mc_damcuoichuot);
-
         songResourceMap.put("Lofi Mưa", R.raw.mc_lofimua);
         songResourceMap.put("Tháng Năm Bình Yên", R.raw.mc_thangnambinhyen);
         songResourceMap.put("Chờ Anh Về", R.raw.mc_choanhve);
@@ -124,26 +118,22 @@ public class SelectMusicActivity extends AppCompatActivity {
     private void setupSuggestedSongs() {
         RecyclerView rv = findViewById(R.id.rvSuggested);
         rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
         SongData[] goiY = {
                 new SongData("Lạc Trôi", "Sơn Tùng M-TP", R.drawable.img_sontung),
                 new SongData("Thất Tình", "Trịnh Đình Quang", R.drawable.img_trinhdinhquang),
-                new SongData("Lofi Mưa", "Various", R.drawable.img_trucnhan),
+                new SongData("Lofi Mưa", "Various Artists", R.drawable.img_trucnhan),
                 new SongData("Cười", "Hồ Quang Hiếu", R.drawable.img_tuanhung),
                 new SongData("Không Ai", "Orange", R.drawable.img_sontung)
         };
-
         rv.setAdapter(new SuggestedAdapter(goiY));
     }
 
     private void setupMoodWithGrid(int btnId, int containerId, SongData[] songs) {
         Button btn = findViewById(btnId);
         LinearLayout container = findViewById(containerId);
-
         btn.setOnClickListener(v -> {
             if (container.getVisibility() == View.GONE) {
                 container.removeAllViews();
-
                 RecyclerView rv = new RecyclerView(this);
                 rv.setLayoutParams(new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
@@ -152,7 +142,6 @@ public class SelectMusicActivity extends AppCompatActivity {
                 rv.setClipToPadding(false);
                 rv.setLayoutManager(new GridLayoutManager(this, 2));
                 rv.setAdapter(new MoodGridAdapter(songs));
-
                 container.addView(rv);
                 container.setVisibility(View.VISIBLE);
             } else {
@@ -161,7 +150,6 @@ public class SelectMusicActivity extends AppCompatActivity {
         });
     }
 
-    // HÀM CHÍNH – KHI BẤM VÀO BÀI HÁT
     private void playSong(String title) {
         Integer resId = songResourceMap.get(title);
         if (resId == null) return;
@@ -173,23 +161,19 @@ public class SelectMusicActivity extends AppCompatActivity {
         currentSongName = title;
         isSongPlaying = true;
 
-        // Cập nhật tên bài hát
+        String artist = "Unknown";
+        int coverRes = R.drawable.img_sontung;
+        for (SongData s : binhyenSongs) if (s.title.equals(title)) { artist = s.artist; coverRes = s.coverRes; break; }
+        for (SongData s : buonSongs)     if (s.title.equals(title)) { artist = s.artist; coverRes = s.coverRes; break; }
+        for (SongData s : vuiSongs)      if (s.title.equals(title)) { artist = s.artist; coverRes = s.coverRes; break; }
+
         tvCurrentSong.setText(title);
-
-        // TÌM ẢNH ĐÚNG CỦA BÀI HÁT ĐÓ
-        int coverRes = R.drawable.img_sontung; // mặc định
-        for (SongData s : binhyenSongs) if (s.title.equals(title)) { coverRes = s.coverRes; break; }
-        for (SongData s : buonSongs)     if (s.title.equals(title)) { coverRes = s.coverRes; break; }
-        for (SongData s : vuiSongs)      if (s.title.equals(title)) { coverRes = s.coverRes; break; }
-
+        tvCurrentArtist.setText(artist);
         imgMiniCover.setImageResource(coverRes);
-
-        // Hiện mini player + đổi nút thành pause
         miniPlayer.setVisibility(View.VISIBLE);
         btnPlayPause.setImageResource(R.drawable.ic_pause);
     }
 
-    // Adapter gợi ý ngang
     class SuggestedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private final SongData[] data;
         SuggestedAdapter(SongData[] d) { this.data = d; }
@@ -201,12 +185,12 @@ public class SelectMusicActivity extends AppCompatActivity {
             SongData s = data[pos];
             ((ImageView) h.itemView.findViewById(R.id.imgSongCover)).setImageResource(s.coverRes);
             ((TextView) h.itemView.findViewById(R.id.tvSongTitle)).setText(s.title);
+            ((TextView) h.itemView.findViewById(R.id.tvSongArtist)).setText(s.artist);
             h.itemView.setOnClickListener(v -> playSong(s.title));
         }
         @Override public int getItemCount() { return data.length; }
     }
 
-    // Adapter mood 2 cột
     class MoodGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private final SongData[] data;
         MoodGridAdapter(SongData[] d) { this.data = d; }
@@ -218,6 +202,7 @@ public class SelectMusicActivity extends AppCompatActivity {
             SongData s = data[pos];
             ((ImageView) h.itemView.findViewById(R.id.imgSongCover)).setImageResource(s.coverRes);
             ((TextView) h.itemView.findViewById(R.id.tvSongTitle)).setText(s.title);
+            ((TextView) h.itemView.findViewById(R.id.tvSongArtist)).setText(s.artist);
             h.itemView.setOnClickListener(v -> playSong(s.title));
         }
         @Override public int getItemCount() { return data.length; }
@@ -226,23 +211,29 @@ public class SelectMusicActivity extends AppCompatActivity {
     static class SongData {
         String title, artist;
         int coverRes;
-        SongData(String t, String a, int c) {
-            title = t; artist = a; coverRes = c;
-        }
+        SongData(String t, String a, int c) { title = t; artist = a; coverRes = c; }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if (!currentSongName.isEmpty()) {
+            String artist = getArtistFromTitle(currentSongName);
             tvCurrentSong.setText(currentSongName);
+            tvCurrentArtist.setText(artist);
             imgMiniCover.setImageResource(getCoverFromTitle(currentSongName));
             btnPlayPause.setImageResource(isSongPlaying ? R.drawable.ic_pause : R.drawable.ic_play);
             miniPlayer.setVisibility(View.VISIBLE);
         }
     }
 
-    // Helper tìm ảnh theo tên bài
+    private String getArtistFromTitle(String title) {
+        for (SongData s : binhyenSongs) if (s.title.equals(title)) return s.artist;
+        for (SongData s : buonSongs)     if (s.title.equals(title)) return s.artist;
+        for (SongData s : vuiSongs)      if (s.title.equals(title)) return s.artist;
+        return "Unknown";
+    }
+
     private int getCoverFromTitle(String title) {
         for (SongData s : binhyenSongs) if (s.title.equals(title)) return s.coverRes;
         for (SongData s : buonSongs)     if (s.title.equals(title)) return s.coverRes;
