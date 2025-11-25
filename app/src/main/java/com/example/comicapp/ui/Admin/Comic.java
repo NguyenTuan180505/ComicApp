@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.ui.Admin;
 
 import java.io.Serializable;
 

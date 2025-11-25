@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.ui.Admin;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.comicapp.ui.Admin.AddComicActivity;
+import com.example.comicapp.ui.Activity.HomeActivity;
+import com.example.comicapp.ui.Admin.Comic;
+import com.example.comicapp.ui.Admin.ComicAdapter;
+import com.example.comicapp.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.button.MaterialButton;
+import com.example.comicapp.ui.Activity.LoginActivity;
 
 import java.util.ArrayList;
 
@@ -21,6 +28,7 @@ public class ManageComicsActivity extends AppCompatActivity implements ComicAdap
 
     private RecyclerView recyclerComics;
     private FloatingActionButton fabAdd;
+    private MaterialButton btnLogoutAdmin;
     private ComicAdapter comicAdapter;
     private ArrayList<Comic> comicList = new ArrayList<>();
 
@@ -30,6 +38,13 @@ public class ManageComicsActivity extends AppCompatActivity implements ComicAdap
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_comics);
+
+        String role = getSharedPreferences("auth", MODE_PRIVATE).getString("role", "");
+        if (!"admin".equals(role)) {
+            startActivity(new Intent(this, HomeActivity.class));
+            finish();
+            return;
+        }
 
         // Initialize ActivityResultLauncher
         addComicLauncher = registerForActivityResult(
@@ -52,9 +67,9 @@ public class ManageComicsActivity extends AppCompatActivity implements ComicAdap
 
         recyclerComics = findViewById(R.id.recyclerComics);
         fabAdd = findViewById(R.id.fabAdd);
+        btnLogoutAdmin = findViewById(R.id.btnLogoutAdmin);
 
-        // **SỬA LỖI 1: SỬ DỤNG GridLayoutManager VỚI spanCount = 3**
-        // Điều này phù hợp với cài đặt app:spanCount="3" trong XML của bạn.
+        // Sử dụng GridLayoutManager với spanCount = 3 để khớp XML
         recyclerComics.setLayoutManager(new GridLayoutManager(this, 3));
         comicAdapter = new ComicAdapter(this, comicList);
         recyclerComics.setAdapter(comicAdapter);
@@ -81,6 +96,18 @@ public class ManageComicsActivity extends AppCompatActivity implements ComicAdap
                 Intent intent = new Intent(ManageComicsActivity.this, AddComicActivity.class);
                 addComicLauncher.launch(intent);
             }
+        });
+
+        btnLogoutAdmin.setOnClickListener(v -> {
+            getSharedPreferences("auth", MODE_PRIVATE)
+                    .edit()
+                    .putBoolean("logged_in", false)
+                    .remove("role")
+                    .apply();
+            Intent intent = new Intent(ManageComicsActivity.this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finishAffinity();
         });
 
     } // Kết thúc onCreate

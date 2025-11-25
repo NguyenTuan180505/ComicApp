@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.comicapp.R;
+import com.example.comicapp.ui.Admin.ManageComicsActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -40,8 +41,21 @@ public class LoginActivity extends AppCompatActivity {
 
             if (username.equals("admin") && password.equals("123")) {
                 Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-
-                // Chuyển sang trang chính (MainActivity)
+                getSharedPreferences("auth", MODE_PRIVATE)
+                        .edit()
+                        .putBoolean("logged_in", true)
+                        .putString("role", "admin")
+                        .apply();
+                Intent intent = new Intent(LoginActivity.this, ManageComicsActivity.class);
+                startActivity(intent);
+                finish();
+            } else if (username.equals("user") && password.equals("123")) {
+                Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+                getSharedPreferences("auth", MODE_PRIVATE)
+                        .edit()
+                        .putBoolean("logged_in", true)
+                        .putString("role", "user")
+                        .apply();
                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(intent);
                 finish();

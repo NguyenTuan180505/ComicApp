@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.ui.Admin;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,6 +12,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.comicapp.ui.Admin.Comic;
+import com.example.comicapp.R;
 
 public class AddComicActivity extends AppCompatActivity {
 

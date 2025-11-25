@@ -1,65 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
     xmlns:tools="http://schemas.android.com/tools"
-
     android:layout_width="match_parent"
-
     android:layout_height="match_parent"
-
+    android:fitsSystemWindows="true"
     tools:context=".ManageComicsActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="Quản lý truyện"
+            app:titleTextColor="@android:color/black">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogoutAdmin"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="8dp"
+                android:text="Đăng xuất"
+                android:textColor="@color/design_default_color_primary"
+                android:textAllCaps="false" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-
         android:id="@+id/recyclerComics"
-
         android:layout_width="match_parent"
-
         android:layout_height="match_parent"
-
         android:clipToPadding="false"
-
         android:paddingStart="8dp"
-
         android:paddingTop="12dp"
-
         android:paddingEnd="8dp"
-
         android:paddingBottom="12dp"
-
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-
-        app:spanCount="5"
-
+        app:spanCount="3"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/item_comic" />
 
-
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-
         android:id="@+id/fabAdd"
-
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
-
-        android:contentDescription="Add"
-
+        android:contentDescription="Add New Comic"
+        android:layout_margin="16dp"
         app:srcCompat="@android:drawable/ic_input_add"
-
         app:tint="@android:color/white"
-
-        app:layout_anchorGravity="bottom|end"
-
-        android:layout_margin="24dp"
-
-        app:layout_anchor="@id/recyclerComics" />
-
-
+        app:layout_anchor="@id/recyclerComics"
+        app:layout_anchorGravity="bottom|end" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.ui.Admin;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.comicapp.R;
 
 import java.util.List;
 
@@ -41,11 +43,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) listener.onChapterClick(chapter);
         });
-        if (holder.tvChapterContentHint != null) {
-            holder.tvChapterContentHint.setOnClickListener(v -> {
-                if (listener != null) listener.onChapterClick(chapter);
-            });
-        }
+        
     }
 
     @Override
@@ -55,12 +53,11 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
 
     static class ChapterViewHolder extends RecyclerView.ViewHolder {
         TextView tvChapterTitle;
-        TextView tvChapterContentHint;
+        
 
         ChapterViewHolder(@NonNull View itemView) {
             super(itemView);
             tvChapterTitle = itemView.findViewById(R.id.tvChapterTitle);
-            tvChapterContentHint = itemView.findViewById(R.id.tvChapterContentHint);
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.ui.Admin;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.comicapp.ui.Admin.Comic;
+import com.example.comicapp.ui.Admin.ComicDetailAdActivity;
+import com.example.comicapp.R;
 
 import java.util.ArrayList;
 
@@ -50,7 +54,7 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
         holder.ivThumbnail.setImageResource(imageId);
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, ComicDetailActivity.class);
+            Intent intent = new Intent(context, ComicDetailAdActivity.class);
             intent.putExtra("title", comic.getTitle());
             intent.putExtra("chapters", comic.getChapters());
             intent.putExtra("thumbnail", comic.getThumbnail());

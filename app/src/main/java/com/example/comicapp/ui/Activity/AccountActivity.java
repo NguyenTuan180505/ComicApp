@@ -1,6 +1,7 @@
 // AccountActivity.java
 package com.example.comicapp.ui.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -24,6 +25,19 @@ public class AccountActivity extends BaseNavigationActivity {
         // Nút quay lại
         ImageButton btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> finish());
+
+        // Đăng xuất
+        findViewById(R.id.btnLogout).setOnClickListener(v -> {
+            getSharedPreferences("auth", MODE_PRIVATE)
+                    .edit()
+                    .putBoolean("logged_in", false)
+                    .remove("role")
+                    .apply();
+            Intent intent = new Intent(AccountActivity.this, WelcomeActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finishAffinity();
+        });
 
         // Bottom Nav
         setupBottomNavigation(R.id.nav_account);

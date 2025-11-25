@@ -15,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.comicapp.R;
 import com.example.comicapp.ui.Fragment.BannerFragment;
+import com.example.comicapp.ui.Admin.ManageComicsActivity;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 public class WelcomeActivity extends AppCompatActivity {
@@ -48,6 +49,8 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        
 
         bannerPager = findViewById(R.id.bannerPager);
         dotsIndicator = findViewById(R.id.dotsIndicator);

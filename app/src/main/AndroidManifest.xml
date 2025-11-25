@@ -16,7 +16,8 @@
         <!-- Màn hình chính: Truyện đang theo dõi -->
         <activity
             android:name=".ui.Activity.WelcomeActivity"
-            android:exported="true">
+            android:exported="true"
+            android:clearTaskOnLaunch="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -50,6 +51,19 @@
             android:exported="false" />
         <activity
             android:name=".ui.Activity.FollowActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.Admin.ManageComicsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Admin.ComicDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Admin.AddComicActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Admin.ComicDetailAdActivity"
             android:exported="false" />
 
     </application>

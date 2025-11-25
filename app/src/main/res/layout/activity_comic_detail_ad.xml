@@ -6,12 +6,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnBackToManage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:text="Quay lại"
+        android:textAllCaps="false" />
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        app:cardUseCompatPadding="true"
-        app:cardCornerRadius="12dp">
+        app:cardCornerRadius="12dp"
+        app:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,8 +44,8 @@
                     android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
                     android:textSize="16sp"
+                    android:textStyle="bold"
                     tools:text="Truyện: ABC" />
 
                 <TextView
