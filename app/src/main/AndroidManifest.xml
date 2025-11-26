@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,7 +15,7 @@
         android:theme="@style/Theme.ComicApp"
         tools:targetApi="31">
 
-        <!-- Màn hình chính: Truyện đang theo dõi -->
+        <!-- Màn hình khởi động (Launcher) -->
         <activity
             android:name=".ui.Activity.WelcomeActivity"
             android:exported="true">
@@ -23,33 +25,58 @@
             </intent-filter>
         </activity>
 
-        <!-- Màn hình thông tin tài khoản -->
+        <!-- Màn hình chính (Home) -->
         <activity
-            android:name=".ui.Activity.AccountActivity"
+            android:name=".ui.Activity.HomeActivity"
             android:exported="false" />
-        <activity
-            android:name=".ui.Activity.RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.Activity.ComicDetailActivity"
-            android:exported="false" />
+
+        <!-- Đăng nhập / Đăng ký -->
         <activity
             android:name=".ui.Activity.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.Activity.HomeActivity"
+            android:name=".ui.Activity.RegisterActivity"
             android:exported="false" />
+
+        <!-- Tài khoản cá nhân -->
+        <activity
+            android:name=".ui.Activity.AccountActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.Activity.HomeActivity" />
+
+        <!-- CẬP NHẬT THÔNG TIN CÁ NHÂN (MỚI THÊM) -->
+        <activity
+            android:name=".ui.Activity.UserActivity"
+            android:exported="false"
+            android:label="Thông tin tài khoản"
+            android:parentActivityName=".ui.Activity.AccountActivity"
+            android:theme="@style/Theme.ComicApp" />
+
+        <!-- Chi tiết truyện -->
+        <activity
+            android:name=".ui.Activity.ComicDetailActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.Activity.HomeActivity" />
+
+        <!-- Đọc truyện -->
         <activity
             android:name=".ui.Activity.ReadComicActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ui.Activity.ComicDetailActivity" />
+
+        <!-- Nhiệm vụ -->
         <activity
             android:name=".ui.Activity.TaskActivity"
             android:exported="false" />
-        <activity
-            android:name=".ui.Activity.SelectMusicActivity"
-            android:exported="false" />
+
+        <!-- Danh sách theo dõi -->
         <activity
             android:name=".ui.Activity.FollowActivity"
+            android:exported="false" />
+
+        <!-- Chọn nhạc (nếu có) -->
+        <activity
+            android:name=".ui.Activity.SelectMusicActivity"
             android:exported="false" />
 
     </application>

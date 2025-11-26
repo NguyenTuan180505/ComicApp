@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#F7F7F7">
 
-    <!-- ScrollView chiếm toàn bộ không gian trừ BottomNav -->
+    <!-- ScrollView chiếm toàn bộ trừ BottomNav -->
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
@@ -20,7 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="24dp">
+            android:paddingBottom="32dp">
 
             <!-- Avatar + Tên + Edit -->
             <de.hdodenhof.circleimageview.CircleImageView
@@ -39,7 +39,7 @@
                 android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="User"
+                android:text="Name"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="#000000"
@@ -73,6 +73,8 @@
                 app:layout_constraintEnd_toEndOf="parent">
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="Level 1"
                     android:textSize="14sp"
                     android:textColor="#888888" />
@@ -89,6 +91,8 @@
                     android:progressDrawable="@drawable/progress_level" />
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="700/1000"
                     android:textSize="14sp"
                     android:textColor="#888888" />
@@ -129,12 +133,16 @@
                         android:layout_marginStart="12dp">
 
                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="Mở thẻ VIP"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             android:textColor="#D32F2F" />
 
                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="Thoả sức đam mê"
                             android:textSize="13sp"
                             android:textColor="#666666" />
@@ -166,97 +174,200 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
-                <!-- Re-use một layout cho tất cả item để gọn code -->
-                <!-- Item 1 -->
-                <LinearLayout android:layout_width="match_parent" android:layout_height="56dp"
-                    android:orientation="horizontal" android:gravity="center_vertical"
+                <!-- 1. Danh sách theo dõi -->
+                <LinearLayout
+                    android:id="@+id/item_follow_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
                     android:background="@drawable/bg_menu_item"
-                    android:clickable="true" android:focusable="true"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:foreground="?attr/selectableItemBackground">
-                    <ImageView android:layout_width="24dp" android:layout_height="24dp"
-                        android:src="@drawable/ic_list" app:tint="#666666" android:layout_marginStart="16dp"/>
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:text="Danh sách theo dõi"
-                        android:textSize="15sp" android:textColor="#000000" android:layout_marginStart="20dp"/>
-                    <ImageView android:layout_width="24dp" android:layout_height="24dp"
-                        android:src="@drawable/ic_chevron_right" app:tint="#BBBBBB" android:layout_marginEnd="16dp"/>
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_list"
+                        app:tint="#666666"
+                        android:layout_marginStart="16dp" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Danh sách theo dõi"
+                        android:textSize="15sp"
+                        android:textColor="#000000"
+                        android:layout_marginStart="20dp" />
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="#BBBBBB"
+                        android:layout_marginEnd="16dp" />
                 </LinearLayout>
 
-                <!-- Item 2 -->
-                <LinearLayout android:layout_width="match_parent" android:layout_height="56dp"
-                    android:orientation="horizontal" android:gravity="center_vertical"
+                <!-- 2. Nạp xu -->
+                <LinearLayout
+                    android:id="@+id/item_nap_xu"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
                     android:background="@drawable/bg_menu_item"
-                    android:clickable="true" android:focusable="true"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:foreground="?attr/selectableItemBackground">
-                    <ImageView android:layout_width="24dp" android:layout_height="24dp"
-                        android:src="@drawable/ic_coin" app:tint="#666666" android:layout_marginStart="16dp"/>
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:text="Nạp xu"
-                        android:textSize="15sp" android:textColor="#000000" android:layout_marginStart="20dp"/>
-                    <ImageView android:layout_width="24dp" android:layout_height="24dp"
-                        android:src="@drawable/ic_chevron_right" app:tint="#BBBBBB" android:layout_marginEnd="16dp"/>
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_coin"
+                        app:tint="#666666"
+                        android:layout_marginStart="16dp" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Nạp xu"
+                        android:textSize="15sp"
+                        android:textColor="#000000"
+                        android:layout_marginStart="20dp" />
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="#BBBBBB"
+                        android:layout_marginEnd="16dp" />
                 </LinearLayout>
 
-                <!-- Item 3 -->
-                <LinearLayout android:layout_width="match_parent" android:layout_height="56dp"
-                    android:orientation="horizontal" android:gravity="center_vertical"
+                <!-- 3. Lịch sử giao dịch -->
+                <LinearLayout
+                    android:id="@+id/item_lich_su"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
                     android:background="@drawable/bg_menu_item"
-                    android:clickable="true" android:focusable="true"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:foreground="?attr/selectableItemBackground">
-                    <ImageView android:layout_width="24dp" android:layout_height="24dp"
-                        android:src="@drawable/ic_history" app:tint="#666666" android:layout_marginStart="16dp"/>
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:text="Lịch sử giao dịch"
-                        android:textSize="15sp" android:textColor="#000000" android:layout_marginStart="20dp"/>
-                    <ImageView android:layout_width="24dp" android:layout_height="24dp"
-                        android:src="@drawable/ic_chevron_right" app:tint="#BBBBBB" android:layout_marginEnd="16dp"/>
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_history"
+                        app:tint="#666666"
+                        android:layout_marginStart="16dp" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Lịch sử giao dịch"
+                        android:textSize="15sp"
+                        android:textColor="#000000"
+                        android:layout_marginStart="20dp" />
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="#BBBBBB"
+                        android:layout_marginEnd="16dp" />
                 </LinearLayout>
 
-                <!-- Item 4 -->
-                <LinearLayout android:layout_width="match_parent" android:layout_height="56dp"
-                    android:orientation="horizontal" android:gravity="center_vertical"
+                <!-- 4. Đổi mật khẩu -->
+                <LinearLayout
+                    android:id="@+id/item_change_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
                     android:background="@drawable/bg_menu_item"
-                    android:clickable="true" android:focusable="true"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:foreground="?attr/selectableItemBackground">
-                    <ImageView android:layout_width="24dp" android:layout_height="24dp"
-                        android:src="@drawable/ic_lock" app:tint="#666666" android:layout_marginStart="16dp"/>
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:text="Đổi mật khẩu"
-                        android:textSize="15sp" android:textColor="#000000" android:layout_marginStart="20dp"/>
-                    <ImageView android:layout_width="24dp" android:layout_height="24dp"
-                        android:src="@drawable/ic_chevron_right" app:tint="#BBBBBB" android:layout_marginEnd="16dp"/>
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_lock"
+                        app:tint="#666666"
+                        android:layout_marginStart="16dp" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Đổi mật khẩu"
+                        android:textSize="15sp"
+                        android:textColor="#000000"
+                        android:layout_marginStart="20dp" />
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="#BBBBBB"
+                        android:layout_marginEnd="16dp" />
                 </LinearLayout>
 
-                <!-- Item 5 -->
-                <LinearLayout android:layout_width="match_parent" android:layout_height="56dp"
-                    android:orientation="horizontal" android:gravity="center_vertical"
+                <!-- 5. Cập nhật thông tin -->
+                <LinearLayout
+                    android:id="@+id/item_update_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
                     android:background="@drawable/bg_menu_item"
-                    android:clickable="true" android:focusable="true"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:foreground="?attr/selectableItemBackground">
-                    <ImageView android:layout_width="24dp" android:layout_height="24dp"
-                        android:src="@drawable/ic_info" app:tint="#666666" android:layout_marginStart="16dp"/>
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:text="Cập nhật thông tin"
-                        android:textSize="15sp" android:textColor="#000000" android:layout_marginStart="20dp"/>
-                    <ImageView android:layout_width="24dp" android:layout_height="24dp"
-                        android:src="@drawable/ic_chevron_right" app:tint="#BBBBBB" android:layout_marginEnd="16dp"/>
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_info"
+                        app:tint="#666666"
+                        android:layout_marginStart="16dp" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Cập nhật thông tin"
+                        android:textSize="15sp"
+                        android:textColor="#000000"
+                        android:layout_marginStart="20dp" />
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="#BBBBBB"
+                        android:layout_marginEnd="16dp" />
                 </LinearLayout>
 
-                <!-- Item Đăng xuất (màu đỏ) -->
-                <LinearLayout android:layout_width="match_parent" android:layout_height="56dp"
-                    android:orientation="horizontal" android:gravity="center_vertical"
+                <!-- 6. Đăng xuất -->
+                <LinearLayout
+                    android:id="@+id/item_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
                     android:background="@drawable/bg_menu_item"
-                    android:clickable="true" android:focusable="true"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:foreground="?attr/selectableItemBackground">
-                    <ImageView android:layout_width="24dp" android:layout_height="24dp"
-                        android:src="@drawable/ic_logout" app:tint="#D32F2F" android:layout_marginStart="16dp"/>
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:text="Đăng xuất"
-                        android:textSize="15sp" android:textColor="#D32F2F" android:layout_marginStart="20dp"/>
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_logout"
+                        app:tint="#D32F2F"
+                        android:layout_marginStart="16dp" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Đăng xuất"
+                        android:textSize="15sp"
+                        android:textColor="#D32F2F"
+                        android:layout_marginStart="20dp" />
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Phần dưới cùng: Liên hệ, Đánh giá, Chia sẻ -->
+            <!-- Phần dưới cùng: Liên hệ, Đánh giá, Chia sẻ (ĐÃ FIX LỖI HOÀN TOÀN) -->
             <LinearLayout
                 android:id="@+id/footerMenu"
                 android:layout_width="0dp"
@@ -268,7 +379,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/item_contact_admin"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:text="Liên hệ admin"
@@ -281,7 +393,8 @@
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/item_rate_app"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginTop="8dp"
@@ -295,7 +408,8 @@
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/item_share_app"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginTop="8dp"
@@ -308,24 +422,25 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground" />
+
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <!-- Bottom Navigation cố định -->
+    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
-        android:elevation="12dp"
+        android:elevation="8dp"
         app:itemIconTint="@color/nav_item_color"
-        app:itemTextColorTint="@color/nav_item_color"
+        app:itemTextColor="@color/nav_item_color"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

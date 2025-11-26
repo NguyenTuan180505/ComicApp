@@ -24,7 +24,7 @@ public class AccountActivity extends BaseNavigationActivity {
         // === XỬ LÝ CLICK CÁC MỤC TRONG MENU ===
         findViewById(R.id.item_update_info).setOnClickListener(v -> {
             // Chuyển sang trang cập nhật thông tin cá nhân
-            startActivity(new Intent(this, UserInfoActivity.class));
+            startActivity(new Intent(this, UserActivity.class));
         });
 
         findViewById(R.id.item_logout).setOnClickListener(v -> {
