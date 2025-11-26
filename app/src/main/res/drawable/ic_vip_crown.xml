@@ -1,9 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="48dp"
     android:height="48dp"
-    android:viewportWidth="24"
-    android:viewportHeight="24">
+    android:viewportWidth="64"
+    android:viewportHeight="64">
+
+    <!-- Đế cúp (màu đen bóng) -->
+    <path
+        android:fillColor="#1A1A1A"
+        android:pathData="M20,56h24v6H20z" />
+    <path
+        android:fillColor="#2D2D2D"
+        android:pathData="M18,54h28v2H18z" />
+
+    <!-- Thân cúp (vàng kim) -->
     <path
         android:fillColor="#FFB800"
-        android:pathData="M12,8L10.47,3.79C10.29,3.31 9.71,3.31 9.53,3.79L8,8L3.79,9.53C3.31,9.71 3.31,10.29 3.79,10.47L8,12l-1.53,4.21c-0.18,0.48 0.4,0.88 0.88,0.59L12,15.25l3.65,1.92c0.48,0.25 1.06,-0.15 0.88,-0.63L15,12l4.21,-1.53c0.48,-0.18 0.48,-0.76 0,-0.94L15,8l-1.53,-4.21C13.29,3.31 12.71,3.31 12.47,3.79L12,8z"/>
+        android:pathData="M16,48h32v6H16z" />
+    <path
+        android:fillColor="#FFCA28"
+        android:pathData="M18,46h28v2H18z" />
+
+    <!-- Phần cúp chính (vàng sáng) -->
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M14,38h36v10H14z" />
+    <path
+        android:fillColor="#FFEC8B"
+        android:pathData="M16,36h32v2H16z" />
+
+    <!-- Hai quai cúp (vàng bóng) -->
+    <path
+        android:fillColor="#FFB800"
+        android:pathData="M18,36c-4,0 -6,-4 -6,-10c0,-6 4,-12 12,-12s12,6 12,12c0,6 -2,10 -6,10" />
+    <path
+        android:fillColor="#FFCA28"
+        android:pathData="M20,34c-3,0 -4.5,-3 -4.5,-8c0,-5 3,-10 10,-10s10,5 10,10c0,5 -1.5,8 -4.5,8" />
+
+    <!-- Hiệu ứng bóng trong lòng cúp -->
+    <path
+        android:fillColor="#FFF8C4"
+        android:pathData="M25,34c-2,0 -4,-2 -4,-6s2,-6 6,-6s6,2 6,6s-2,6 -6,6z" />
+
+    <!-- Vòng tròn trang trí trên đỉnh -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M32,12c-3.3,0 -6,2.7 -6,6s2.7,6 6,6s6,-2.7 6,-6s-2.7,-6 -6,-6z" />
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M32,14c-2.2,0 -4,1.8 -4,4s1.8,4 4,4s4,-1.8 4,-4s-1.8,-4 -4,-4z" />
+
+    <!-- Hiệu ứng ánh sáng trên đỉnh -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.6"
+        android:pathData="M30,10l4,0l2,4l-8,0z" />
+
 </vector>

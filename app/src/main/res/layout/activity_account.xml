@@ -39,7 +39,7 @@
                 android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name"
+                android:text="Name User"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="#000000"
@@ -122,8 +122,7 @@
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:src="@drawable/ic_vip_crown"
-                        app:tint="#FFB800" />
+                        android:src="@drawable/ic_vip_crown" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -189,7 +188,6 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_list"
-                        app:tint="#666666"
                         android:layout_marginStart="16dp" />
                     <TextView
                         android:layout_width="0dp"
@@ -222,7 +220,6 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_coin"
-                        app:tint="#666666"
                         android:layout_marginStart="16dp" />
                     <TextView
                         android:layout_width="0dp"
@@ -255,7 +252,6 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_history"
-                        app:tint="#666666"
                         android:layout_marginStart="16dp" />
                     <TextView
                         android:layout_width="0dp"
@@ -288,7 +284,6 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_lock"
-                        app:tint="#666666"
                         android:layout_marginStart="16dp" />
                     <TextView
                         android:layout_width="0dp"
@@ -321,7 +316,6 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_info"
-                        app:tint="#666666"
                         android:layout_marginStart="16dp" />
                     <TextView
                         android:layout_width="0dp"
@@ -354,7 +348,6 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_logout"
-                        app:tint="#D32F2F"
                         android:layout_marginStart="16dp" />
                     <TextView
                         android:layout_width="0dp"

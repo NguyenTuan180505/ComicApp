@@ -3,7 +3,7 @@
     <item android:left="2dp" android:top="8dp">
         <rotate android:fromDegrees="0">
             <shape android:shape="line">
-                <stroke android:width="2dp" android:color="#666666"/>
+                <stroke android:width="2dp" android:color="#505050"/>
                 <size android:width="14dp"/>
             </shape>
         </rotate>
@@ -11,7 +11,7 @@
     <item android:left="10dp" android:top="4dp">
         <rotate android:fromDegrees="-45">
             <shape android:shape="line">
-                <stroke android:width="2dp" android:color="#666666"/>
+                <stroke android:width="2dp" android:color="#505050"/>
                 <size android:width="8dp"/>
             </shape>
         </rotate>
@@ -19,7 +19,7 @@
     <item android:left="10dp" android:top="12dp">
         <rotate android:fromDegrees="45">
             <shape android:shape="line">
-                <stroke android:width="2dp" android:color="#666666"/>
+                <stroke android:width="2dp" android:color="#505050"/>
                 <size android:width="8dp"/>
             </shape>
         </rotate>
@@ -27,7 +27,7 @@
     <item android:right="4dp">
         <shape android:shape="rectangle">
             <size android:width="4dp" android:height="20dp"/>
-            <solid android:color="#666666"/>
+            <solid android:color="#F60000"/>
             <corners android:radius="2dp"/>
         </shape>
     </item>

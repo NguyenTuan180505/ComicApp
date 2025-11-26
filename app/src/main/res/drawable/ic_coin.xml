@@ -3,13 +3,13 @@
     <item>
         <shape android:shape="oval">
             <size android:width="20dp" android:height="20dp"/>
-            <solid android:color="#666666"/>
-            <stroke android:width="2dp" android:color="#FFFFFF"/>
+            <solid android:color="#FFFFFF"/>
+            <stroke android:width="2dp" android:color="#A99900"/>
         </shape>
     </item>
     <item android:top="6dp" android:left="6dp" android:right="6dp" android:bottom="6dp">
         <shape android:shape="oval">
-            <solid android:color="#FFFFFF"/>
+            <solid android:color="#C7B400"/>
             <size android:width="8dp" android:height="8dp"/>
         </shape>
     </item>
