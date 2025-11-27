@@ -73,32 +73,52 @@ public class ComicDetailAdActivity extends AppCompatActivity {
         for (int i = 1; i <= chaptersCount; i++) {
             chapterNumbers.add(i);
         }
-        ChapterAdapter adapter = new ChapterAdapter(this, chapterNumbers, chapterNumber -> {
-            BottomSheetDialog dialog = new BottomSheetDialog(ComicDetailAdActivity.this);
-            View sheet = LayoutInflater.from(ComicDetailAdActivity.this)
-                    .inflate(R.layout.activity_edit_chapter, null);
-            dialog.setContentView(sheet);
-            EditText et = sheet.findViewById(R.id.etContent);
-            Button btn = sheet.findViewById(R.id.btnSave);
-            String key = title + "_chapter_" + chapterNumber;
-            String existing = prefs.getString(key, "");
-            et.setText(existing);
-            btn.setOnClickListener(v -> {
-                String content = et.getText().toString();
-                prefs.edit().putString(key, content).apply();
-                dialog.dismiss();
-            });
-            dialog.show();
+        final ChapterAdapter adapter = new ChapterAdapter(this, chapterNumbers, new ChapterAdapter.OnChapterClickListener() {
+            @Override
+            public void onChapterClick(int chapterNumber) {
+                BottomSheetDialog dialog = new BottomSheetDialog(ComicDetailAdActivity.this);
+                View sheet = LayoutInflater.from(ComicDetailAdActivity.this)
+                        .inflate(R.layout.activity_edit_chapter, null);
+                dialog.setContentView(sheet);
+                EditText et = sheet.findViewById(R.id.etContent);
+                Button btn = sheet.findViewById(R.id.btnSave);
+                String key = title + "_chapter_" + chapterNumber;
+                String existing = prefs.getString(key, "");
+                et.setText(existing);
+                btn.setOnClickListener(v -> {
+                    String content = et.getText().toString();
+                    prefs.edit().putString(key, content).apply();
+                    dialog.dismiss();
+                });
+                dialog.show();
+            }
+
+            @Override
+            public void onChapterDelete(int chapterNumber, int position) {
+                chapterNumbers.remove(position);
+                chaptersCount = chapterNumbers.size();
+                tvChapters.setText("Chap: " + chaptersCount);
+                RecyclerView.Adapter rvAdapter = recyclerChapters.getAdapter();
+                if (rvAdapter instanceof ChapterAdapter) {
+                    rvAdapter.notifyItemRemoved(position);
+                }
+                prefs.edit()
+                        .remove(title + "_chapter_" + chapterNumber)
+                        .putInt(title + "_chapter_count", chaptersCount)
+                        .apply();
+            }
         });
         recyclerChapters.setAdapter(adapter);
 
-        fabAddChapter.setOnClickListener(v -> {
-            chaptersCount++;
-            tvChapters.setText("Chap: " + chaptersCount);
-            chapterNumbers.add(chaptersCount);
-            adapter.notifyItemInserted(chapterNumbers.size() - 1);
-            prefs.edit().putInt(title + "_chapter_count", chaptersCount).apply();
-        });
+        if (fabAddChapter != null) {
+            fabAddChapter.setOnClickListener(v -> {
+                chaptersCount++;
+                tvChapters.setText("Chap: " + chaptersCount);
+                chapterNumbers.add(chaptersCount);
+                adapter.notifyItemInserted(chapterNumbers.size() - 1);
+                prefs.edit().putInt(title + "_chapter_count", chaptersCount).apply();
+            });
+        }
 
         btnBackToManage.setOnClickListener(v -> {
             finish();
