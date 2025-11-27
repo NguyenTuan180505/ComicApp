@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,8 +51,23 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
         Comic comic = comicList.get(position);
         holder.tvTitle.setText("Truyện: " + comic.getTitle());
         holder.tvChapters.setText("Chap: " + comic.getChapters());
-        int imageId = context.getResources().getIdentifier(comic.getThumbnail(), "drawable", context.getPackageName());
-        holder.ivThumbnail.setImageResource(imageId);
+        String thumb = comic.getThumbnail();
+        if (thumb != null && !thumb.isEmpty()) {
+            if (thumb.startsWith("content://") || thumb.startsWith("file://") || thumb.startsWith("/")) {
+                holder.ivThumbnail.setImageURI(Uri.parse(thumb));
+            } else {
+                int imageId = context.getResources().getIdentifier(thumb, "drawable", context.getPackageName());
+                if (imageId != 0) {
+                    holder.ivThumbnail.setImageResource(imageId);
+                } else {
+                    try {
+                        holder.ivThumbnail.setImageURI(Uri.parse(thumb));
+                    } catch (Exception ignored) {}
+                }
+            }
+        } else {
+            holder.ivThumbnail.setImageDrawable(null);
+        }
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ComicDetailAdActivity.class);
