@@ -66,7 +66,7 @@
             android:name=".ui.ActivityAdmin.ComicDetailAdActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.Activity.ChapterListActivity"
+            android:name=".ui.ActivityUser.ChapterListActivity"
             android:exported="false" />
         <service android:name=".service.MusicService" android:exported="false"/>
 
