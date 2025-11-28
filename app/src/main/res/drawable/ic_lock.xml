@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Thân khóa (hình chữ U) -->
+    <item android:top="10dp">
+        <shape android:shape="rectangle">
+            <size android:width="16dp" android:height="14dp"/>
+            <solid android:color="#000000"/>
+            <corners
+                android:topLeftRadius="8dp"
+                android:topRightRadius="8dp"
+                android:bottomLeftRadius="2dp"
+                android:bottomRightRadius="2dp"/>
+        </shape>
+    </item>
+
+    <!-- Lỗ khóa (tròn ở giữa) -->
+    <item android:top="20dp" android:bottom="2dp" android:left="6dp" android:right="6dp">
+        <shape android:shape="oval">
+            <size android:width="4dp" android:height="4dp"/>
+            <solid android:color="#FFFFFF"/>
+        </shape>
+    </item>
+
+    <!-- Phần trên (cái móc khóa) -->
+    <item android:bottom="14dp">
+        <shape android:shape="oval">
+            <size android:width="18dp" android:height="20dp"/>
+            <stroke android:width="3dp" android:color="#000000"/>
+            <solid android:color="#00000000"/>
+        </shape>
+    </item>
+
+    <!-- Làm mờ viền trên một chút để đẹp hơn (tùy chọn) -->
+    <item android:bottom="14dp" android:left="1dp" android:right="1dp">
+        <shape android:shape="oval">
+            <size android:width="16dp" android:height="18dp"/>
+            <stroke android:width="2dp" android:color="#000000"/>
+            <solid android:color="#00000000"/>
+        </shape>
+    </item>
+
+</layer-list>
