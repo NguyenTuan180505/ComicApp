@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="#FFFFFF"
     android:gravity="center_horizontal"
-    tools:context=".ui.Activity.WelcomeActivity">
+    tools:context=".ui.ActivityUser.WelcomeActivity">
 
     <!-- PHẦN MỚI: ViewPager2 + Dots Indicator -->
     <androidx.viewpager2.widget.ViewPager2

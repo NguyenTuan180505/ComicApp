@@ -2,7 +2,6 @@ package com.example.comicapp.ui.Fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.comicapp.R;
 import com.example.comicapp.data.adapter.StoryAdapter;
 import com.example.comicapp.data.model.Story;
-import com.example.comicapp.ui.Activity.HomeActivity;
+import com.example.comicapp.ui.ActivityUser.HomeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
