@@ -13,16 +13,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.TextView;          // ← THÊM DÒNG NÀY
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.res.ColorStateList;          // ĐÃ CÓ RỒI – QUAN TRỌNG NHẤT
+import android.content.res.ColorStateList; // ĐÃ CÓ RỒI – QUAN TRỌNG NHẤT
 
 import com.example.comicapp.R;
 import com.google.android.material.button.MaterialButton;
 
 public class ReadComicActivity extends AppCompatActivity {
+
+
+    public static final String EXTRA_COMIC_TITLE     = "extra_comic_title";
+    public static final String EXTRA_CHAPTER_NUMBER  = "extra_chapter_number";
+    public static final String EXTRA_CHAPTER_TITLE   = "extra_chapter_title";
 
     private MaterialButton btnReaction;
     private PopupWindow reactionPopup;
@@ -39,6 +45,39 @@ public class ReadComicActivity extends AppCompatActivity {
             startActivity(intent);
         });
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+
+        // Nút Menu → mở danh sách chương
+        findViewById(R.id.btnMenu).setOnClickListener(v -> {
+            Intent intent = new Intent(this, ChapterListActivity.class);
+
+            TextView tvTitle = findViewById(R.id.tvTitle);
+            String comicName = tvTitle.getText().toString();
+
+            TextView tvChap = findViewById(R.id.tvChapterName);
+            String chapText = tvChap.getText().toString();
+            int currentChap = 1;
+            try {
+                currentChap = Integer.parseInt(chapText.replaceAll("\\D+", ""));
+            } catch (Exception ignored) {}
+
+            intent.putExtra(ChapterListActivity.EXTRA_COMIC_TITLE, comicName);
+            intent.putExtra(ChapterListActivity.EXTRA_CURRENT_CHAPTER, currentChap);
+            startActivity(intent);
+        });
+
+        // Nhận dữ liệu khi chọn chương từ danh sách
+        Intent intent = getIntent();
+        if (intent != null) {
+            if (intent.hasExtra(EXTRA_CHAPTER_TITLE)) {
+                String title = intent.getStringExtra(EXTRA_CHAPTER_TITLE);
+                ((TextView) findViewById(R.id.tvChapterName)).setText(title);
+            }
+            if (intent.hasExtra(EXTRA_COMIC_TITLE)) {
+                String title = intent.getStringExtra(EXTRA_COMIC_TITLE);
+                ((TextView) findViewById(R.id.tvTitle)).setText(title);
+            }
+        }
+
         initReactionButton();
     }
 

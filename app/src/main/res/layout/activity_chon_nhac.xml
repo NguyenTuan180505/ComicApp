@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="#FAFAFA">
 
     <!-- HEADER -->
     <LinearLayout
@@ -19,19 +19,21 @@
             android:id="@+id/btnBack"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:src="@drawable/vqv_vt_back" />
+            android:src="@drawable/vqv_vt_back"
+            android:contentDescription="Back" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:text="Chọn nhạc theo tâm trạng"
-            android:textSize="16sp"
+            android:textSize="17sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black" />
+            android:textColor="#000000"
+            android:gravity="center" />
     </LinearLayout>
 
-    <!-- TOÀN BỘ NỘI DUNG CÓ THỂ KÉO LÊN XUỐNG -->
+    <!-- NỘI DUNG CHÍNH -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -45,20 +47,59 @@
 
             <!-- 3 NÚT TÂM TRẠNG -->
             <LinearLayout
-                android:id="@+id/layoutMood"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <Button android:id="@+id/btnBinhYen" android:text="Bình yên" android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginBottom="12dp"/>
-                <LinearLayout android:id="@+id/listBinhYen" android:visibility="gone" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="8dp"/>
+                <!-- Bình yên -->
+                <Button
+                    android:id="@+id/btnBinhYen"
+                    android:text="Bình yên"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginBottom="8dp"
+                    android:backgroundTint="#E8F5E9"
+                    android:textColor="#2E7D32" />
 
-                <Button android:id="@+id/btnBuon" android:text="Buồn" android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginBottom="12dp"/>
-                <LinearLayout android:id="@+id/listBuon" android:visibility="gone" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="8dp"/>
+                <LinearLayout
+                    android:id="@+id/listBinhYen"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-                <Button android:id="@+id/btnVui" android:text="Vui" android:layout_width="match_parent" android:layout_height="56dp"/>
-                <LinearLayout android:id="@+id/listVui" android:visibility="gone" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="8dp"/>
+                <!-- Buồn -->
+                <Button
+                    android:id="@+id/btnBuon"
+                    android:text="Buồn"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="#E3F2FD"
+                    android:textColor="#1565C0" />
+
+                <LinearLayout
+                    android:id="@+id/listBuon"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <!-- Vui -->
+                <Button
+                    android:id="@+id/btnVui"
+                    android:text="Vui"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="#FFF3E0"
+                    android:textColor="#EF6C00" />
+
+                <LinearLayout
+                    android:id="@+id/listVui"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <!-- GỢI Ý HÔM NAY -->
@@ -66,11 +107,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Gợi ý hôm nay"
-                android:textSize="19sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="#000000"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginBottom="12dp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -78,55 +119,71 @@
                 android:layout_width="match_parent"
                 android:layout_height="240dp"
                 android:clipToPadding="false"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:orientation="horizontal" />
-
+                android:paddingHorizontal="8dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <!-- MINI PLAYER -->
+    <!-- MINI PLAYER SIÊU ĐẸP – CÓ TÊN CA SĨ -->
     <LinearLayout
         android:id="@+id/miniPlayer"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="84dp"
         android:layout_gravity="bottom"
         android:orientation="horizontal"
-        android:background="#FFFFFF"
-        android:elevation="16dp"
+        android:background="@drawable/bg_miniplayer"
+        android:elevation="24dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:gravity="center_vertical"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true">
 
         <ImageView
             android:id="@+id/imgMiniCover"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
             android:scaleType="centerCrop"
             android:src="@drawable/img_sontung"
-            android:layout_marginEnd="12dp"/>
+            android:layout_marginEnd="14dp" />
 
-        <TextView
-            android:id="@+id/tvCurrentSong"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Fists of Fury"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:ellipsize="end"
-            android:maxLines="1"/>
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvCurrentSong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lạc Trôi"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <TextView
+                android:id="@+id/tvCurrentArtist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sơn Tùng M-TP"
+                android:textColor="#666666"
+                android:textSize="13sp"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/btnPlayPause"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_pause"
-            android:scaleType="centerInside"/>
+            android:scaleType="centerInside"
+            android:contentDescription="Play/Pause" />
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
