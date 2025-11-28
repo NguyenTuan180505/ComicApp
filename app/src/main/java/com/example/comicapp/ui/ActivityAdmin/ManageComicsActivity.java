@@ -27,7 +27,9 @@ public class ManageComicsActivity extends AppCompatActivity implements ComicAdap
 
     private RecyclerView recyclerComics;
     private FloatingActionButton fabAdd;
+    private FloatingActionButton fabDeleteSelected;
     private MaterialButton btnLogoutAdmin;
+    private MaterialButton btnToggleSelect;
     private ComicAdapter comicAdapter;
     private ArrayList<Comic> comicList = new ArrayList<>();
 
@@ -66,7 +68,13 @@ public class ManageComicsActivity extends AppCompatActivity implements ComicAdap
 
         recyclerComics = findViewById(R.id.recyclerComics);
         fabAdd = findViewById(R.id.fabAdd);
+        fabDeleteSelected = findViewById(R.id.fabDeleteSelected);
         btnLogoutAdmin = findViewById(R.id.btnLogoutAdmin);
+        btnToggleSelect = findViewById(R.id.btnToggleSelect);
+
+        if (fabDeleteSelected != null) {
+            fabDeleteSelected.setVisibility(View.GONE);
+        }
 
         // Sử dụng GridLayoutManager với spanCount = 3 để khớp XML
         recyclerComics.setLayoutManager(new GridLayoutManager(this, 3));
@@ -97,6 +105,37 @@ public class ManageComicsActivity extends AppCompatActivity implements ComicAdap
             }
         });
 
+        btnToggleSelect.setOnClickListener(v -> {
+            boolean enable = !v.isSelected();
+            v.setSelected(enable);
+            btnToggleSelect.setText(enable ? "Đang chọn" : "Chọn");
+            comicAdapter.setSelectionMode(enable);
+            if (fabDeleteSelected != null) {
+                fabDeleteSelected.setVisibility(enable ? View.VISIBLE : View.GONE);
+            }
+        });
+
+        fabDeleteSelected.setOnClickListener(v -> {
+            ArrayList<Integer> selected = comicAdapter.getSelectedPositions();
+            if (selected.isEmpty()) return;
+            // Xóa từ vị trí lớn đến nhỏ để tránh lệch index
+            selected.sort((a,b) -> Integer.compare(b,a));
+            for (int pos : selected) {
+                String title = comicList.get(pos).getTitle();
+                getSharedPreferences("chapters", MODE_PRIVATE)
+                        .edit()
+                        .remove(title + "_chapter_count")
+                        .apply();
+                comicAdapter.removeAt(pos);
+            }
+            comicAdapter.setSelectionMode(false);
+            btnToggleSelect.setSelected(false);
+            btnToggleSelect.setText("Chọn");
+            if (fabDeleteSelected != null) {
+                fabDeleteSelected.setVisibility(View.GONE);
+            }
+        });
+
         btnLogoutAdmin.setOnClickListener(v -> {
             getSharedPreferences("auth", MODE_PRIVATE)
                     .edit()
@@ -110,6 +149,19 @@ public class ManageComicsActivity extends AppCompatActivity implements ComicAdap
         });
 
     } // Kết thúc onCreate
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Cập nhật số chap từ SharedPreferences sau khi chỉnh ở chi tiết
+        for (int i = 0; i < comicList.size(); i++) {
+            Comic c = comicList.get(i);
+            int count = getSharedPreferences("chapters", MODE_PRIVATE)
+                    .getInt(c.getTitle() + "_chapter_count", c.getChapters());
+            c.setChapters(count);
+        }
+        comicAdapter.notifyDataSetChanged();
+    }
 
     // **TRIỂN KHAI CÁC PHƯƠNG THỨC CỦA ComicAdapter.OnItemClickListener**
     @Override

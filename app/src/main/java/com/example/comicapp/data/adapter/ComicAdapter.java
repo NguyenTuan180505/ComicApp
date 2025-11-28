@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.CheckBox;
 import android.widget.TextView;
+import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,12 +18,16 @@ import com.example.comicapp.R;
 import com.example.comicapp.ui.ActivityAdmin.ComicDetailAdActivity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHolder> {
 
     private Context context;
     private ArrayList<Comic> comicList;
     private OnItemClickListener listener;
+    private boolean selectionMode = false;
+    private final Set<Integer> selectedPositions = new HashSet<>();
 
     public interface OnItemClickListener {
         void onAddChapterClick(int position);
@@ -50,8 +56,23 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
         Comic comic = comicList.get(position);
         holder.tvTitle.setText("Truyện: " + comic.getTitle());
         holder.tvChapters.setText("Chap: " + comic.getChapters());
-        int imageId = context.getResources().getIdentifier(comic.getThumbnail(), "drawable", context.getPackageName());
-        holder.ivThumbnail.setImageResource(imageId);
+        String thumb = comic.getThumbnail();
+        if (thumb != null && !thumb.isEmpty()) {
+            if (thumb.startsWith("content://") || thumb.startsWith("file://") || thumb.startsWith("/")) {
+                holder.ivThumbnail.setImageURI(Uri.parse(thumb));
+            } else {
+                int imageId = context.getResources().getIdentifier(thumb, "drawable", context.getPackageName());
+                if (imageId != 0) {
+                    holder.ivThumbnail.setImageResource(imageId);
+                } else {
+                    try {
+                        holder.ivThumbnail.setImageURI(Uri.parse(thumb));
+                    } catch (Exception ignored) {}
+                }
+            }
+        } else {
+            holder.ivThumbnail.setImageDrawable(null);
+        }
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ComicDetailAdActivity.class);
@@ -60,6 +81,13 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
             intent.putExtra("thumbnail", comic.getThumbnail());
             context.startActivity(intent);
         });
+
+        holder.cbSelect.setVisibility(selectionMode ? View.VISIBLE : View.GONE);
+        holder.cbSelect.setOnCheckedChangeListener(null);
+        holder.cbSelect.setChecked(selectedPositions.contains(position));
+        holder.cbSelect.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) selectedPositions.add(position); else selectedPositions.remove(position);
+        });
     }
 
     @Override
@@ -67,9 +95,25 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
         return comicList.size();
     }
 
+    public void setSelectionMode(boolean enabled) {
+        selectionMode = enabled;
+        if (!enabled) selectedPositions.clear();
+        notifyDataSetChanged();
+    }
+
+    public ArrayList<Integer> getSelectedPositions() {
+        return new ArrayList<>(selectedPositions);
+    }
+
+    public void removeAt(int position) {
+        comicList.remove(position);
+        notifyItemRemoved(position);
+    }
+
     public static class ComicViewHolder extends RecyclerView.ViewHolder {
         ImageView ivThumbnail;
         TextView tvTitle, tvChapters;
+        CheckBox cbSelect;
 
 
         public ComicViewHolder(@NonNull View itemView) {
@@ -77,6 +121,7 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
             ivThumbnail = itemView.findViewById(R.id.ivThumbnail);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvChapters = itemView.findViewById(R.id.tvChapters);
+            cbSelect = itemView.findViewById(R.id.cbSelect);
 
         }
     }
