@@ -7,7 +7,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comicapp.R;
@@ -39,13 +39,14 @@ public class FollowActivity extends BaseNavigationActivity {
     private void setupStoryLists() {
         List<Story> stories = getDummyStories();
 
-        // Hot Stories
-        rvFavStories.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        rvFavStories.setLayoutManager(gridLayoutManager);
+
         StoryAdapter favAdapter = new StoryAdapter(stories);
         favAdapter.setOnStoryClickListener(story -> openComicDetail(story));
         rvFavStories.setAdapter(favAdapter);
-
     }
+
     public void openComicDetail(Story story) {
         Intent intent = new Intent(this, ComicDetailActivity.class);
         intent.putExtra("story", story);

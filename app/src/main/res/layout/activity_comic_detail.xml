@@ -135,7 +135,7 @@
             </LinearLayout>
 
             <!-- Danh sách chương -->
-            <!-- Thay toàn bộ phần cũ "Danh sách chương" bằng đoạn sau -->
+            <!-- THAY TOÀN BỘ PHẦN "Chapter" CŨ BẰNG ĐOẠN SAU -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -172,11 +172,17 @@
                         android:background="?attr/selectableItemBackgroundBorderless" />
                 </LinearLayout>
 
-                <!-- 3 chương mới nhất -->
-                <include layout="@layout/item_chapter" android:id="@+id/chapter1" />
-                <include layout="@layout/item_chapter" android:id="@+id/chapter2" />
-                <include layout="@layout/item_chapter" android:id="@+id/chapter3" />
-
+                <!-- RecyclerView chương: cố định chiều cao + scroll riêng -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvChapters"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="400dp"
+                    android:minHeight="200dp"
+                    android:nestedScrollingEnabled="true"
+                    android:clipToPadding="false"
+                    android:paddingBottom="8dp"
+                    android:overScrollMode="never" />
             </LinearLayout>
 
             <!-- BÌNH LUẬN -->

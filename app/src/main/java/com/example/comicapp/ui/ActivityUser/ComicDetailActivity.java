@@ -11,9 +11,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comicapp.R;
+import com.example.comicapp.data.adapter.ChapterAdapterUser;
+import com.example.comicapp.data.model.Chapter;
 import com.example.comicapp.data.model.Story;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class ComicDetailActivity extends AppCompatActivity {
 
@@ -21,9 +29,9 @@ public class ComicDetailActivity extends AppCompatActivity {
     ImageButton btnFavorite, btnBack, btnAddComment, btnSendComment;
     LinearLayout layoutInputComment, commentContainer;
     EditText edtComment;
-    TextView tvCommentTitle;
+    TextView tvCommentTitle ,tvViewAllChapters;
 
-    private Story story;        // Nhận truyện từ Home
+    private Story story;
     private int commentCount = 0;
     private boolean isFavorite = false;
 
@@ -50,7 +58,28 @@ public class ComicDetailActivity extends AppCompatActivity {
         commentContainer = findViewById(R.id.commentContainer);
         edtComment = findViewById(R.id.edtComment);
         tvCommentTitle = findViewById(R.id.tvCommentTitle);
+        tvViewAllChapters=findViewById(R.id.tvViewAllChapters);
+        // Trong onCreate() của ComicDetailActivity
+        RecyclerView rcvChapters = findViewById(R.id.rcvChapters);
 
+        rcvChapters.setHasFixedSize(false);
+        rcvChapters.setNestedScrollingEnabled(true);
+// Giả lập dữ liệu chapter (sau này thay bằng story.getChapters())
+        List<Chapter> chapters = new ArrayList<>();
+        for (int i = 1; i <= 15; i++) { // chỉ hiển thị 15 chương mới nhất
+            String name = i % 5 == 0 ? "Boss cuối xuất hiện" : "Hành trình của Sung Jin Woo";
+            chapters.add(new Chapter(name, i, i <= 3 ? "vừa xong" : (i <= 7 ? "1 tuần trước" : "1 tháng trước"), 20 + i));
+        }
+// Đảo ngược để chương mới nhất lên đầu
+        Collections.reverse(chapters);
+
+        ChapterAdapterUser adapter = new ChapterAdapterUser(this, chapters, story);
+        rcvChapters.setAdapter(adapter);
+        rcvChapters.setLayoutManager(new LinearLayoutManager(this));
+//        rcvChapters.setNestedScrollingEnabled(false);
+
+// TẮT SCROLL
+//        rcvChapters.setNestedScrollingEnabled(false);
         // NÚT "ĐỌC NGAY" → CHUYỂN SANG MÀN HÌNH ĐỌC TRUYỆN
         btnReadNow.setOnClickListener(v -> {
             Intent intent = new Intent(ComicDetailActivity.this, ReadComicActivity.class);
@@ -59,7 +88,14 @@ public class ComicDetailActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); // Hiệu ứng đẹp
         });
 
-        // NÚT YÊU THÍCH
+// Ví dụ từ ComicDetailActivity
+        tvViewAllChapters.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ChapterListActivity.class);
+//            intent.putExtra(ChapterListActivity.EXTRA_STORY, story);
+//            intent.putExtra(ChapterListActivity.EXTRA_CURRENT_CHAPTER_NUMBER, 125); // chương đang đọc
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        });
         btnFavorite.setOnClickListener(v -> {
             isFavorite = !isFavorite;
             btnFavorite.setImageResource(isFavorite
@@ -92,7 +128,7 @@ public class ComicDetailActivity extends AppCompatActivity {
                 return;
             }
             addComment("Bạn", content);
-            edtComment.isTextSelectable();
+            edtComment.setText("");
             layoutInputComment.setVisibility(View.GONE);
         });
     }
@@ -106,7 +142,7 @@ public class ComicDetailActivity extends AppCompatActivity {
         ImageButton avatar = new ImageButton(this);
         avatar.setLayoutParams(new LinearLayout.LayoutParams(100, 100));
         avatar.setScaleType(ImageButton.ScaleType.CENTER_CROP);
-//        avatar.setImageResource(R.drawable.ic_avatar_default); // Thêm ảnh avatar nếu có
+        avatar.setImageResource(R.drawable.ic_person_24); // Thêm ảnh avatar nếu có
         avatar.setBackground(null);
 
         LinearLayout textLayout = new LinearLayout(this);
