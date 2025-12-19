@@ -46,8 +46,6 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        
-
         bannerPager = findViewById(R.id.bannerPager);
         dotsIndicator = findViewById(R.id.dotsIndicator);
         btnStart = findViewById(R.id.btnStart);
