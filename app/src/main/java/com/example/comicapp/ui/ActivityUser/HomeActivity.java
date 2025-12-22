@@ -4,22 +4,31 @@ package com.example.comicapp.ui.ActivityUser;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.comicapp.R;
+import com.example.comicapp.api.EmotionApi;
 import com.example.comicapp.data.adapter.EmotionPagerAdapter;
 import com.example.comicapp.data.adapter.StoryAdapter;
+import com.example.comicapp.data.model.Emotion;
 import com.example.comicapp.data.model.Story;
+import com.example.comicapp.network.RetrofitClient;
 import com.example.comicapp.ui.Fragment.EmotionBottomSheet;
+import com.example.comicapp.utils.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends BaseNavigationActivity {
 
@@ -43,26 +52,31 @@ public class HomeActivity extends BaseNavigationActivity {
         bottomNav = findViewById(R.id.bottomNav);
 
         setupStoryLists();
-        setupEmotionTabs();
+        loadEmotionsAndSetupTabs();
         setupBottomNavigation(R.id.nav_home);
-        EmotionBottomSheet sheet = new EmotionBottomSheet(emoji -> {
-            selectEmotionTab(emoji);
+        // Trong onCreate()
+        EmotionBottomSheet sheet = new EmotionBottomSheet(emotionId -> {
+            selectEmotionTabById(emotionId);
         });
 
         sheet.show(getSupportFragmentManager(), "EmotionSheet");
 
     }
-    private void selectEmotionTab(String emoji) {
-        int tabIndex = 0;
-
-        switch (emoji) {
-            case "😀": tabIndex = 0; break;  // Vui
-            case "😐": tabIndex = 3; break;  // Bình thường
-            case "😔": tabIndex = 1; break;  // Buồn
-            case "😡": tabIndex = 2; break;  // Tức giận
+    private void selectEmotionTabById(Long emotionId) {
+        if (emotionId == null || allEmotions.isEmpty()) {
+            viewPagerEmotion.setCurrentItem(0, true);
+            return;
         }
 
-        viewPagerEmotion.setCurrentItem(tabIndex, true);
+        for (int i = 0; i < allEmotions.size(); i++) {
+            if (allEmotions.get(i).getId().equals(emotionId)) {
+                viewPagerEmotion.setCurrentItem(i, true);
+                return;
+            }
+        }
+
+        // Không tìm thấy → về tab đầu
+        viewPagerEmotion.setCurrentItem(0, true);
     }
 
 
@@ -89,13 +103,37 @@ public class HomeActivity extends BaseNavigationActivity {
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
-    private void setupEmotionTabs() {
-        EmotionPagerAdapter pagerAdapter = new EmotionPagerAdapter(this);
-        viewPagerEmotion.setAdapter(pagerAdapter);
+    // Trong HomeActivity.java
+    private List<Emotion> allEmotions = new ArrayList<>();
 
-        new TabLayoutMediator(tabEmotion, viewPagerEmotion, (tab, position) ->
-                tab.setText(pagerAdapter.getEmotionTitle(position))
-        ).attach();
+    private void loadEmotionsAndSetupTabs() {
+        String token = "Bearer " + SessionManager.getToken(this);
+
+        EmotionApi api = RetrofitClient.getInstance().create(EmotionApi.class);
+        api.getAllEmotions(token).enqueue(new Callback<List<Emotion>>() {
+            @Override
+            public void onResponse(Call<List<Emotion>> call, Response<List<Emotion>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    allEmotions = response.body();
+
+                    EmotionPagerAdapter pagerAdapter = new EmotionPagerAdapter(HomeActivity.this);
+                    pagerAdapter.setEmotions(allEmotions);
+                    viewPagerEmotion.setAdapter(pagerAdapter);
+
+                    new TabLayoutMediator(tabEmotion, viewPagerEmotion, (tab, position) ->
+                            tab.setText(pagerAdapter.getEmotionTitle(position))
+                    ).attach();
+
+                } else {
+                    Toast.makeText(HomeActivity.this, "Không tải được danh sách cảm xúc", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Emotion>> call, Throwable t) {
+                Toast.makeText(HomeActivity.this, "Lỗi kết nối server", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
