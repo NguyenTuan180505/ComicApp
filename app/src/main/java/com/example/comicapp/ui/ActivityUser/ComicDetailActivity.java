@@ -29,7 +29,7 @@ public class ComicDetailActivity extends AppCompatActivity {
     ImageButton btnFavorite, btnBack, btnAddComment, btnSendComment;
     LinearLayout layoutInputComment, commentContainer;
     EditText edtComment;
-    TextView tvCommentTitle ,tvViewAllChapters;
+    TextView tvCommentTitle ,tvViewAllChapters, tvTitle, tvDescription, tvAuthor;
 
     private Story story;
     private int commentCount = 0;
@@ -59,11 +59,19 @@ public class ComicDetailActivity extends AppCompatActivity {
         edtComment = findViewById(R.id.edtComment);
         tvCommentTitle = findViewById(R.id.tvCommentTitle);
         tvViewAllChapters=findViewById(R.id.tvViewAllChapters);
+        tvTitle= findViewById(R.id.tvTitle);
+        tvDescription = findViewById(R.id.tvDescription);
+        tvAuthor = findViewById(R.id.tvAuthor);
         // Trong onCreate() của ComicDetailActivity
         RecyclerView rcvChapters = findViewById(R.id.rcvChapters);
 
+        if (tvTitle != null) tvTitle.setText(story.getTitle());
+        if (tvDescription != null) tvDescription.setText(story.getDescription());
+        if (tvAuthor != null) tvAuthor.setText(story.getAuthor());
+
         rcvChapters.setHasFixedSize(false);
         rcvChapters.setNestedScrollingEnabled(true);
+
 // Giả lập dữ liệu chapter (sau này thay bằng story.getChapters())
         List<Chapter> chapters = new ArrayList<>();
         for (int i = 1; i <= 15; i++) { // chỉ hiển thị 15 chương mới nhất

@@ -64,6 +64,9 @@
             </RelativeLayout>
 
             <!-- Phần thông tin truyện -->
+
+            <!-- Danh sách chương -->
+            <!-- THAY TOÀN BỘ PHẦN "Chapter" CŨ BẰNG ĐOẠN SAU -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -71,22 +74,22 @@
                 android:padding="16dp">
 
                 <TextView
-                    android:id="@+id/tvType"
+                    android:id="@+id/tvAth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Manhwa"
+                    android:text="Tác giả"
                     android:textColor="#5C5C5C"
                     android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginTop="4dp"
-                    android:gravity="start">
+                    android:gravity="start"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tvViewCount"
+                        android:id="@+id/tvAuthor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="3M Views · 170 Chapters"
@@ -95,9 +98,9 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_marginStart="8dp"
                         android:gravity="center_vertical"
-                        android:layout_marginStart="8dp">
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:layout_width="18dp"
@@ -108,8 +111,8 @@
                             android:id="@+id/tvRating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="4.7"
                             android:layout_marginStart="4dp"
+                            android:text="4.7"
                             android:textColor="#FFA500"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -119,23 +122,21 @@
                     android:id="@+id/tvDescTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:text="Nội dung"
-                    android:textStyle="bold"
                     android:textSize="16sp"
-                    android:layout_marginTop="10dp" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium..."
-                    android:textColor="#6F6F6F"
                     android:layout_marginTop="4dp"
-                    android:maxLines="3" />
+                    android:maxLines="3"
+                    android:text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium..."
+                    android:textColor="#6F6F6F" />
             </LinearLayout>
 
-            <!-- Danh sách chương -->
-            <!-- THAY TOÀN BỘ PHẦN "Chapter" CŨ BẰNG ĐOẠN SAU -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

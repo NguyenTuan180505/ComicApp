@@ -3,6 +3,7 @@ package com.example.comicapp.ui.ActivityUser;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -140,7 +141,7 @@ public class HomeActivity extends BaseNavigationActivity {
 
     public void openComicDetail(Story story) {
         Intent intent = new Intent(this, ComicDetailActivity.class);
-//        intent.putExtra("story", story);
+        intent.putExtra("story", (Parcelable) story);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
