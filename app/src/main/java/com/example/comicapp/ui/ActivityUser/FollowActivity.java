@@ -49,18 +49,18 @@ public class FollowActivity extends BaseNavigationActivity {
 
     public void openComicDetail(Story story) {
         Intent intent = new Intent(this, ComicDetailActivity.class);
-        intent.putExtra("story", story);
+//        intent.putExtra("story", story);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
     private List<Story> getDummyStories() {
         List<Story> list = new ArrayList<>();
-        list.add(new Story("Thám tử lừng danh Conan", "Aoyama Gosho", R.drawable.conan));
-        list.add(new Story("One Piece", "Eiichiro Oda", R.drawable.onepiece));
-        list.add(new Story("Naruto", "Masashi Kishimoto", R.drawable.naruto));
-//        list.add(new Story("Attack on Titan", "Hajime Isayama", R.drawable.aot));
-//        list.add(new Story("Dragon Ball", "Akira Toriyama", R.drawable.dragonball));
-//        list.add(new Story("Demon Slayer", "Koyoharu Gotouge", R.drawable.kimetsu));
+        list.add(new Story());
+        list.add(new Story());
+        list.add(new Story());
+        list.add(new Story());
+        list.add(new Story());
+        list.add(new Story());
         return list;
     }
 

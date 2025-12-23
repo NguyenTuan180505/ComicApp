@@ -43,7 +43,7 @@ public class ChapterAdapterUser extends RecyclerView.Adapter<ChapterAdapterUser.
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ReadComicActivity.class);
-            intent.putExtra("story", story);
+//            intent.putExtra("story", story);
             intent.putExtra("chapterNumber", chapter.getNumber());
             context.startActivity(intent);
         });

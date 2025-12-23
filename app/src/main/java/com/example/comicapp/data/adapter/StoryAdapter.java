@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.comicapp.R;
 import com.example.comicapp.data.model.Story;
 
@@ -20,7 +21,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
     private List<Story> stories;
     private OnStoryClickListener listener;
 
-    // Interface để xử lý click
     public interface OnStoryClickListener {
         void onStoryClick(Story story);
     }
@@ -47,9 +47,14 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
 
         holder.txtTitle.setText(story.getTitle());
         holder.txtAuthor.setText("Tác giả: " + story.getAuthor());
-        holder.imgStory.setImageResource(story.getImageResId());
 
-        // Xử lý click vào item
+        // Load ảnh từ URL bằng Glide
+        Glide.with(holder.itemView.getContext())
+                .load(story.getCoverImage())
+//                .placeholder(R.drawable.placeholder_image)  // tạo 1 drawable placeholder
+//                .error(R.drawable.error_image)              // ảnh lỗi nếu load fail
+                .into(holder.imgStory);
+
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onStoryClick(story);
