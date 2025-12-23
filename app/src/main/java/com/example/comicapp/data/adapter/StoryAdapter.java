@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.comicapp.R;
 import com.example.comicapp.data.model.Story;
 
@@ -46,8 +47,24 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
         Story story = stories.get(position);
 
         holder.txtTitle.setText(story.getTitle());
-        holder.txtAuthor.setText("Tác giả: " + story.getAuthor());
-        holder.imgStory.setImageResource(story.getImageResId());
+        holder.txtAuthor.setText("Tác giả: " + (story.getAuthor() != null ? story.getAuthor() : "N/A"));
+        
+        // Load ảnh từ URL nếu có, nếu không thì dùng imageResId (cho dummy data)
+        String coverImageUrl = story.getCoverImage();
+        if (coverImageUrl != null && !coverImageUrl.isEmpty()) {
+            // Load ảnh từ URL bằng Glide
+            Glide.with(holder.itemView.getContext())
+                    .load(coverImageUrl)
+                    .placeholder(R.drawable.sample_story) // Ảnh placeholder khi đang load
+                    .error(R.drawable.sample_story) // Ảnh hiển thị khi lỗi
+                    .into(holder.imgStory);
+        } else if (story.getImageResId() != 0) {
+            // Fallback về imageResId nếu không có URL (cho dummy data)
+            holder.imgStory.setImageResource(story.getImageResId());
+        } else {
+            // Ảnh mặc định nếu không có cả URL và ResId
+            holder.imgStory.setImageResource(R.drawable.sample_story);
+        }
 
         // Xử lý click vào item
         holder.itemView.setOnClickListener(v -> {
@@ -61,7 +78,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
     public int getItemCount() {
         return stories != null ? stories.size() : 0;
     }
-
     static class StoryViewHolder extends RecyclerView.ViewHolder {
         ImageView imgStory;
         TextView txtTitle, txtAuthor;
