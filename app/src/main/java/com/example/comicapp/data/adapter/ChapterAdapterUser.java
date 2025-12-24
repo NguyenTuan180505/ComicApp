@@ -7,19 +7,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.comicapp.R;
 import com.example.comicapp.data.model.Chapter;
-import com.example.comicapp.ui.ActivityUser.ReadComicActivity;
 import com.example.comicapp.data.model.Story;
+import com.example.comicapp.ui.ActivityUser.ReadComicActivity;
+
 import java.util.List;
 
 public class ChapterAdapterUser extends RecyclerView.Adapter<ChapterAdapterUser.ViewHolder> {
 
-    private List<Chapter> chapterList;
-    private Context context;
-    private Story story;
+    private final List<Chapter> chapterList;
+    private final Context context;
+    private final Story story;
 
     public ChapterAdapterUser(Context context, List<Chapter> chapters, Story story) {
         this.context = context;
@@ -30,31 +34,63 @@ public class ChapterAdapterUser extends RecyclerView.Adapter<ChapterAdapterUser.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.item_chapter, parent, false);
+        View v = LayoutInflater.from(context)
+                .inflate(R.layout.item_chapter, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Chapter chapter = chapterList.get(position);
-        holder.tvChapterName.setText("Chương " + chapter.getNumber() + (chapter.getName().isEmpty() ? "" : ": " + chapter.getName()));
-        holder.tvPageCount.setText(chapter.getPageCount() + " trang");
-        holder.tvUploadDate.setText(chapter.getUploadDate());
 
+        // ===== 1️⃣ Tạo title + Free / VIP =====
+        String title = null;
+
+        if (chapter.getTitle() != null && !chapter.getTitle().isEmpty()) {
+            title = chapter.getTitle();
+        }
+
+        // Hiển thị Free / VIP
+        title += chapter.isLocked() ? " (Chưa mở)" : " (Đã mở)";
+
+        holder.tvChapterName.setText(title);
+
+        // ===== 2️⃣ Làm mờ chương bị khóa =====
+        holder.itemView.setAlpha(chapter.isLocked() ? 0.5f : 1f);
+
+        // ===== 3️⃣ Ngày tạo =====
+        holder.tvUploadDate.setText(formatDate(chapter.getCreatedAt()));
+
+        // Ẩn pageCount nếu không dùng
+        holder.tvPageCount.setVisibility(View.GONE);
+
+        // ===== 4️⃣ Click vào item =====
         holder.itemView.setOnClickListener(v -> {
+
+            // 👉 Click chương khóa → Toast
+            if (chapter.isLocked()) {
+                Toast.makeText(context,
+                        "Chương này cần mở khóa",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // 👉 Chương mở → đọc truyện
             Intent intent = new Intent(context, ReadComicActivity.class);
-            intent.putExtra("story", story);
-            intent.putExtra("chapterNumber", chapter.getNumber());
+            intent.putExtra("storyId", story.getId());
+            intent.putExtra("chapterNumber", chapter.getChapterNumber());
             context.startActivity(intent);
         });
     }
 
+
     @Override
     public int getItemCount() {
-        return chapterList.size();
+        return chapterList != null ? chapterList.size() : 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+
         TextView tvChapterName, tvPageCount, tvUploadDate;
 
         public ViewHolder(@NonNull View itemView) {
@@ -62,6 +98,17 @@ public class ChapterAdapterUser extends RecyclerView.Adapter<ChapterAdapterUser.
             tvChapterName = itemView.findViewById(R.id.tvChapterName);
             tvPageCount = itemView.findViewById(R.id.tvPageCount);
             tvUploadDate = itemView.findViewById(R.id.tvUploadDate);
+        }
+    }
+    private String formatDate(String isoDate) {
+        if (isoDate == null) return "Vừa xong";
+        try {
+            String[] parts = isoDate.split("T");
+            String date = parts[0];
+            String[] dateParts = date.split("-");
+            return dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0];
+        } catch (Exception e) {
+            return "Vừa xong";
         }
     }
 }
