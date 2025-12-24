@@ -31,7 +31,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 public class HomeActivity extends BaseNavigationActivity {
 
     RecyclerView rvHot, rvNew;
@@ -57,6 +58,9 @@ public class HomeActivity extends BaseNavigationActivity {
         loadEmotionsAndSetupTabs();
         loadStoriesFromApi();
         setupBottomNavigation(R.id.nav_home);
+
+        setupSearchInHome();
+
         // Trong onCreate()
         EmotionBottomSheet sheet = new EmotionBottomSheet(emotionId -> {
             selectEmotionTabById(emotionId);
@@ -131,7 +135,33 @@ public class HomeActivity extends BaseNavigationActivity {
         adapter.setOnStoryClickListener(story -> openComicDetail(story));
         recyclerView.setAdapter(adapter);
     }
+    private void setupSearchInHome() {
+        edtSearch.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                String query = edtSearch.getText().toString().trim();
+                if (!query.isEmpty()) {
+                    performSearch(query);
+                } else {
+                    Toast.makeText(this, "Vui lòng nhập từ khóa tìm kiếm", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+            return false;
+        });
+    }
 
+    private void performSearch(String query) {
+        Intent intent = new Intent(this, SearchActivity.class);
+        intent.putExtra("query", query);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+        // Ẩn bàn phím sau khi tìm
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(edtSearch.getWindowToken(), 0);
+        }
+    }
     private void fallbackToDummy() {
         // Giữ lại tạm để test khi không có mạng
         List<Story> dummy = getDummyStories();

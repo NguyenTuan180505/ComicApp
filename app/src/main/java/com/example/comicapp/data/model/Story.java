@@ -6,7 +6,7 @@ import android.os.Parcelable;
 
 import java.io.Serializable;
 
-public class Story implements Serializable, Parcelable {
+public class Story implements  Parcelable {
     private Long id;
     private String title;
     private String author;
