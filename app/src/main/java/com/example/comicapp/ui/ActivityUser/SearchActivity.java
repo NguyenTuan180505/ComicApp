@@ -17,6 +17,7 @@ import com.example.comicapp.api.StoryApi;
 import com.example.comicapp.data.adapter.StoryAdapter;
 import com.example.comicapp.data.model.Story;
 import com.example.comicapp.network.RetrofitClient;
+import com.example.comicapp.ui.Fragment.GridSpacingItemDecoration;
 import com.example.comicapp.utils.SessionManager;
 
 import java.util.List;
@@ -58,6 +59,16 @@ public class SearchActivity extends BaseNavigationActivity {
         tvNoResult = findViewById(R.id.tvNoResult);
         tvResultTitle = findViewById(R.id.tvResultTitle);
         edtSearch = findViewById(R.id.edtSearch);
+        edtSearch = findViewById(R.id.edtSearch);
+
+        // Nút quay lại
+        findViewById(R.id.btnBack).setOnClickListener(v -> {
+            Intent intent = new Intent(SearchActivity.this, HomeActivity.class);
+            // Xóa toàn bộ stack để quay về Home và không thể quay lại SearchActivity
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish(); // kết thúc SearchActivity
+        });
     }
 
     private void initApi() {
@@ -148,7 +159,20 @@ public class SearchActivity extends BaseNavigationActivity {
         tvNoResult.setVisibility(View.GONE);
         rvSearchResults.setVisibility(View.VISIBLE);
 
-        rvSearchResults.setLayoutManager(new GridLayoutManager(this, 3));
+        // Setup LayoutManager
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+        rvSearchResults.setLayoutManager(layoutManager);
+
+        // XÓA TẤT CẢ decoration cũ trước khi thêm mới (tránh chồng chéo khi tìm kiếm lại)
+        clearItemDecorations(rvSearchResults);  // Thay cho rvSearchResults.clearItemDecorations();  / // ← THÊM DÒNG NÀY (rất quan trọng!)
+
+        // Khoảng cách đều 16dp
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.grid_spacing);
+        // Hoặc hardcode tạm: int spacingInPixels = (int) (16 * getResources().getDisplayMetrics().density);
+
+        rvSearchResults.addItemDecoration(new GridSpacingItemDecoration(2, spacingInPixels, true));
+
+        // Setup adapter
         StoryAdapter adapter = new StoryAdapter(stories);
         adapter.setOnStoryClickListener(this::openComicDetail);
         rvSearchResults.setAdapter(adapter);
@@ -167,9 +191,15 @@ public class SearchActivity extends BaseNavigationActivity {
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
-
+    // Thêm method này vào trong class SearchActivity (bên ngoài các method khác cũng được)
+    private void clearItemDecorations(RecyclerView recyclerView) {
+        while (recyclerView.getItemDecorationCount() > 0) {
+            recyclerView.removeItemDecorationAt(0);
+        }
+    }
     @Override
     protected int getCurrentNavItemId() {
         return R.id.nav_home; // Giữ highlight Home khi ở màn tìm kiếm
     }
+
 }

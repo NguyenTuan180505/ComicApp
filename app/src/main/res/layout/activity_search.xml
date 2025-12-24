@@ -37,18 +37,31 @@
     </androidx.cardview.widget.CardView>
 
     <!-- Tiêu đề kết quả (tùy chọn, có thể ẩn nếu muốn sạch hơn) -->
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:padding="12dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Quay lại"
+        android:src="@drawable/ic_arrow_back_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvResultTitle"
+        app:layout_constraintBottom_toBottomOf="@id/tvResultTitle" />
+    <!-- Tiêu đề kết quả -->
     <TextView
         android:id="@+id/tvResultTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="72dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="Kết quả tìm kiếm"
         android:textColor="#212121"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchCard" />
