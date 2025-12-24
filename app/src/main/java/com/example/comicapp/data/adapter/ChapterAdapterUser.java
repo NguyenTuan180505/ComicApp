@@ -1,4 +1,3 @@
-// ChapterAdapterUser.java
 package com.example.comicapp.data.adapter;
 
 import android.content.Context;
@@ -77,8 +76,11 @@ public class ChapterAdapterUser extends RecyclerView.Adapter<ChapterAdapterUser.
 
             // 👉 Chương mở → đọc truyện
             Intent intent = new Intent(context, ReadComicActivity.class);
-            intent.putExtra("storyId", story.getId());
-            intent.putExtra("chapterNumber", chapter.getChapterNumber());
+            intent.putExtra("storyId", story.getId());                                      // ← GIỮ NGUYÊN
+            intent.putExtra("storyTitle", story.getTitle());                                // ← THÊM
+            intent.putExtra("chapterId", chapter.getId());                                  // ← THÊM
+            intent.putExtra("chapterNumber", chapter.getChapterNumber());                   // ← GIỮ NGUYÊN
+            intent.putExtra("chapterTitle", chapter.getTitle() != null ? chapter.getTitle() : ""); // ← THÊM
             context.startActivity(intent);
         });
     }

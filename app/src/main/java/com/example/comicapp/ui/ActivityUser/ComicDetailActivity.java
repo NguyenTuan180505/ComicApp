@@ -131,6 +131,7 @@ public class ComicDetailActivity extends AppCompatActivity {
 
             Intent intent = new Intent(ComicDetailActivity.this, ReadComicActivity.class);
             intent.putExtra("storyTitle", story.getTitle());
+            intent.putExtra("storyId", story.getId());  // ← THÊM DÒNG NÀY
             intent.putExtra("chapterId", firstChapter.getId());
             intent.putExtra("chapterNumber", firstChapter.getChapterNumber());
             intent.putExtra("chapterTitle", firstChapter.getTitle() != null ? firstChapter.getTitle() : "");
