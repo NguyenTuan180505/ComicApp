@@ -47,10 +47,15 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
 
         holder.txtTitle.setText(story.getTitle());
         holder.txtAuthor.setText("Tác giả: " + story.getAuthor());
+        String imageUrl = story.getCoverImage();
+
+        if (imageUrl != null && imageUrl.contains("http://localhost")) {
+            imageUrl = imageUrl.replace("http://localhost", "http://10.0.2.2");
+        }
 
         // Load ảnh từ URL bằng Glide
         Glide.with(holder.itemView.getContext())
-                .load(story.getCoverImage())
+                .load(imageUrl)
 //                .placeholder(R.drawable.placeholder_image)  // tạo 1 drawable placeholder
 //                .error(R.drawable.error_image)              // ảnh lỗi nếu load fail
                 .into(holder.imgStory);
@@ -60,6 +65,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
                 listener.onStoryClick(story);
             }
         });
+
     }
 
     @Override
@@ -78,4 +84,5 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
             txtAuthor = itemView.findViewById(R.id.txtStoryAuthor);
         }
     }
+
 }

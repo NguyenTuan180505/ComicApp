@@ -90,8 +90,13 @@ public class ComicDetailActivity extends AppCompatActivity {
         if (tvTitle != null) tvTitle.setText(story.getTitle());
         if (tvDescription != null) tvDescription.setText(story.getDescription());
         if (tvAuthor != null) tvAuthor.setText(story.getAuthor());
+        String imageUrl = story.getCoverImage();
+
+        if (imageUrl != null && imageUrl.contains("http://localhost")) {
+            imageUrl = imageUrl.replace("http://localhost", "http://10.0.2.2");
+        }
         Glide.with(this)
-                .load(story.getCoverImage())
+                .load(imageUrl)
 //                .placeholder(R.drawable.placeholder_cover)
                 .into(imgCover);
         rcvComments = findViewById(R.id.rcvComments); // Thêm RecyclerView vào layout
@@ -115,7 +120,7 @@ public class ComicDetailActivity extends AppCompatActivity {
 // Ví dụ từ ComicDetailActivity
         tvViewAllChapters.setOnClickListener(v -> {
             Intent intent = new Intent(this, ChapterListActivity.class);
-//            intent.putExtra(ChapterListActivity.EXTRA_STORY, story);
+            intent.putExtra("storyId", story.getId());
 //            intent.putExtra(ChapterListActivity.EXTRA_CURRENT_CHAPTER_NUMBER, 125); // chương đang đọc
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -314,14 +319,14 @@ public class ComicDetailActivity extends AppCompatActivity {
                     chapters.sort((c1, c2) -> Integer.compare(c2.getChapterNumber(), c1.getChapterNumber()));
 
                     // Chỉ hiển thị tối đa 15 chương mới nhất
-                    List<Chapter> displayChapters = chapters.size() > 15 ?
-                            chapters.subList(0, 15) : chapters;
+                    List<Chapter> displayChapters = chapters.size() > 3 ?
+                            chapters.subList(0, 3) : chapters;
 
                     setupChapterRecyclerView(displayChapters);
                 } else {
                     Toast.makeText(ComicDetailActivity.this, "Không tải được chương", Toast.LENGTH_SHORT).show();
                     // Fallback: dùng dummy
-                    setupDummyChapters();
+                        setupDummyChapters();
                 }
             }
 

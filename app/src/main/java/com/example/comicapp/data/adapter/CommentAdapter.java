@@ -52,8 +52,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         Comment comment = comments.get(position);
         holder.tvUsername.setText(comment.getUsername());
         holder.tvContent.setText(comment.getContent());
-        holder.tvTime.setText(comment.getCreatedAt());
-        holder.tvTime.setText("Vừa xong");
+        holder.tvTime.setText(formatDate(comment.getCreatedAt()));
     }
 
     @Override
@@ -69,6 +68,17 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             tvUsername = itemView.findViewById(R.id.tvUsername);
             tvContent = itemView.findViewById(R.id.tvContent);
             tvTime = itemView.findViewById(R.id.tvTime);
+        }
+    }
+    private String formatDate(String isoDate) {
+        if (isoDate == null) return "Vừa xong";
+        try {
+            String[] parts = isoDate.split("T");
+            String date = parts[0];
+            String[] dateParts = date.split("-");
+            return dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0];
+        } catch (Exception e) {
+            return "Vừa xong";
         }
     }
 }

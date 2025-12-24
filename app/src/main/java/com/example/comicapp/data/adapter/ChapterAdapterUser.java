@@ -59,7 +59,7 @@ public class ChapterAdapterUser extends RecyclerView.Adapter<ChapterAdapterUser.
         holder.itemView.setAlpha(chapter.isLocked() ? 0.5f : 1f);
 
         // ===== 3️⃣ Ngày tạo =====
-        holder.tvUploadDate.setText(chapter.getCreatedAt());
+        holder.tvUploadDate.setText(formatDate(chapter.getCreatedAt()));
 
         // Ẩn pageCount nếu không dùng
         holder.tvPageCount.setVisibility(View.GONE);
@@ -98,6 +98,17 @@ public class ChapterAdapterUser extends RecyclerView.Adapter<ChapterAdapterUser.
             tvChapterName = itemView.findViewById(R.id.tvChapterName);
             tvPageCount = itemView.findViewById(R.id.tvPageCount);
             tvUploadDate = itemView.findViewById(R.id.tvUploadDate);
+        }
+    }
+    private String formatDate(String isoDate) {
+        if (isoDate == null) return "Vừa xong";
+        try {
+            String[] parts = isoDate.split("T");
+            String date = parts[0];
+            String[] dateParts = date.split("-");
+            return dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0];
+        } catch (Exception e) {
+            return "Vừa xong";
         }
     }
 }

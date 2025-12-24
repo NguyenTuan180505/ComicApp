@@ -20,7 +20,7 @@ public class Comment implements Serializable {
     public Long getUserId() { return userId; }
     public String getContent() { return content; }
     public String getCreatedAt() { return createdAt; }
-    public String getUsername() { return username == null ? "Người dùng" : username; }
+    public String getUsername() { return username == null ? "Đọc giả" : username; }
 
     // Setter nếu cần
     public void setId(Long id) { this.id = id; }

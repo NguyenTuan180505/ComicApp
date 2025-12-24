@@ -60,8 +60,8 @@ public class ReadComicActivity extends AppCompatActivity {
                 currentChap = Integer.parseInt(chapText.replaceAll("\\D+", ""));
             } catch (Exception ignored) {}
 
-            intent.putExtra(ChapterListActivity.EXTRA_COMIC_TITLE, comicName);
-            intent.putExtra(ChapterListActivity.EXTRA_CURRENT_CHAPTER, currentChap);
+//            intent.putExtra(ChapterListActivity.EXTRA_COMIC_TITLE, comicName);
+//            intent.putExtra(ChapterListActivity.EXTRA_CURRENT_CHAPTER, currentChap);
             startActivity(intent);
         });
 
