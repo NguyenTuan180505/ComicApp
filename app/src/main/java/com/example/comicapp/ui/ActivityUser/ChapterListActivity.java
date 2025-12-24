@@ -35,6 +35,9 @@ public class ChapterListActivity extends AppCompatActivity {
     private Long storyId;
     private int currentChapterNumber = -1; // -1 nghĩa là chưa có chương đang đọc
 
+    // === THÊM BIẾN ĐỂ NHẬN TÊN TRUYỆN TỪ ComicDetail ===
+    private String storyTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,10 +46,11 @@ public class ChapterListActivity extends AppCompatActivity {
         rvChapters = findViewById(R.id.rvChapters);
         rvChapters.setLayoutManager(new LinearLayoutManager(this));
 
-        // Nhận storyId từ ComicDetailActivity
+        // Nhận storyId và storyTitle từ ComicDetailActivity
         Intent intent = getIntent();
         if (intent != null) {
             storyId = intent.getLongExtra("storyId", -1);
+            storyTitle = intent.getStringExtra("storyTitle");  // ← THÊM DÒNG NÀY
             currentChapterNumber = intent.getIntExtra("currentChapterNumber", -1);
         }
 
@@ -140,7 +144,6 @@ public class ChapterListActivity extends AppCompatActivity {
                 holder.tvTitle.setTextColor(0xFF1A1A1A);
             }
             holder.itemView.setAlpha(chapter.isLocked() ? 0.5f : 1f);
-            // 👉 Click chương khóa → Toast
 
             // Click vào chương → mở ReadComicActivity
             holder.itemView.setOnClickListener(v -> {
@@ -151,7 +154,7 @@ public class ChapterListActivity extends AppCompatActivity {
                     return;
                 }
                 Intent intent = new Intent(ChapterListActivity.this, ReadComicActivity.class);
-                intent.putExtra("storyId", storyId);
+                intent.putExtra("storyTitle", storyTitle);                    // ← THÊM TÊN TRUYỆN
                 intent.putExtra("chapterId", chapter.getId());
                 intent.putExtra("chapterNumber", chapter.getChapterNumber());
                 intent.putExtra("chapterTitle", chapter.getTitle());

@@ -44,16 +44,21 @@ public class ComicDetailActivity extends AppCompatActivity {
     ImageButton btnFavorite, btnBack, btnAddComment, btnSendComment;
     LinearLayout layoutInputComment, commentContainer;
     EditText edtComment;
-    TextView tvCommentTitle ,tvViewAllChapters, tvTitle, tvDescription, tvAuthor;
+    TextView tvCommentTitle, tvViewAllChapters, tvTitle, tvDescription, tvAuthor;
     ImageView imgCover;
+
     private boolean isFavorite = false; // trạng thái hiện tại
     private boolean isLoadingFavorite = false;
+
     private RecyclerView rcvComments;
     private CommentAdapter commentAdapter;
     private List<Comment> commentList = new ArrayList<>();
 
     private Story story;
     private int commentCount = 0;
+
+    // === THÊM BIẾN ĐỂ LƯU DANH SÁCH CHƯƠNG (dùng cho nút Đọc ngay) ===
+    private List<Chapter> chapters = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,7 @@ public class ComicDetailActivity extends AppCompatActivity {
             finish();
             return;
         }
+
         // Sau khi set tiêu đề, mô tả, ảnh bìa...
         checkFavoriteStatus();
 
@@ -79,10 +85,11 @@ public class ComicDetailActivity extends AppCompatActivity {
         layoutInputComment = findViewById(R.id.layoutInputComment);
         edtComment = findViewById(R.id.edtComment);
         tvCommentTitle = findViewById(R.id.tvCommentTitle);
-        tvViewAllChapters=findViewById(R.id.tvViewAllChapters);
-        tvTitle= findViewById(R.id.tvTitle);
+        tvViewAllChapters = findViewById(R.id.tvViewAllChapters);
+        tvTitle = findViewById(R.id.tvTitle);
         tvDescription = findViewById(R.id.tvDescription);
         tvAuthor = findViewById(R.id.tvAuthor);
+
         // Trong onCreate() của ComicDetailActivity
         RecyclerView rcvChapters = findViewById(R.id.rcvChapters);
         imgCover = findViewById(R.id.imgCover);
@@ -90,16 +97,18 @@ public class ComicDetailActivity extends AppCompatActivity {
         if (tvTitle != null) tvTitle.setText(story.getTitle());
         if (tvDescription != null) tvDescription.setText(story.getDescription());
         if (tvAuthor != null) tvAuthor.setText(story.getAuthor());
-        String imageUrl = story.getCoverImage();
 
+        String imageUrl = story.getCoverImage();
         if (imageUrl != null && imageUrl.contains("http://localhost")) {
             imageUrl = imageUrl.replace("http://localhost", "http://10.0.2.2");
         }
         Glide.with(this)
                 .load(imageUrl)
-//                .placeholder(R.drawable.placeholder_cover)
+                // .placeholder(R.drawable.placeholder_cover)
                 .into(imgCover);
-        rcvComments = findViewById(R.id.rcvComments); // Thêm RecyclerView vào layout
+
+        rcvComments = findViewById(R.id.rcvComments);
+        // Thêm RecyclerView vào layout
         rcvComments.setLayoutManager(new LinearLayoutManager(this));
         commentAdapter = new CommentAdapter();
         rcvComments.setAdapter(commentAdapter);
@@ -107,45 +116,54 @@ public class ComicDetailActivity extends AppCompatActivity {
         loadChaptersFromApi();
         loadCommentsFromApi();
 
-// TẮT SCROLL
-//        rcvChapters.setNestedScrollingEnabled(false);
-        // NÚT "ĐỌC NGAY" → CHUYỂN SANG MÀN HÌNH ĐỌC TRUYỆN
-        btnReadNow.setOnClickListener(v -> {
-            Intent intent = new Intent(ComicDetailActivity.this, ReadComicActivity.class);
-//            intent.putExtra("story", story); // Truyền cả object Story
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); // Hiệu ứng đẹp
-        });
+        // TẮT SCROLL
+        // rcvChapters.setNestedScrollingEnabled(false);
 
-// Ví dụ từ ComicDetailActivity
-        tvViewAllChapters.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ChapterListActivity.class);
-            intent.putExtra("storyId", story.getId());
-//            intent.putExtra(ChapterListActivity.EXTRA_CURRENT_CHAPTER_NUMBER, 125); // chương đang đọc
+        // ================== SỬA NÚT "ĐỌC NGAY" ==================
+        btnReadNow.setOnClickListener(v -> {
+            if (chapters == null || chapters.isEmpty()) {
+                Toast.makeText(this, "Truyện chưa có chương nào để đọc!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Lấy chương đầu tiên (sau khi đã sort chương mới nhất lên đầu)
+            Chapter firstChapter = chapters.get(0);
+
+            Intent intent = new Intent(ComicDetailActivity.this, ReadComicActivity.class);
+            intent.putExtra("storyTitle", story.getTitle());
+            intent.putExtra("chapterId", firstChapter.getId());
+            intent.putExtra("chapterNumber", firstChapter.getChapterNumber());
+            intent.putExtra("chapterTitle", firstChapter.getTitle() != null ? firstChapter.getTitle() : "");
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
+
+        // ================== SỬA NÚT "XEM TẤT CẢ CHƯƠNG" ==================
+        tvViewAllChapters.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ChapterListActivity.class);
+            intent.putExtra("storyId", story.getId());
+            intent.putExtra("storyTitle", story.getTitle());  // ← THÊM DÒNG NÀY ĐỂ TRUYỀN TÊN TRUYỆN
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        });
+
+        // ================== GIỮ NGUYÊN TOÀN BỘ CODE CŨ TỪ ĐÂY TRỞ XUỐNG ==================
         btnFavorite.setOnClickListener(v -> {
             if (isLoadingFavorite) return; // đang xử lý, không cho click tiếp
             if (story == null || story.getId() == null) {
                 Toast.makeText(this, "Không có thông tin truyện!", Toast.LENGTH_SHORT).show();
                 return;
             }
-
             isLoadingFavorite = true;
-
             String token = "Bearer " + SessionManager.getToken(this);
             FavoriteApi api = RetrofitClient.getInstance().create(FavoriteApi.class);
-
             if (!isFavorite) {
                 // Đang thêm vào yêu thích
                 FavoriteRequest request = new FavoriteRequest(story.getId());
-
                 api.addFavorite(token, request).enqueue(new retrofit2.Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         isLoadingFavorite = false;
-
                         if (response.isSuccessful()) {
                             isFavorite = true;
                             updateFavoriteButton();
@@ -162,14 +180,12 @@ public class ComicDetailActivity extends AppCompatActivity {
                         Toast.makeText(ComicDetailActivity.this, "Lỗi kết nối server", Toast.LENGTH_SHORT).show();
                     }
                 });
-
             } else {
                 // Đang bỏ yêu thích
                 api.removeFavorite(token, story.getId()).enqueue(new retrofit2.Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         isLoadingFavorite = false;
-
                         if (response.isSuccessful()) {
                             isFavorite = false;
                             updateFavoriteButton();
@@ -205,11 +221,9 @@ public class ComicDetailActivity extends AppCompatActivity {
                 Toast.makeText(this, "Vui lòng nhập nội dung bình luận", Toast.LENGTH_SHORT).show();
                 return;
             }
-
             String token = "Bearer " + SessionManager.getToken(this);
             CommentApi api = RetrofitClient.getInstance().create(CommentApi.class);
             CommentRequest request = new CommentRequest(story.getId(), content);
-
             api.postComment(token, request).enqueue(new Callback<Comment>() {
                 @Override
                 public void onResponse(Call<Comment> call, Response<Comment> response) {
@@ -217,10 +231,8 @@ public class ComicDetailActivity extends AppCompatActivity {
                         Comment newComment = response.body();
                         newComment.setUsername("Bạn"); // Vì backend chưa trả tên
                         commentAdapter.addComment(newComment);
-
                         commentCount++;
                         tvCommentTitle.setText("Bình Luận (" + commentCount + ")");
-
                         Toast.makeText(ComicDetailActivity.this, "Đã gửi bình luận!", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(ComicDetailActivity.this, "Gửi thất bại!", Toast.LENGTH_SHORT).show();
@@ -232,18 +244,16 @@ public class ComicDetailActivity extends AppCompatActivity {
                     Toast.makeText(ComicDetailActivity.this, "Lỗi mạng", Toast.LENGTH_SHORT).show();
                 }
             });
-
             edtComment.setText("");
             layoutInputComment.setVisibility(View.GONE);
         });
-
     }
+
+    // ================== GIỮ NGUYÊN CÁC METHOD KHÁC ==================
     private void loadCommentsFromApi() {
         if (story == null || story.getId() == null) return;
-
         String token = "Bearer " + SessionManager.getToken(this);
         CommentApi api = RetrofitClient.getInstance().create(CommentApi.class);
-
         api.getCommentsByStoryId(token, story.getId()).enqueue(new Callback<List<Comment>>() {
             @Override
             public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
@@ -253,7 +263,6 @@ public class ComicDetailActivity extends AppCompatActivity {
                         commentList = commentList.subList(0, 3);
                     }
                     commentAdapter.setComments(commentList);
-
                     int commentCount = commentList.size();
                     tvCommentTitle.setText("Bình Luận (" + commentCount + ")");
                 }
@@ -265,10 +274,10 @@ public class ComicDetailActivity extends AppCompatActivity {
             }
         });
     }
+
     private void checkFavoriteStatus() {
         String token = "Bearer " + SessionManager.getToken(this);
         FavoriteApi api = RetrofitClient.getInstance().create(FavoriteApi.class);
-
         api.isFavorite(token, story.getId()).enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
@@ -284,10 +293,9 @@ public class ComicDetailActivity extends AppCompatActivity {
             }
         });
     }
+
     private void updateFavoriteButton() {
-        btnFavorite.setImageResource(isFavorite
-                ? R.mipmap.ic_heart_filled
-                : R.mipmap.ic_heart_outline);
+        btnFavorite.setImageResource(isFavorite ? R.mipmap.ic_heart_filled : R.mipmap.ic_heart_outline);
     }
 
     private void animateHeart(View v) {
@@ -299,34 +307,33 @@ public class ComicDetailActivity extends AppCompatActivity {
                         .setDuration(100))
                 .start();
     }
+
     // Trong ComicDetailActivity.java
     private void loadChaptersFromApi() {
         if (story == null || story.getId() == null) {
             Toast.makeText(this, "Không có thông tin truyện!", Toast.LENGTH_SHORT).show();
             return;
         }
-
         String token = "Bearer " + SessionManager.getToken(this);
-
         ChapterApi chapterApi = RetrofitClient.getInstance().create(ChapterApi.class);
         chapterApi.getChaptersByStoryId(token, story.getId()).enqueue(new Callback<List<Chapter>>() {
             @Override
             public void onResponse(Call<List<Chapter>> call, Response<List<Chapter>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Chapter> chapters = response.body();
-
+                    List<Chapter> allChapters = response.body();
                     // Sắp xếp: chương mới nhất lên đầu (chapterNumber giảm dần)
-                    chapters.sort((c1, c2) -> Integer.compare(c2.getChapterNumber(), c1.getChapterNumber()));
+                    allChapters.sort((c1, c2) -> Integer.compare(c2.getChapterNumber(), c1.getChapterNumber()));
 
-                    // Chỉ hiển thị tối đa 15 chương mới nhất
-                    List<Chapter> displayChapters = chapters.size() > 3 ?
-                            chapters.subList(0, 3) : chapters;
+                    // Lưu lại toàn bộ chapters để dùng cho nút "Đọc ngay"
+                    chapters = new ArrayList<>(allChapters);
 
+                    // Chỉ hiển thị tối đa 3 chương mới nhất
+                    List<Chapter> displayChapters = allChapters.size() > 3 ? allChapters.subList(0, 3) : allChapters;
                     setupChapterRecyclerView(displayChapters);
                 } else {
                     Toast.makeText(ComicDetailActivity.this, "Không tải được chương", Toast.LENGTH_SHORT).show();
                     // Fallback: dùng dummy
-                        setupDummyChapters();
+                    setupDummyChapters();
                 }
             }
 
@@ -341,11 +348,9 @@ public class ComicDetailActivity extends AppCompatActivity {
     private void setupChapterRecyclerView(List<Chapter> chapters) {
         RecyclerView rcvChapters = findViewById(R.id.rcvChapters);
         rcvChapters.setLayoutManager(new LinearLayoutManager(this));
-
         ChapterAdapterUser adapter = new ChapterAdapterUser(this, chapters, story);
         rcvChapters.setAdapter(adapter);
     }
-
 
     private void setupDummyChapters() {
         List<Chapter> dummy = new ArrayList<>();
@@ -360,5 +365,4 @@ public class ComicDetailActivity extends AppCompatActivity {
         Collections.reverse(dummy);
         setupChapterRecyclerView(dummy);
     }
-
 }
