@@ -12,7 +12,9 @@ import androidx.activity.EdgeToEdge;
 import com.example.comicapp.R;
 import com.example.comicapp.api.UserApi;
 import com.example.comicapp.data.model.User;
+import com.example.comicapp.dto.response.RegisterResponse;
 import com.example.comicapp.network.RetrofitClient;
+import com.example.comicapp.service.AuthService;
 import com.example.comicapp.utils.SessionManager;
 
 import retrofit2.Call;
@@ -80,7 +82,26 @@ public class AccountActivity extends BaseNavigationActivity {
         findViewById(R.id.item_share_app).setOnClickListener(v ->
                 Toast.makeText(this, "Chia sẻ ứng dụng", Toast.LENGTH_SHORT).show());
     }
-
+    private void handleRegister(String username, String email, String password) {
+        AuthService authService = new AuthService(this);
+        authService.register(username, email, password, new AuthService.AuthCallback() {
+            @Override
+            public void onSuccess(RegisterResponse response) {
+                runOnUiThread(() -> {
+                    Toast.makeText(AccountActivity.this,
+                            "Đăng ký thành công: " + response.getMessage(),
+                            Toast.LENGTH_SHORT).show();
+                    // Chuyển đến màn hình đăng nhập
+                });
+            }
+            @Override
+            public void onError(String message) {
+                runOnUiThread(() ->
+                        Toast.makeText(AccountActivity.this, message, Toast.LENGTH_SHORT).show()
+                );
+            }
+        });
+    }
     @Override
     protected int getCurrentNavItemId() {
         return R.id.nav_account;
