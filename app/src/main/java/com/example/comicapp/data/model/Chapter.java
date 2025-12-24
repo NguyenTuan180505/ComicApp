@@ -10,6 +10,7 @@ public class Chapter implements Serializable {
     private int chapterNumber;
     private boolean isLocked;
     private String createdAt;
+    private String content; // Nội dung chương
 
     // Constructor rỗng cho Retrofit
     public Chapter() {}
@@ -21,6 +22,7 @@ public class Chapter implements Serializable {
     public int getChapterNumber() { return chapterNumber; }
     public boolean isLocked() { return isLocked; }
     public String getCreatedAt() { return createdAt; }
+    public String getContent() { return content; }
 
     // Setter (nếu cần)
     public void setId(Long id) { this.id = id; }
@@ -29,6 +31,7 @@ public class Chapter implements Serializable {
     public void setChapterNumber(int chapterNumber) { this.chapterNumber = chapterNumber; }
     public void setLocked(boolean locked) { isLocked = locked; }
     public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
+    public void setContent(String content) { this.content = content; }
 
     // Để hiển thị đẹp trong RecyclerView
     @Override

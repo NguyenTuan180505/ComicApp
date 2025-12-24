@@ -19,7 +19,7 @@
 
         <ImageView
             android:id="@+id/btnBack"
-            android:layout_width="28dp"
+            android:layout_width="wrap_content"
             android:layout_height="28dp"
             android:src="@drawable/vqv_vt_back" />
 
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Tên truyện: Võ Lâm Ký"
+            android:text=""
             android:textSize="16sp"
             android:textColor="@android:color/black"
             android:textStyle="bold" />
@@ -37,7 +37,7 @@
         <ImageView
             android:id="@+id/btnMenu"
             android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_height="wrap_content"
             android:src="@drawable/vqv_vt_menu" />
     </LinearLayout>
 

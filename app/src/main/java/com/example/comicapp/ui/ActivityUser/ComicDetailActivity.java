@@ -28,6 +28,7 @@ import com.example.comicapp.data.model.Story;
 import com.example.comicapp.dto.request.CommentRequest;
 import com.example.comicapp.dto.request.FavoriteRequest;
 import com.example.comicapp.network.RetrofitClient;
+import com.example.comicapp.ui.ActivityUser.ReadComicActivity;
 import com.example.comicapp.utils.SessionManager;
 
 import java.util.ArrayList;
@@ -112,7 +113,10 @@ public class ComicDetailActivity extends AppCompatActivity {
         // NÚT "ĐỌC NGAY" → CHUYỂN SANG MÀN HÌNH ĐỌC TRUYỆN
         btnReadNow.setOnClickListener(v -> {
             Intent intent = new Intent(ComicDetailActivity.this, ReadComicActivity.class);
-//            intent.putExtra("story", story); // Truyền cả object Story
+            if (story != null) {
+                intent.putExtra("storyId", story.getId());
+                intent.putExtra(ReadComicActivity.EXTRA_COMIC_TITLE, story.getTitle());
+            }
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); // Hiệu ứng đẹp
         });
@@ -121,6 +125,9 @@ public class ComicDetailActivity extends AppCompatActivity {
         tvViewAllChapters.setOnClickListener(v -> {
             Intent intent = new Intent(this, ChapterListActivity.class);
             intent.putExtra("storyId", story.getId());
+            if (story.getTitle() != null) {
+                intent.putExtra("comicTitle", story.getTitle());
+            }
 //            intent.putExtra(ChapterListActivity.EXTRA_CURRENT_CHAPTER_NUMBER, 125); // chương đang đọc
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
