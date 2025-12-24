@@ -54,8 +54,8 @@ public class HomeActivity extends BaseNavigationActivity {
         bottomNav = findViewById(R.id.bottomNav);
 
 //        setupStoryLists();
-        loadEmotionsAndSetupTabs();
-        loadStoriesFromApi();
+//        loadEmotionsAndSetupTabs();
+//        loadStoriesFromApi();
         setupBottomNavigation(R.id.nav_home);
         // Trong onCreate()
         EmotionBottomSheet sheet = new EmotionBottomSheet(emotionId -> {
@@ -182,10 +182,17 @@ public class HomeActivity extends BaseNavigationActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        // Đánh dấu lại tab Home
         if (bottomNav != null) {
             bottomNav.setSelectedItemId(R.id.nav_home);
         }
+
+        // GỌI LẠI API → lấy dữ liệu mới nhất
+        loadStoriesFromApi();
+        loadEmotionsAndSetupTabs();
     }
+
 
     @Override
     protected int getCurrentNavItemId() {
