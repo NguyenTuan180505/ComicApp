@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAFAFA">
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:paddingTop="32dp">
 
     <!-- HEADER -->
     <LinearLayout
@@ -12,16 +14,14 @@
         android:orientation="horizontal"
         android:background="@drawable/vqv_header_border"
         android:gravity="center_vertical"
-        android:paddingHorizontal="12dp"
-        android:layout_marginTop="32dp">
+        android:paddingHorizontal="12dp">
 
         <ImageView
             android:id="@+id/btnBack"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:src="@drawable/vqv_vt_back"
-            android:contentDescription="Quay lại"
-            android:layout_marginEnd="16dp"/>
+            android:contentDescription="Quay lại" />
 
         <TextView
             android:id="@+id/tvComicTitle"
@@ -29,9 +29,9 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="Võ Lâm Ký"
-            android:textSize="17sp"
+            android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#000000"
+            android:textColor="@android:color/black"
             android:gravity="center" />
     </LinearLayout>
 
@@ -39,9 +39,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvChapters"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="88dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:clipToPadding="false"
         android:padding="12dp" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

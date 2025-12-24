@@ -18,6 +18,7 @@ import com.example.comicapp.R;
 import com.example.comicapp.api.ChapterApi;
 import com.example.comicapp.data.model.Chapter;
 import com.example.comicapp.network.RetrofitClient;
+import com.example.comicapp.ui.ActivityUser.ReadComicActivity;
 import com.example.comicapp.utils.SessionManager;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class ChapterListActivity extends AppCompatActivity {
     private List<Chapter> chapterList = new ArrayList<>();
     private Long storyId;
     private int currentChapterNumber = -1; // -1 nghĩa là chưa có chương đang đọc
+    private String comicTitle; // Lưu tên truyện để truyền cho ReadComicActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class ChapterListActivity extends AppCompatActivity {
         if (intent != null) {
             storyId = intent.getLongExtra("storyId", -1);
             currentChapterNumber = intent.getIntExtra("currentChapterNumber", -1);
+            comicTitle = intent.getStringExtra("comicTitle"); // Nhận tên truyện nếu có
         }
 
         if (storyId == -1) {
@@ -155,6 +158,10 @@ public class ChapterListActivity extends AppCompatActivity {
                 intent.putExtra("chapterId", chapter.getId());
                 intent.putExtra("chapterNumber", chapter.getChapterNumber());
                 intent.putExtra("chapterTitle", chapter.getTitle());
+                // Truyền tên truyện nếu có
+                if (comicTitle != null && !comicTitle.isEmpty()) {
+                    intent.putExtra(ReadComicActivity.EXTRA_COMIC_TITLE, comicTitle);
+                }
                 startActivity(intent);
                 finish(); // Đóng danh sách chương sau khi chọn
             });
