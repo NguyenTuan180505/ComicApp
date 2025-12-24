@@ -11,6 +11,7 @@ import android.os.Vibrator;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;          // ← THÊM DÒNG NÀY
@@ -26,6 +27,9 @@ import com.example.comicapp.data.model.Chapter;
 import com.example.comicapp.network.RetrofitClient;
 import com.example.comicapp.utils.SessionManager;
 import com.google.android.material.button.MaterialButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,7 +50,8 @@ public class ReadComicActivity extends AppCompatActivity {
     private Long storyId;
     private Long chapterId;
     private int chapterNumber;
-
+    private List<Chapter> chapterList = new ArrayList<>();
+    private int currentIndex = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,12 +60,47 @@ public class ReadComicActivity extends AppCompatActivity {
 
         // Ánh xạ TextView nội dung
         tvContent = findViewById(R.id.tvContent);
-        
         findViewById(R.id.btnMusic).setOnClickListener(v -> {
             Intent intent = new Intent(ReadComicActivity.this, SelectMusicActivity.class);
             startActivity(intent);
         });
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+        findViewById(R.id.btnNext).setOnClickListener(v -> {
+
+            if (chapterList.isEmpty()) {
+                Toast.makeText(this, "Đang tải danh sách chương...", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (currentIndex == -1) {
+                Toast.makeText(this, "Không xác định được chương hiện tại", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (currentIndex >= chapterList.size() - 1) {
+                Toast.makeText(this, "Đã là chương cuối", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Chapter next = chapterList.get(currentIndex + 1);
+
+            if (Boolean.TRUE.equals(next.isLocked())) {
+                Toast.makeText(this, "Chương này bị khóa", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            openChapter(next);
+        });
+
+        findViewById(R.id.btnPrev).setOnClickListener(v -> {
+            if (currentIndex <= 0) {
+                Toast.makeText(this, "Đã là chương đầu", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Chapter prev = chapterList.get(currentIndex - 1);
+            openChapter(prev);
+        });
 
         // Nút Menu (biểu tượng 3 gạch) → mở danh sách chương
         findViewById(R.id.btnMenu).setOnClickListener(v -> {
@@ -113,11 +153,23 @@ public class ReadComicActivity extends AppCompatActivity {
                 tvTitle.setText("Tên truyện: " + comicTitle);
             }
         }
+// Sau khi xử lý intent xong
+        loadChapterListAndDetectIndex();
 
         // Load nội dung chương từ API
         loadChapterContent();
 
         initReactionButton();
+    }
+    private void updateNextPrevState() {
+        ImageButton btnNext = findViewById(R.id.btnNext);
+        ImageButton btnPrev = findViewById(R.id.btnPrev);
+
+        btnPrev.setEnabled(currentIndex > 0);
+        btnNext.setEnabled(currentIndex < chapterList.size() - 1);
+
+        btnPrev.setAlpha(btnPrev.isEnabled() ? 1f : 0.3f);
+        btnNext.setAlpha(btnNext.isEnabled() ? 1f : 0.3f);
     }
 
     private void initReactionButton() {
@@ -187,6 +239,56 @@ public class ReadComicActivity extends AppCompatActivity {
             }
         });
     }
+    private void loadChapterListAndDetectIndex() {
+        String token = "Bearer " + SessionManager.getToken(this);
+
+        ChapterApi api = RetrofitClient.getInstance().create(ChapterApi.class);
+        api.getChaptersByStoryId(token, storyId)
+                .enqueue(new Callback<List<Chapter>>() {
+                    @Override
+                    public void onResponse(Call<List<Chapter>> call, Response<List<Chapter>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            chapterList = response.body();
+
+                            // Sắp xếp theo createdAt hoặc id
+                            chapterList.sort((a, b) -> a.getId().compareTo(b.getId()));
+
+                            detectCurrentIndex();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Chapter>> call, Throwable t) {}
+                });
+    }
+    private void detectCurrentIndex() {
+        for (int i = 0; i < chapterList.size(); i++) {
+            Chapter c = chapterList.get(i);
+
+            if (chapterId != null && c.getId().equals(chapterId)) {
+                currentIndex = i;
+                updateNextPrevState();
+                return;
+            }
+
+            if (chapterNumber != -1 && c.getChapterNumber() == chapterNumber) {
+                currentIndex = i;
+                updateNextPrevState();
+                return;
+            }
+        }
+    }
+
+    private void openChapter(Chapter chapter) {
+        Intent intent = new Intent(this, ReadComicActivity.class);
+        intent.putExtra("storyId", storyId);
+        intent.putExtra("chapterId", chapter.getId());
+        intent.putExtra("chapterNumber", chapter.getChapterNumber());
+        intent.putExtra("chapterTitle", chapter.getTitle());
+        startActivity(intent);
+        finish(); // 🔥 rất quan trọng để không stack activity
+    }
+
 
     private void selectReaction(String type, int bigIcon) {
         currentReaction = type;
