@@ -18,10 +18,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.comicapp.R;
 import com.example.comicapp.api.ChapterApi;
+import com.example.comicapp.api.CommentApi;
 import com.example.comicapp.api.FavoriteApi;
 import com.example.comicapp.data.adapter.ChapterAdapterUser;
+import com.example.comicapp.data.adapter.CommentAdapter;
 import com.example.comicapp.data.model.Chapter;
+import com.example.comicapp.data.model.Comment;
 import com.example.comicapp.data.model.Story;
+import com.example.comicapp.dto.request.CommentRequest;
 import com.example.comicapp.dto.request.FavoriteRequest;
 import com.example.comicapp.network.RetrofitClient;
 import com.example.comicapp.utils.SessionManager;
@@ -43,7 +47,10 @@ public class ComicDetailActivity extends AppCompatActivity {
     TextView tvCommentTitle ,tvViewAllChapters, tvTitle, tvDescription, tvAuthor;
     ImageView imgCover;
     private boolean isFavorite = false; // trạng thái hiện tại
-    private boolean isLoadingFavorite = false; // tránh click liên tục
+    private boolean isLoadingFavorite = false;
+    private RecyclerView rcvComments;
+    private CommentAdapter commentAdapter;
+    private List<Comment> commentList = new ArrayList<>();
 
     private Story story;
     private int commentCount = 0;
@@ -70,7 +77,6 @@ public class ComicDetailActivity extends AppCompatActivity {
         btnAddComment = findViewById(R.id.btnAddComment);
         btnSendComment = findViewById(R.id.btnSendComment);
         layoutInputComment = findViewById(R.id.layoutInputComment);
-        commentContainer = findViewById(R.id.commentContainer);
         edtComment = findViewById(R.id.edtComment);
         tvCommentTitle = findViewById(R.id.tvCommentTitle);
         tvViewAllChapters=findViewById(R.id.tvViewAllChapters);
@@ -88,8 +94,13 @@ public class ComicDetailActivity extends AppCompatActivity {
                 .load(story.getCoverImage())
 //                .placeholder(R.drawable.placeholder_cover)
                 .into(imgCover);
+        rcvComments = findViewById(R.id.rcvComments); // Thêm RecyclerView vào layout
+        rcvComments.setLayoutManager(new LinearLayoutManager(this));
+        commentAdapter = new CommentAdapter();
+        rcvComments.setAdapter(commentAdapter);
 
         loadChaptersFromApi();
+        loadCommentsFromApi();
 
 // TẮT SCROLL
 //        rcvChapters.setNestedScrollingEnabled(false);
@@ -189,11 +200,65 @@ public class ComicDetailActivity extends AppCompatActivity {
                 Toast.makeText(this, "Vui lòng nhập nội dung bình luận", Toast.LENGTH_SHORT).show();
                 return;
             }
-            addComment("Bạn", content);
+
+            String token = "Bearer " + SessionManager.getToken(this);
+            CommentApi api = RetrofitClient.getInstance().create(CommentApi.class);
+            CommentRequest request = new CommentRequest(story.getId(), content);
+
+            api.postComment(token, request).enqueue(new Callback<Comment>() {
+                @Override
+                public void onResponse(Call<Comment> call, Response<Comment> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        Comment newComment = response.body();
+                        newComment.setUsername("Bạn"); // Vì backend chưa trả tên
+                        commentAdapter.addComment(newComment);
+
+                        commentCount++;
+                        tvCommentTitle.setText("Bình Luận (" + commentCount + ")");
+
+                        Toast.makeText(ComicDetailActivity.this, "Đã gửi bình luận!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(ComicDetailActivity.this, "Gửi thất bại!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Comment> call, Throwable t) {
+                    Toast.makeText(ComicDetailActivity.this, "Lỗi mạng", Toast.LENGTH_SHORT).show();
+                }
+            });
+
             edtComment.setText("");
             layoutInputComment.setVisibility(View.GONE);
         });
 
+    }
+    private void loadCommentsFromApi() {
+        if (story == null || story.getId() == null) return;
+
+        String token = "Bearer " + SessionManager.getToken(this);
+        CommentApi api = RetrofitClient.getInstance().create(CommentApi.class);
+
+        api.getCommentsByStoryId(token, story.getId()).enqueue(new Callback<List<Comment>>() {
+            @Override
+            public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Comment> commentList = response.body();
+                    if (commentList.size() > 3) {
+                        commentList = commentList.subList(0, 3);
+                    }
+                    commentAdapter.setComments(commentList);
+
+                    int commentCount = commentList.size();
+                    tvCommentTitle.setText("Bình Luận (" + commentCount + ")");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Comment>> call, Throwable t) {
+                Toast.makeText(ComicDetailActivity.this, "Lỗi tải bình luận", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     private void checkFavoriteStatus() {
         String token = "Bearer " + SessionManager.getToken(this);
@@ -291,41 +356,4 @@ public class ComicDetailActivity extends AppCompatActivity {
         setupChapterRecyclerView(dummy);
     }
 
-    // THÊM BÌNH LUẬN MỚI
-    private void addComment(String username, String content) {
-        LinearLayout commentLayout = new LinearLayout(this);
-        commentLayout.setOrientation(LinearLayout.HORIZONTAL);
-        commentLayout.setPadding(16, 16, 16, 16);
-
-        ImageButton avatar = new ImageButton(this);
-        avatar.setLayoutParams(new LinearLayout.LayoutParams(100, 100));
-        avatar.setScaleType(ImageButton.ScaleType.CENTER_CROP);
-        avatar.setImageResource(R.drawable.ic_person_24); // Thêm ảnh avatar nếu có
-        avatar.setBackground(null);
-
-        LinearLayout textLayout = new LinearLayout(this);
-        textLayout.setOrientation(LinearLayout.VERTICAL);
-        textLayout.setPadding(20, 0, 0, 0);
-
-        TextView tvUser = new TextView(this);
-        tvUser.setText(username);
-        tvUser.setTextSize(15);
-        tvUser.setTextColor(getResources().getColor(android.R.color.holo_blue_dark));
-        tvUser.setTypeface(tvUser.getTypeface(), android.graphics.Typeface.BOLD);
-
-        TextView tvContent = new TextView(this);
-        tvContent.setText(content);
-        tvContent.setTextSize(14);
-        tvContent.setPadding(0, 8, 0, 20);
-
-        textLayout.addView(tvUser);
-        textLayout.addView(tvContent);
-        commentLayout.addView(avatar);
-        commentLayout.addView(textLayout);
-        commentContainer.addView(commentLayout);
-
-        commentCount++;
-        tvCommentTitle.setText("Bình Luận (" + commentCount + ")");
-        Toast.makeText(this, "Đã gửi bình luận!", Toast.LENGTH_SHORT).show();
-    }
 }

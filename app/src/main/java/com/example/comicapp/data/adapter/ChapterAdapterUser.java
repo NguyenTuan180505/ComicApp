@@ -51,7 +51,7 @@ public class ChapterAdapterUser extends RecyclerView.Adapter<ChapterAdapterUser.
         }
 
         // Hiển thị Free / VIP
-        title += chapter.isLocked() ? " (VIP)" : " (Free)";
+        title += chapter.isLocked() ? " (Chưa mở)" : " (Đã mở)";
 
         holder.tvChapterName.setText(title);
 
