@@ -52,22 +52,10 @@ public class FollowActivity extends BaseNavigationActivity {
     }
     /**
      * GỌI API LẤY DANH SÁCH TRUYỆN YÊU THÍCH
-     * Strategy: 
-     * 1. Gọi getFavoriteStories để lấy list favorite IDs
-     * 2. Gọi getAllStories để lấy tất cả stories với đầy đủ thông tin
-     * 3. Match favorite IDs với story IDs để lấy những stories được favorite
      */
     private void setupStoryLists() {
         FavoriteApi favoriteApi = RetrofitClient.getInstance().create(FavoriteApi.class);
-        // Lấy token gốc từ SessionManager
-        String rawToken = SessionManager.getToken(this);
-        if (rawToken == null) {
-            Toast.makeText(this, "Vui lòng đăng nhập để xem truyện yêu thích", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        String token = "Bearer " + rawToken;
-
-        // Bước 1: Lấy danh sách favorite IDs
+        String token = "Bearer " + SessionManager.getToken(this);
         favoriteApi.getFavoriteStories(token).enqueue(new Callback<List<Story>>() {
             @Override
             public void onResponse(Call<List<Story>> call, Response<List<Story>> response) {
@@ -103,15 +91,12 @@ public class FollowActivity extends BaseNavigationActivity {
                             if (response.isSuccessful() && response.body() != null) {
                                 List<Story> allStories = response.body();
                                 Log.d("FavoriteAPI", "Received " + allStories.size() + " total stories");
-                                
                                 // Debug: Log tất cả story IDs từ getAllStories
                                 Log.d("FavoriteAPI", "Favorite IDs to match: " + favoriteStoryIds);
                                 for (Story story : allStories) {
                                     Log.d("FavoriteAPI", "AllStory ID: " + story.getId() + 
                                             ", title=" + story.getTitle());
                                 }
-                                
-                                // Bước 3: Match favorite IDs với story IDs
                                 List<Story> favoriteStories = new ArrayList<>();
                                 for (Story story : allStories) {
                                     if (story.getId() != null && favoriteStoryIds.contains(story.getId())) {

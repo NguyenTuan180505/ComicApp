@@ -39,8 +39,10 @@ public class AccountActivity extends BaseNavigationActivity {
         });
 
         // Các mục khác (có thể thêm sau)
-        findViewById(R.id.item_follow_list).setOnClickListener(v ->
-                Toast.makeText(this, "Danh sách theo dõi", Toast.LENGTH_SHORT).show());
+        findViewById(R.id.item_follow_list).setOnClickListener(v -> {
+            // Mở trang danh sách theo dõi (yêu thích)
+            startActivity(new Intent(this, FollowActivity.class));
+        });
 
         findViewById(R.id.item_nap_xu).setOnClickListener(v ->
                 Toast.makeText(this, "Chức năng nạp xu", Toast.LENGTH_SHORT).show());
