@@ -41,6 +41,7 @@
         <activity android:name=".ui.ActivityUser.ChapterListActivity" android:exported="false" />
         <activity android:name=".ui.ActivityUser.UserActivity" android:exported="false" />
         <activity android:name=".ui.ActivityUser.SearchActivity" android:exported="false" />
+        <activity android:name=".ui.ActivityUser.ChangePasswordActivity" android:exported="false" />
         <!-- Admin -->
         <activity android:name=".ui.ActivityAdmin.ManageComicsActivity" android:exported="false" />
         <activity android:name=".ui.ActivityAdmin.ComicDetailActivity" android:exported="false" />

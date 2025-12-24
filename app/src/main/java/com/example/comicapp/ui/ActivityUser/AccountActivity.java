@@ -68,8 +68,11 @@ public class AccountActivity extends BaseNavigationActivity {
         findViewById(R.id.item_lich_su).setOnClickListener(v ->
                 Toast.makeText(this, "Lịch sử giao dịch", Toast.LENGTH_SHORT).show());
 
-        findViewById(R.id.item_change_password).setOnClickListener(v ->
-                Toast.makeText(this, "Đổi mật khẩu", Toast.LENGTH_SHORT).show());
+        findViewById(R.id.item_change_password).setOnClickListener(v -> {
+            Intent intent = new Intent(this, ChangePasswordActivity.class);
+            startActivity(intent);
+        });
+
 
         findViewById(R.id.item_contact_admin).setOnClickListener(v ->
                 Toast.makeText(this, "Liên hệ admin", Toast.LENGTH_SHORT).show());
