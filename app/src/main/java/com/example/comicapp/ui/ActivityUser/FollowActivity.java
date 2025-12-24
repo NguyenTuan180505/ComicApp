@@ -46,7 +46,7 @@ public class FollowActivity extends BaseNavigationActivity {
     }
     public void openComicDetail(Story story) {
         Intent intent = new Intent(this, ComicDetailActivity.class);
-        intent.putExtra("story", story);
+//        intent.putExtra("story", story);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }

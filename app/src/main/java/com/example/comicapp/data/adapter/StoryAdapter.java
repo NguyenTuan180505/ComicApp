@@ -21,7 +21,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
     private List<Story> stories;
     private OnStoryClickListener listener;
 
-    // Interface để xử lý click
     public interface OnStoryClickListener {
         void onStoryClick(Story story);
     }
@@ -47,31 +46,26 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
         Story story = stories.get(position);
 
         holder.txtTitle.setText(story.getTitle());
-        holder.txtAuthor.setText("Tác giả: " + (story.getAuthor() != null ? story.getAuthor() : "N/A"));
-        
-        // Load ảnh từ URL nếu có, nếu không thì dùng imageResId (cho dummy data)
-        String coverImageUrl = story.getCoverImage();
-        if (coverImageUrl != null && !coverImageUrl.isEmpty()) {
-            // Load ảnh từ URL bằng Glide
-            Glide.with(holder.itemView.getContext())
-                    .load(coverImageUrl)
-                    .placeholder(R.drawable.sample_story) // Ảnh placeholder khi đang load
-                    .error(R.drawable.sample_story) // Ảnh hiển thị khi lỗi
-                    .into(holder.imgStory);
-        } else if (story.getImageResId() != 0) {
-            // Fallback về imageResId nếu không có URL (cho dummy data)
-            holder.imgStory.setImageResource(story.getImageResId());
-        } else {
-            // Ảnh mặc định nếu không có cả URL và ResId
-            holder.imgStory.setImageResource(R.drawable.sample_story);
+        holder.txtAuthor.setText("Tác giả: " + story.getAuthor());
+        String imageUrl = story.getCoverImage();
+
+        if (imageUrl != null && imageUrl.contains("http://localhost")) {
+            imageUrl = imageUrl.replace("http://localhost", "http://10.0.2.2");
         }
 
-        // Xử lý click vào item
+        // Load ảnh từ URL bằng Glide
+        Glide.with(holder.itemView.getContext())
+                .load(imageUrl)
+//                .placeholder(R.drawable.placeholder_image)  // tạo 1 drawable placeholder
+//                .error(R.drawable.error_image)              // ảnh lỗi nếu load fail
+                .into(holder.imgStory);
+
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onStoryClick(story);
             }
         });
+
     }
 
     @Override
@@ -89,4 +83,5 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
             txtAuthor = itemView.findViewById(R.id.txtStoryAuthor);
         }
     }
+
 }

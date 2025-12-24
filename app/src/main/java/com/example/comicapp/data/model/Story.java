@@ -4,91 +4,75 @@ package com.example.comicapp.data.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 
-public class Story implements Parcelable {
+public class Story implements Serializable, Parcelable {
     private Long id;
-    
-    // Backend có thể trả về storyId trong favorite response
-    @SerializedName(value = "storyId", alternate = {"story_id"})
-    private Long storyId;
-    
     private String title;
     
     // Backend có thể dùng "author", "authorName", "writer", etc.
     // Thử map với nhiều tên có thể có
     @SerializedName(value = "author", alternate = {"authorName", "writer", "createdBy"})
     private String author;
-    
     private String description;
-    
-    @SerializedName("coverImage")
-    private String coverImage; // URL ảnh từ backend
-    
-    // Giữ lại imageResId để tương thích với code cũ (dùng cho dummy data)
-    private transient int imageResId = 0;
+    private Integer emotionId;
+    private String coverImage;     // URL ảnh bìa
+    private String createdAt;      // "2025-10-26T20:56:21.937"
 
-    // Constructor mặc định cho Gson
-    public Story() {
-    }
+    // Constructor rỗng cho Retrofit/Gson
+    public Story() {}
 
-    // Constructor cũ để tương thích
-    public Story(String title, String author, int imageResId) {
-        this.title = title;
-        this.author = author;
-        this.imageResId = imageResId;
-    }
+    // Getter & Setter
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+
+    public String getAuthor() { return author; }
+    public void setAuthor(String author) { this.author = author; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+
+    public Integer getEmotionId() { return emotionId; }
+    public void setEmotionId(Integer emotionId) { this.emotionId = emotionId; }
+
+    public String getCoverImage() { return coverImage; }
+    public void setCoverImage(String coverImage) { this.coverImage = coverImage; }
+
+    public String getCreatedAt() { return createdAt; }
+    public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
+
+    // Parcelable implementation
     protected Story(Parcel in) {
-        long idValue = in.readLong();
-        id = idValue != 0 ? idValue : null;
+        if (in.readByte() == 0) id = null; else id = in.readLong();
         title = in.readString();
         author = in.readString();
         description = in.readString();
+        if (in.readByte() == 0) emotionId = null; else emotionId = in.readInt();
         coverImage = in.readString();
-        imageResId = in.readInt();
+        createdAt = in.readString();
     }
 
     public static final Creator<Story> CREATOR = new Creator<Story>() {
         @Override
-        public Story createFromParcel(Parcel in) {
-            return new Story(in);
-        }
-
+        public Story createFromParcel(Parcel in) { return new Story(in); }
         @Override
-        public Story[] newArray(int size) {
-            return new Story[size];
-        }
+        public Story[] newArray(int size) { return new Story[size]; }
     };
-
-    // Getters
-    public Long getId() { return id; }
-    public Long getStoryId() { return storyId; }
-    public String getTitle() { return title; }
-    public String getAuthor() { return author; }
-    public String getDescription() { return description; }
-    public String getCoverImage() { return coverImage; }
-    public int getImageResId() { return imageResId; }
-
-    // Setters
-    public void setId(Long id) { this.id = id; }
-    public void setStoryId(Long storyId) { this.storyId = storyId; }
-    public void setTitle(String title) { this.title = title; }
-    public void setAuthor(String author) { this.author = author; }
-    public void setDescription(String description) { this.description = description; }
-    public void setCoverImage(String coverImage) { this.coverImage = coverImage; }
-    public void setImageResId(int imageResId) { this.imageResId = imageResId; }
 
     @Override
     public int describeContents() { return 0; }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id != null ? id : 0L);
+        if (id == null) dest.writeByte((byte) 0); else { dest.writeByte((byte) 1); dest.writeLong(id); }
         dest.writeString(title);
         dest.writeString(author);
         dest.writeString(description);
+        if (emotionId == null) dest.writeByte((byte) 0); else { dest.writeByte((byte) 1); dest.writeInt(emotionId); }
         dest.writeString(coverImage);
-        dest.writeInt(imageResId);
+        dest.writeString(createdAt);
     }
 }

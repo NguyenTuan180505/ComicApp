@@ -21,7 +21,7 @@ public class ComicDetailActivity extends AppCompatActivity {
 
         imgCover = findViewById(R.id.imgCover);
         tvTitle = findViewById(R.id.tvTitle);
-        tvViewCount = findViewById(R.id.tvViewCount);
+//        tvViewCount = findViewById(R.id.tvViewCount);
 
         String title = getIntent().getStringExtra("title");
         int chapters = getIntent().getIntExtra("chapters", 0);
