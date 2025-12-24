@@ -72,7 +72,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
     public int getItemCount() {
         return stories != null ? stories.size() : 0;
     }
-
     static class StoryViewHolder extends RecyclerView.ViewHolder {
         ImageView imgStory;
         TextView txtTitle, txtAuthor;

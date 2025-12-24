@@ -9,6 +9,10 @@ import java.io.Serializable;
 public class Story implements Serializable, Parcelable {
     private Long id;
     private String title;
+    
+    // Backend có thể dùng "author", "authorName", "writer", etc.
+    // Thử map với nhiều tên có thể có
+    @SerializedName(value = "author", alternate = {"authorName", "writer", "createdBy"})
     private String author;
     private String description;
     private Integer emotionId;

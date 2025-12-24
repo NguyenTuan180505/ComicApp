@@ -1,6 +1,5 @@
-// api/FavoriteApi.java
-package com.example.comicapp.api;
 
+package com.example.comicapp.api;
 import com.example.comicapp.dto.request.FavoriteRequest;
 
 import retrofit2.Call;
@@ -34,4 +33,10 @@ public interface FavoriteApi {
             @Header("Authorization") String token,
             @Query("storyId") Long storyId
     );
+  @GET("api/favorites/me")
+    Call<List<Story>> getFavoriteStories(@Header("Authorization") String token);
+    
+    // API lấy tất cả stories để match với favorites
+    @GET("api/stories")
+    Call<List<Story>> getAllStories(@Header("Authorization") String token);
 }
