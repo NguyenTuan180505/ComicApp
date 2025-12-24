@@ -58,7 +58,7 @@ public class UserActivity extends BaseNavigationActivity {
 
         // Đảm bảo token có prefix "Bearer "
         String authToken = rawToken.startsWith("Bearer ") ? rawToken : "Bearer " + rawToken;
-        Log.d("UserAPI", "Calling endpoint: api/user/me");
+        Log.d("UserAPI", "Calling endpoint: api/users/me");
         Log.d("UserAPI", "Auth token: " + (authToken.length() > 30 ? authToken.substring(0, 30) + "..." : authToken));
         
         UserApi userApi = RetrofitClient.getInstance().create(UserApi.class);
