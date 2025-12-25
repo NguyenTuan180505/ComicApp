@@ -15,6 +15,7 @@ import com.example.comicapp.api.UserApi;
 import com.example.comicapp.data.model.Task;
 import com.example.comicapp.data.model.User;
 import com.example.comicapp.data.adapter.TaskAdapter;
+import com.example.comicapp.dto.response.UserPointsResponse;
 import com.example.comicapp.network.RetrofitClient;
 import com.example.comicapp.utils.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -105,20 +106,20 @@ public class TaskActivity extends BaseNavigationActivity {
     }
 
     /**
-     * Load danh sách nhiệm vụ từ API
+     * Load danh sách nhiệm vụ từ API (sử dụng endpoint /my để kiểm tra trạng thái hoàn thành)
      */
     private void loadTasksFromApi() {
         if (!checkAuth()) return;
 
         String authToken = getAuthToken();
-        taskApi.getUserTasks(authToken).enqueue(new Callback<List<Task>>() {
+        taskApi.getMyTasks(authToken).enqueue(new Callback<List<Task>>() {
             @Override
             public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     taskList.clear();
                     taskList.addAll(response.body());
                     adapter.notifyDataSetChanged();
-                    Log.d("TaskActivity", "Loaded " + taskList.size() + " tasks from API");
+                    Log.d("TaskActivity", "Loaded " + taskList.size() + " tasks from API (with completion status)");
                 } else {
                     Log.e("TaskActivity", "Failed to load tasks: " + response.code());
                     if (response.code() == 401 || response.code() == 403) {
@@ -157,28 +158,27 @@ public class TaskActivity extends BaseNavigationActivity {
     }
 
     /**
-     * Load điểm người dùng từ API (lấy từ User model)
+     * Load điểm người dùng từ API (sử dụng endpoint /me/points)
      */
     private void loadUserPoints() {
         if (!checkAuth()) return;
 
         String authToken = getAuthToken();
-        userApi.getCurrentUser(authToken).enqueue(new Callback<User>() {
+        userApi.getUserPoints(authToken).enqueue(new Callback<UserPointsResponse>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<UserPointsResponse> call, Response<UserPointsResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    User user = response.body();
-                    // TODO: Nếu User model có field points, uncomment dòng dưới
-                    // userPoints = user.getPoints() != null ? user.getPoints() : 0;
+                    UserPointsResponse pointsResponse = response.body();
+                    userPoints = pointsResponse.getPoints();
                     updatePointsDisplay();
-                    Log.d("TaskActivity", "Loaded user data");
+                    Log.d("TaskActivity", "Loaded user points: " + userPoints);
                 } else {
                     Log.e("TaskActivity", "Failed to load user points: " + response.code());
                 }
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<UserPointsResponse> call, Throwable t) {
                 Log.e("TaskActivity", "Error loading user points", t);
             }
         });
@@ -217,20 +217,16 @@ public class TaskActivity extends BaseNavigationActivity {
                 Log.d("TaskActivity", "Complete task response code: " + response.code());
                 
                 if (response.isSuccessful()) {
-                    // Cập nhật trạng thái nhiệm vụ
-                    task.setCompleted(true);
-                    userPoints += task.getReward();
-                    updatePointsDisplay();
-                    adapter.notifyDataSetChanged();
+                    // Refresh lại danh sách nhiệm vụ từ API để cập nhật trạng thái hoàn thành
+                    loadTasksFromApi();
+                    
+                    // Refresh điểm từ API để đảm bảo đồng bộ với server
+                    loadUserPoints();
                     
                     Toast.makeText(TaskActivity.this, 
                             "Hoàn thành nhiệm vụ! +" + task.getReward() + " điểm", 
                             Toast.LENGTH_SHORT).show();
                     Log.d("TaskActivity", "Task completed successfully: " + task.getName());
-                    
-                    // Refresh điểm từ API để đảm bảo đồng bộ với server (không bắt buộc)
-                    // Chỉ refresh nếu cần, không block UI
-                    refreshUserPointsSilently();
                 } else {
                     // Log chi tiết lỗi
                     String errorBody = "";
@@ -276,38 +272,6 @@ public class TaskActivity extends BaseNavigationActivity {
         });
     }
 
-    /**
-     * Refresh điểm người dùng một cách im lặng (không hiển thị lỗi nếu fail)
-     */
-    private void refreshUserPointsSilently() {
-        String rawToken = SessionManager.getToken(this);
-        if (rawToken == null) {
-            return;
-        }
-
-        String authToken = rawToken.startsWith("Bearer ") ? rawToken : "Bearer " + rawToken;
-        userApi.getCurrentUser(authToken).enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    User user = response.body();
-                    // TODO: Nếu User model có field points, uncomment dòng dưới
-                    // userPoints = user.getPoints() != null ? user.getPoints() : 0;
-                    updatePointsDisplay();
-                    Log.d("TaskActivity", "Silently refreshed user points");
-                } else {
-                    // Không hiển thị lỗi, chỉ log
-                    Log.d("TaskActivity", "Silent refresh failed: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                // Không hiển thị lỗi, chỉ log
-                Log.d("TaskActivity", "Silent refresh error", t);
-            }
-        });
-    }
 
     private void updatePointsDisplay() {
         txtUserPoints.setText(String.valueOf(userPoints));
