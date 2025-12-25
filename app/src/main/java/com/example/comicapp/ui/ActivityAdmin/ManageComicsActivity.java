@@ -17,9 +17,9 @@ import com.example.comicapp.data.adapter.ComicAdapter;
 import com.example.comicapp.ui.ActivityUser.HomeActivity;
 import com.example.comicapp.data.model.Comic;
 import com.example.comicapp.R;
+import com.example.comicapp.ui.ActivityUser.LoginActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.button.MaterialButton;
-import com.example.comicapp.ui.ActivityUser.LoginActivity;
 
 import java.util.ArrayList;
 

@@ -11,6 +11,7 @@ import android.os.Vibrator;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;          // ← THÊM DÒNG NÀY
@@ -21,7 +22,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.res.ColorStateList; // ĐÃ CÓ RỒI – QUAN TRỌNG NHẤT
 
 import com.example.comicapp.R;
+import com.example.comicapp.api.ChapterApi;
+import com.example.comicapp.data.model.Chapter;
+import com.example.comicapp.network.RetrofitClient;
+import com.example.comicapp.utils.SessionManager;
 import com.google.android.material.button.MaterialButton;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ReadComicActivity extends AppCompatActivity {
 
@@ -33,52 +45,131 @@ public class ReadComicActivity extends AppCompatActivity {
     private MaterialButton btnReaction;
     private PopupWindow reactionPopup;
     private String currentReaction = null;
-
+    
+    private TextView tvContent;
+    private Long storyId;
+    private Long chapterId;
+    private int chapterNumber;
+    private List<Chapter> chapterList = new ArrayList<>();
+    private int currentIndex = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_comic);
 
 
+        // Ánh xạ TextView nội dung
+        tvContent = findViewById(R.id.tvContent);
         findViewById(R.id.btnMusic).setOnClickListener(v -> {
             Intent intent = new Intent(ReadComicActivity.this, SelectMusicActivity.class);
             startActivity(intent);
         });
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+        findViewById(R.id.btnNext).setOnClickListener(v -> {
 
-        // Nút Menu → mở danh sách chương
+            if (chapterList.isEmpty()) {
+                Toast.makeText(this, "Đang tải danh sách chương...", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (currentIndex == -1) {
+                Toast.makeText(this, "Không xác định được chương hiện tại", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (currentIndex >= chapterList.size() - 1) {
+                Toast.makeText(this, "Đã là chương cuối", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Chapter next = chapterList.get(currentIndex + 1);
+
+            if (Boolean.TRUE.equals(next.isLocked())) {
+                Toast.makeText(this, "Chương này bị khóa", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            openChapter(next);
+        });
+
+        findViewById(R.id.btnPrev).setOnClickListener(v -> {
+            if (currentIndex <= 0) {
+                Toast.makeText(this, "Đã là chương đầu", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Chapter prev = chapterList.get(currentIndex - 1);
+            openChapter(prev);
+        });
+
+        // Nút Menu (biểu tượng 3 gạch) → mở danh sách chương
         findViewById(R.id.btnMenu).setOnClickListener(v -> {
+            if (storyId == -1) {
+                Toast.makeText(this, "Không có thông tin truyện!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            
+            // Mở màn hình danh sách chương (ChapterListActivity)
             Intent intent = new Intent(this, ChapterListActivity.class);
-
-            TextView tvTitle = findViewById(R.id.tvTitle);
-            String comicName = tvTitle.getText().toString();
-
-            TextView tvChap = findViewById(R.id.tvChapterName);
-            String chapText = tvChap.getText().toString();
-            int currentChap = 1;
-            try {
-                currentChap = Integer.parseInt(chapText.replaceAll("\\D+", ""));
-            } catch (Exception ignored) {}
-
-            intent.putExtra(ChapterListActivity.EXTRA_COMIC_TITLE, comicName);
-            intent.putExtra(ChapterListActivity.EXTRA_CURRENT_CHAPTER, currentChap);
+            // Truyền storyId và chapterNumber hiện tại để ChapterListActivity biết chương đang đọc
+            intent.putExtra("storyId", storyId);
+            intent.putExtra("currentChapterNumber", chapterNumber);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
 
         // Nhận dữ liệu khi chọn chương từ danh sách
         Intent intent = getIntent();
         if (intent != null) {
+            // Nhận storyId và chapterNumber/chapterId từ Intent
+            storyId = intent.getLongExtra("storyId", -1);
+            if (intent.hasExtra("chapterId")) {
+                long id = intent.getLongExtra("chapterId", -1);
+                chapterId = (id != -1) ? id : null;
+            } else {
+                chapterId = null;
+            }
+            chapterNumber = intent.getIntExtra("chapterNumber", -1);
+            
+            // Nhận tiêu đề chương (có thể từ EXTRA_CHAPTER_TITLE hoặc "chapterTitle")
             if (intent.hasExtra(EXTRA_CHAPTER_TITLE)) {
                 String title = intent.getStringExtra(EXTRA_CHAPTER_TITLE);
                 ((TextView) findViewById(R.id.tvChapterName)).setText(title);
+            } else if (intent.hasExtra("chapterTitle")) {
+                String title = intent.getStringExtra("chapterTitle");
+                ((TextView) findViewById(R.id.tvChapterName)).setText(title);
             }
+            
+            // Nhận tên truyện
+            TextView tvTitle = findViewById(R.id.tvTitle);
+            String comicTitle = null;
             if (intent.hasExtra(EXTRA_COMIC_TITLE)) {
-                String title = intent.getStringExtra(EXTRA_COMIC_TITLE);
-                ((TextView) findViewById(R.id.tvTitle)).setText(title);
+                comicTitle = intent.getStringExtra(EXTRA_COMIC_TITLE);
+            } else if (intent.hasExtra("comicTitle")) {
+                // Fallback: kiểm tra key khác nếu có
+                comicTitle = intent.getStringExtra("comicTitle");
+            }
+            if (comicTitle != null && !comicTitle.isEmpty()) {
+                tvTitle.setText("Tên truyện: " + comicTitle);
             }
         }
+// Sau khi xử lý intent xong
+        loadChapterListAndDetectIndex();
+
+        // Load nội dung chương từ API
+        loadChapterContent();
 
         initReactionButton();
+    }
+    private void updateNextPrevState() {
+        ImageButton btnNext = findViewById(R.id.btnNext);
+        ImageButton btnPrev = findViewById(R.id.btnPrev);
+
+        btnPrev.setEnabled(currentIndex > 0);
+        btnNext.setEnabled(currentIndex < chapterList.size() - 1);
+
+        btnPrev.setAlpha(btnPrev.isEnabled() ? 1f : 0.3f);
+        btnNext.setAlpha(btnNext.isEnabled() ? 1f : 0.3f);
     }
 
     private void initReactionButton() {
@@ -148,6 +239,56 @@ public class ReadComicActivity extends AppCompatActivity {
             }
         });
     }
+    private void loadChapterListAndDetectIndex() {
+        String token = "Bearer " + SessionManager.getToken(this);
+
+        ChapterApi api = RetrofitClient.getInstance().create(ChapterApi.class);
+        api.getChaptersByStoryId(token, storyId)
+                .enqueue(new Callback<List<Chapter>>() {
+                    @Override
+                    public void onResponse(Call<List<Chapter>> call, Response<List<Chapter>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            chapterList = response.body();
+
+                            // Sắp xếp theo createdAt hoặc id
+                            chapterList.sort((a, b) -> a.getId().compareTo(b.getId()));
+
+                            detectCurrentIndex();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Chapter>> call, Throwable t) {}
+                });
+    }
+    private void detectCurrentIndex() {
+        for (int i = 0; i < chapterList.size(); i++) {
+            Chapter c = chapterList.get(i);
+
+            if (chapterId != null && c.getId().equals(chapterId)) {
+                currentIndex = i;
+                updateNextPrevState();
+                return;
+            }
+
+            if (chapterNumber != -1 && c.getChapterNumber() == chapterNumber) {
+                currentIndex = i;
+                updateNextPrevState();
+                return;
+            }
+        }
+    }
+
+    private void openChapter(Chapter chapter) {
+        Intent intent = new Intent(this, ReadComicActivity.class);
+        intent.putExtra("storyId", storyId);
+        intent.putExtra("chapterId", chapter.getId());
+        intent.putExtra("chapterNumber", chapter.getChapterNumber());
+        intent.putExtra("chapterTitle", chapter.getTitle());
+        startActivity(intent);
+        finish(); // 🔥 rất quan trọng để không stack activity
+    }
+
 
     private void selectReaction(String type, int bigIcon) {
         currentReaction = type;
@@ -213,5 +354,68 @@ public class ReadComicActivity extends AppCompatActivity {
                 .alpha(1f)
                 .setDuration(200)
                 .start();
+    }
+
+    /**
+     * Load nội dung chương từ API
+     */
+    private void loadChapterContent() {
+        if (storyId == -1) {
+            Toast.makeText(this, "Không có thông tin truyện!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String token = "Bearer " + SessionManager.getToken(this);
+        ChapterApi chapterApi = RetrofitClient.getInstance().create(ChapterApi.class);
+
+        Call<Chapter> call;
+        
+        // Ưu tiên dùng chapterId nếu có, nếu không thì dùng storyId + chapterNumber
+        if (chapterId != null && chapterId != -1) {
+            call = chapterApi.getChapterById(token, chapterId);
+        } else if (chapterNumber != -1) {
+            call = chapterApi.getChapterDetail(token, storyId, chapterNumber);
+        } else {
+            Toast.makeText(this, "Không có thông tin chương!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        call.enqueue(new Callback<Chapter>() {
+            @Override
+            public void onResponse(Call<Chapter> call, Response<Chapter> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Chapter chapter = response.body();
+                    
+                    // Hiển thị nội dung chương
+                    String content = chapter.getContent();
+                    if (content != null && !content.isEmpty()) {
+                        tvContent.setText(content);
+                    } else {
+                        tvContent.setText("Chương này chưa có nội dung.");
+                    }
+                    
+                    // Cập nhật tiêu đề chương nếu chưa có từ Intent
+                    if (chapter.getTitle() != null && !chapter.getTitle().isEmpty()) {
+                        TextView tvChapterName = findViewById(R.id.tvChapterName);
+                        if (tvChapterName.getText().toString().isEmpty()) {
+                            tvChapterName.setText(chapter.getTitle());
+                        }
+                    }
+                } else {
+                    Toast.makeText(ReadComicActivity.this, 
+                            "Không tải được nội dung chương (code: " + response.code() + ")", 
+                            Toast.LENGTH_SHORT).show();
+                    tvContent.setText("Không tải được nội dung chương.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Chapter> call, Throwable t) {
+                Toast.makeText(ReadComicActivity.this, 
+                        "Lỗi kết nối: " + t.getMessage(), 
+                        Toast.LENGTH_SHORT).show();
+                tvContent.setText("Lỗi kết nối server.");
+            }
+        });
     }
 }

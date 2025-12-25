@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.comicapp.R;
 import com.example.comicapp.data.model.Story;
 
@@ -20,7 +21,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
     private List<Story> stories;
     private OnStoryClickListener listener;
 
-    // Interface để xử lý click
     public interface OnStoryClickListener {
         void onStoryClick(Story story);
     }
@@ -47,21 +47,31 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
 
         holder.txtTitle.setText(story.getTitle());
         holder.txtAuthor.setText("Tác giả: " + story.getAuthor());
-        holder.imgStory.setImageResource(story.getImageResId());
+        String imageUrl = story.getCoverImage();
 
-        // Xử lý click vào item
+        if (imageUrl != null && imageUrl.contains("http://localhost")) {
+            imageUrl = imageUrl.replace("http://localhost", "http://10.0.2.2");
+        }
+
+        // Load ảnh từ URL bằng Glide
+        Glide.with(holder.itemView.getContext())
+                .load(imageUrl)
+//                .placeholder(R.drawable.placeholder_image)  // tạo 1 drawable placeholder
+//                .error(R.drawable.error_image)              // ảnh lỗi nếu load fail
+                .into(holder.imgStory);
+
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onStoryClick(story);
             }
         });
+
     }
 
     @Override
     public int getItemCount() {
         return stories != null ? stories.size() : 0;
     }
-
     static class StoryViewHolder extends RecyclerView.ViewHolder {
         ImageView imgStory;
         TextView txtTitle, txtAuthor;
@@ -73,4 +83,5 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
             txtAuthor = itemView.findViewById(R.id.txtStoryAuthor);
         }
     }
+
 }

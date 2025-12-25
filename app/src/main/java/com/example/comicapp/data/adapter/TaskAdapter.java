@@ -43,8 +43,25 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         holder.txtDesc.setText(task.getDesc());
         holder.txtReward.setText("🎁 " + task.getReward() + " điểm");
         holder.txtStatus.setText(task.isCompleted() ? "✅ Hoàn thành" : "⏳ Chưa hoàn thành");
-        holder.btnComplete.setEnabled(!task.isCompleted());
-        holder.btnComplete.setOnClickListener(v -> listener.onTaskCompleted(task));
+        
+        // Clear listener trước để tránh listener cũ
+        holder.btnComplete.setOnClickListener(null);
+        
+        // Cập nhật button dựa trên trạng thái hoàn thành
+        if (task.isCompleted()) {
+            holder.btnComplete.setText("Đã hoàn thành nhiệm vụ");
+            holder.btnComplete.setEnabled(false);
+            holder.btnComplete.setAlpha(0.6f); // Làm mờ button khi đã hoàn thành
+        } else {
+            holder.btnComplete.setText("Đánh dấu hoàn thành");
+            holder.btnComplete.setEnabled(true);
+            holder.btnComplete.setAlpha(1.0f); // Bình thường khi chưa hoàn thành
+            holder.btnComplete.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onTaskCompleted(task);
+                }
+            });
+        }
     }
 
     @Override
