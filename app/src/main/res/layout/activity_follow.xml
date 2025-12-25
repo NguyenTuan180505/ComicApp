@@ -77,18 +77,19 @@
             android:id="@+id/gridFavorites"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:padding="8dp">
 
             <!-- Hàng 1 -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvFavStories"
                 android:layout_width="match_parent"
-                android:layout_height="260dp"
+                android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
                 android:clipToPadding="false"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp" />
+
 
         </LinearLayout>
     </ScrollView>

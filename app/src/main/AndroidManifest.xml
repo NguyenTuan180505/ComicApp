@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- ✅ BẮT BUỘC: quyền INTERNET -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
+        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.ComicApp"
         tools:targetApi="31">
 
-        <!-- Màn hình chính: Truyện đang theo dõi -->
+        <!-- Launcher -->
         <activity
             android:name=".ui.ActivityUser.WelcomeActivity"
             android:exported="true"
@@ -24,54 +29,29 @@
             </intent-filter>
         </activity>
 
-        <!-- Màn hình thông tin tài khoản -->
-        <activity
-            android:name=".ui.ActivityUser.AccountActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.ActivityUser.RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.ActivityUser.ComicDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.ActivityUser.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.ActivityUser.HomeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.ActivityUser.ReadComicActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.ActivityUser.TaskActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.ActivityUser.SelectMusicActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.ActivityUser.FollowActivity"
+        <activity android:name=".ui.ActivityUser.LoginActivity" android:exported="false" />
+        <activity android:name=".ui.ActivityUser.RegisterActivity" android:exported="false" />
+        <activity android:name=".ui.ActivityUser.HomeActivity" android:exported="false" />
+        <activity android:name=".ui.ActivityUser.AccountActivity" android:exported="false" />
+        <activity android:name=".ui.ActivityUser.ComicDetailActivity" android:exported="false" />
+        <activity android:name=".ui.ActivityUser.ReadComicActivity" android:exported="false" />
+        <activity android:name=".ui.ActivityUser.TaskActivity" android:exported="false" />
+        <activity android:name=".ui.ActivityUser.SelectMusicActivity" android:exported="false" />
+        <activity android:name=".ui.ActivityUser.FollowActivity" android:exported="false" />
+        <activity android:name=".ui.ActivityUser.ChapterListActivity" android:exported="false" />
+        <activity android:name=".ui.ActivityUser.UserActivity" android:exported="false" />
+        <activity android:name=".ui.ActivityUser.SearchActivity" android:exported="false" />
+        <activity android:name=".ui.ActivityUser.ChangePasswordActivity" android:exported="false" />
+        <!-- Admin -->
+        <activity android:name=".ui.ActivityAdmin.ManageComicsActivity" android:exported="false" />
+        <activity android:name=".ui.ActivityAdmin.ComicDetailActivity" android:exported="false" />
+        <activity android:name=".ui.ActivityAdmin.AddComicActivity" android:exported="false" />
+        <activity android:name=".ui.ActivityAdmin.ComicDetailAdActivity" android:exported="false" />
+
+        <service
+            android:name=".service.MusicService"
             android:exported="false" />
 
-        <activity
-            android:name=".ui.ActivityAdmin.ManageComicsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.ActivityAdmin.ComicDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.ActivityAdmin.AddComicActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.ActivityAdmin.ComicDetailAdActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.ActivityUser.ChapterListActivity"
-            android:exported="false" />
-        <service android:name=".service.MusicService" android:exported="false"/>
-        <activity
-            android:name=".ui.ActivityUser.UserActivity"
-            android:exported="false" />
     </application>
 
 </manifest>
