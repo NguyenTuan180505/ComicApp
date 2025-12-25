@@ -325,7 +325,7 @@ public class ComicDetailActivity extends AppCompatActivity {
                     // Sắp xếp: chương mới nhất lên đầu (chapterNumber giảm dần)
                     chapters.sort((c1, c2) -> Integer.compare(c2.getChapterNumber(), c1.getChapterNumber()));
 
-                    // Chỉ hiển thị tối đa 15 chương mới nhất
+                    // Chỉ hiển thị tối đa 3 chương mới nhất
                     List<Chapter> displayChapters = chapters.size() > 3 ?
                             chapters.subList(0, 3) : chapters;
 
