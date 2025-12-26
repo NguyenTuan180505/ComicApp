@@ -47,7 +47,7 @@
                     android:background="@drawable/btn_circle_bg"
                     android:src="@mipmap/ic_heart_outline"
                     android:scaleType="centerInside"
-                   />
+                    />
 
 
                 <!-- Tên truyện -->
@@ -254,10 +254,10 @@
                     android:id="@+id/rcvComments"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
-                android:layout_marginTop="10dp"
-                android:nestedScrollingEnabled="false"
-                android:clipToPadding="false"
-                android:overScrollMode="never" />
+                    android:layout_marginTop="10dp"
+                    android:nestedScrollingEnabled="false"
+                    android:clipToPadding="false"
+                    android:overScrollMode="never" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

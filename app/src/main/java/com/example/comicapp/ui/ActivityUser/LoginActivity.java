@@ -15,8 +15,6 @@ import com.example.comicapp.api.AuthApi;
 import com.example.comicapp.dto.request.LoginRequest;
 import com.example.comicapp.dto.response.LoginResponse;
 import com.example.comicapp.network.RetrofitClient;
-import com.example.comicapp.ui.ActivityAdmin.ManageComicsActivity;
-import com.example.comicapp.ui.ActivityUser.HomeActivity;
 import com.example.comicapp.utils.SessionManager;
 
 import org.json.JSONObject;
@@ -76,14 +74,8 @@ public class LoginActivity extends AppCompatActivity {
                     String role = getRoleFromToken(token);
 
                     Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-
-                    if ("ADMIN".equals(role)) {
-                        startActivity(new Intent(LoginActivity.this, ManageComicsActivity.class));
-                    } else {
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                    }
-
-                    finish();
+                        finish();
 
                 } else {
                     Toast.makeText(LoginActivity.this, "Sai tài khoản hoặc mật khẩu!", Toast.LENGTH_SHORT).show();
