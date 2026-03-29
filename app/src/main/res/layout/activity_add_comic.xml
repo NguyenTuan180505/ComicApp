@@ -116,6 +116,19 @@
 
             <TextView
                 style="@style/FormLabel"
+                android:text="🙂 Trạng thái cảm xúc" />
+
+            <Spinner
+                android:id="@+id/spinnerEmotion"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:entries="@array/emotion_array"
+                android:layout_marginBottom="24dp" />
+
+            <TextView
+                style="@style/FormLabel"
                 android:text="🖼️ Ảnh bìa"
                 android:layout_marginBottom="12dp" />
 

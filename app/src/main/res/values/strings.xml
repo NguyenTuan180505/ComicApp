@@ -17,4 +17,11 @@
         <item>Supernatural</item>
         <item>Thriller</item>
     </string-array>
+    <string-array name="emotion_array">
+        <item>Chọn cảm xúc</item>
+        <item>Vui</item>
+        <item>Buồn</item>
+        <item>Tức giận</item>
+        <item>Bình thường</item>
+    </string-array>
 </resources>
